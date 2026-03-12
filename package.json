@@ -1,0 +1,13 @@
+{
+  "name": "mykes-photog",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "generate-gallery": "node scripts/generate-gallery.js",
+    "convert-images": "node scripts/convert-images.js",
+    "convert-images:force": "node scripts/convert-images.js --force"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
+  }
+}
