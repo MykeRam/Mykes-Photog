@@ -1,15 +1,42 @@
 import React from 'react'
 
-export default function Header() {
+function NavLink({ href, label, currentPath, navigate }) {
+  const isActive = currentPath === href
+
+  return (
+    <a
+      href={href}
+      className={isActive ? 'is-active' : ''}
+      aria-current={isActive ? 'page' : undefined}
+      onClick={(event) => {
+        event.preventDefault()
+        navigate(href)
+      }}
+    >
+      {label}
+    </a>
+  )
+}
+
+export default function Header({ currentPath, navigate }) {
   return (
     <header className="site-header">
       <div className="container">
         <div className="logo">
-          <img src="/logo.png" alt="Myke logo" className="logo-img" />
+          <a
+            href="/"
+            onClick={(event) => {
+              event.preventDefault()
+              navigate('/')
+            }}
+            aria-label="Go to home page"
+          >
+            <img src="/logo.png" alt="Myke logo" className="logo-img" />
+          </a>
         </div>
         <nav className="header-nav" aria-label="Main">
-          <a href="#about">about</a>
-          <a href="#coding">coding</a>
+          <NavLink href="/about" label="about" currentPath={currentPath} navigate={navigate} />
+          <NavLink href="/coding" label="coding" currentPath={currentPath} navigate={navigate} />
         </nav>
       </div>
     </header>
