@@ -1,29 +1,45 @@
 import React, { useEffect, useMemo, useState } from 'react'
 
-function pickSpan(idx) {
-  const pattern = [
-    'item--portrait',
-    'item--hero',
-    'item--portrait',
-    'item--portrait',
-    'item--portrait',
-    'item--portrait',
-    'item--wide',
-    'item--wide',
-    'item--large',
-    'item--portrait',
-    'item--portrait',
-    'item--portrait',
-    'item--medium',
-    'item--medium',
-    'item--large',
-    'item--tall',
-    'item--tall',
-    'item--wide',
-    'item--wide',
-    'item--portrait'
-  ]
-  return pattern[idx % pattern.length]
+function getSpanClassWithIndex(ratio, index) {
+  if (!ratio) return 'item--square'
+
+  if (ratio >= 1.75) {
+    return index % 9 === 1 ? 'item--feature-wide' : 'item--wide'
+  }
+
+  if (ratio >= 1.12) {
+    if (index % 11 === 1) return 'item--feature-landscape'
+    if (index % 7 === 4) return 'item--medium-landscape'
+    return 'item--landscape'
+  }
+
+  if (ratio <= 0.68) {
+    return index % 6 === 0 ? 'item--feature-portrait' : 'item--portrait-tall'
+  }
+
+  if (ratio <= 0.95) {
+    return index % 8 === 3 ? 'item--portrait-emphasis' : 'item--portrait'
+  }
+
+  return index % 10 === 5 ? 'item--square-large' : 'item--square'
+}
+
+function loadAspectRatio(src) {
+  return new Promise((resolve) => {
+    const probe = new window.Image()
+
+    probe.onload = () => {
+      if (!probe.naturalWidth || !probe.naturalHeight) {
+        resolve([src, 1])
+        return
+      }
+
+      resolve([src, probe.naturalWidth / probe.naturalHeight])
+    }
+
+    probe.onerror = () => resolve([src, 1])
+    probe.src = src
+  })
 }
 
 const thumbModules = import.meta.glob('../images/thumbs/**/*.{webp,jpg,jpeg,png,svg,gif}', {
@@ -64,6 +80,7 @@ export default function Gallery() {
   const [parentFilter, setParentFilter] = useState('All')
   const [childFilter, setChildFilter] = useState(null)
   const [activeImage, setActiveImage] = useState(null)
+  const [aspectRatios, setAspectRatios] = useState({})
 
   const images = useMemo(() => {
     const grouped = new Map()
@@ -145,6 +162,34 @@ export default function Gallery() {
     }
   }, [activeImage])
 
+  useEffect(() => {
+    let cancelled = false
+
+    const missingThumbs = images
+      .map((image) => image.thumb)
+      .filter((thumb) => thumb && aspectRatios[thumb] === undefined)
+
+    if (missingThumbs.length === 0) return undefined
+
+    Promise.all(missingThumbs.map((thumb) => loadAspectRatio(thumb))).then((entries) => {
+      if (cancelled || entries.length === 0) return
+
+      setAspectRatios((current) => {
+        const next = { ...current }
+
+        for (const [src, ratio] of entries) {
+          next[src] = ratio
+        }
+
+        return next
+      })
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [images, aspectRatios])
+
   const categories = useMemo(() => {
     const map = new Map()
     for (const img of images) {
@@ -224,7 +269,7 @@ export default function Gallery() {
 
       <section className="grid">
         {visible.map((it, i) => (
-          <div key={i} className={`item ${pickSpan(i)}`}>
+          <div key={i} className={`item ${getSpanClassWithIndex(aspectRatios[it.thumb], i)}`}>
             <button
               type="button"
               className="item-btn"

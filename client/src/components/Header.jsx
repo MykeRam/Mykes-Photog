@@ -1,4 +1,5 @@
 import React from 'react'
+import SocialLinks from './SocialLinks'
 
 function NavLink({ href, label, currentPath, navigate }) {
   const isActive = currentPath === href
@@ -34,10 +35,13 @@ export default function Header({ currentPath, navigate }) {
             <img src="/logo.png" alt="Myke logo" className="logo-img" />
           </a>
         </div>
-        <nav className="header-nav" aria-label="Main">
-          <NavLink href="/about" label="about" currentPath={currentPath} navigate={navigate} />
-          <NavLink href="/coding" label="coding" currentPath={currentPath} navigate={navigate} />
-        </nav>
+        <div className="header-actions">
+          <SocialLinks />
+          <nav className="header-nav" aria-label="Main">
+            <NavLink href="/about" label="about" currentPath={currentPath} navigate={navigate} />
+            <NavLink href="/coding" label="coding" currentPath={currentPath} navigate={navigate} />
+          </nav>
+        </div>
       </div>
     </header>
   )
