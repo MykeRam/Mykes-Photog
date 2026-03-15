@@ -33,7 +33,7 @@ export default function Header({ currentPath, navigate }) {
             }}
             aria-label="Go to home page"
           >
-            <img src="/logo.png" alt="Myke logo" className="logo-img" />
+            <img src="/myke_logo_vector_header.svg" alt="Myke logo" className="logo-img" />
           </a>
         </div>
         <div className="header-actions">
