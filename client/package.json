@@ -5,13 +5,16 @@
   "scripts": {
     "dev": "vite --open",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "convert-images": "node scripts/convert-images.js",
+    "convert-images:force": "node scripts/convert-images.js --force"
   },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "sharp": "^0.34.5",
     "vite": "^5.0.0",
     "@vitejs/plugin-react": "^4.0.0"
   }

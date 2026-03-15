@@ -1,0 +1,40 @@
+.page-shell { padding:24px 0 60px; }
+
+.page-copy {
+  max-width:760px;
+  padding:12px 0 0;
+}
+
+.page-eyebrow {
+  margin:0 0 10px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:#6f6254;
+}
+
+.page-copy h1 {
+  margin:0 0 14px;
+  max-width:14ch;
+  font-size:clamp(2.2rem, 6vw, 4.75rem);
+  line-height:0.98;
+}
+
+.page-copy p {
+  margin:0;
+  max-width:56ch;
+  font-size:17px;
+  line-height:1.8;
+  color:#2c2c2c;
+}
+
+.page-copy p + p { margin-top:14px; }
+
+@media (max-width: 640px) {
+  .page-shell { padding-top:8px; }
+
+  .page-copy h1 { max-width:none; }
+
+  .page-copy p { font-size:16px; }
+}

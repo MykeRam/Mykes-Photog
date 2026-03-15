@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import Header from './components/Header'
-import About from './components/About'
-import Coding from './components/Coding'
-import Home from './components/Home'
+import Header from './components/Header/Header'
+import About from './components/About/About'
+import Coding from './components/Coding/Coding'
+import Home from './components/Home/Home'
 
 function normalizePath(pathname) {
   if (!pathname || pathname === '/') return '/'

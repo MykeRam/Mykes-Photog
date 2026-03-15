@@ -1,5 +1,6 @@
 import React from 'react'
-import Gallery from './Gallery'
+import Gallery from '../Gallery/Gallery'
+import './Home.css'
 
 export default function Home() {
   return (

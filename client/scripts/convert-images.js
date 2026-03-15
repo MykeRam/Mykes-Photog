@@ -3,7 +3,7 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const projectRoot = path.join(__dirname, '..');
-const imagesRoot = path.join(projectRoot, 'client', 'src', 'images');
+const imagesRoot = path.join(projectRoot, 'src', 'images');
 const thumbsRoot = path.join(imagesRoot, 'thumbs');
 const fullRoot = path.join(imagesRoot, 'full');
 
@@ -78,100 +78,103 @@ function pickBestSources(files) {
 }
 
 function hasMagick() {
-  const probe = spawnSync('magick', ['-version'], { stdio: 'ignore' });
-  return probe.status === 0;
+  const result = spawnSync('magick', ['-version'], { stdio: 'ignore', shell: true });
+  return result.status === 0;
 }
 
 async function convertWithSharp(sourceFiles) {
   let sharp;
   try {
     sharp = require('sharp');
-  } catch (_err) {
+  } catch {
     return null;
   }
 
-  const stats = { converted: 0, skipped: 0 };
+  let converted = 0;
+  let skipped = 0;
+
   for (const input of sourceFiles) {
     const { thumbOut, largeOut } = targetPaths(input);
-    const bothExist = fs.existsSync(thumbOut) && fs.existsSync(largeOut);
+    const needsThumb = force || !fs.existsSync(thumbOut);
+    const needsLarge = force || !fs.existsSync(largeOut);
 
-    if (bothExist && !force) {
-      stats.skipped += 1;
+    if (!needsThumb && !needsLarge) {
+      skipped++;
       continue;
     }
 
     ensureDir(thumbOut);
     ensureDir(largeOut);
 
-    await sharp(input)
-      .rotate()
-      .resize({ width: THUMB_MAX, height: THUMB_MAX, fit: 'inside', withoutEnlargement: true })
-      .webp({ quality: THUMB_QUALITY })
-      .toFile(thumbOut);
+    if (needsThumb) {
+      await sharp(input)
+        .rotate()
+        .resize({ width: THUMB_MAX, height: THUMB_MAX, fit: 'inside', withoutEnlargement: true })
+        .webp({ quality: THUMB_QUALITY })
+        .toFile(thumbOut);
+    }
 
-    await sharp(input)
-      .rotate()
-      .resize({ width: LARGE_MAX, height: LARGE_MAX, fit: 'inside', withoutEnlargement: true })
-      .webp({ quality: LARGE_QUALITY })
-      .toFile(largeOut);
+    if (needsLarge) {
+      await sharp(input)
+        .rotate()
+        .resize({ width: LARGE_MAX, height: LARGE_MAX, fit: 'inside', withoutEnlargement: true })
+        .webp({ quality: LARGE_QUALITY })
+        .toFile(largeOut);
+    }
 
-    stats.converted += 1;
+    converted++;
     console.log(`sharp: ${path.relative(projectRoot, input)}`);
   }
 
-  return stats;
-}
-
-function runMagick(args) {
-  const result = spawnSync('magick', args, { stdio: 'inherit' });
-  if (result.status !== 0) {
-    throw new Error(`ImageMagick failed: magick ${args.join(' ')}`);
-  }
+  return { converted, skipped };
 }
 
 function convertWithMagick(sourceFiles) {
-  if (!hasMagick()) {
-    return null;
-  }
+  if (!hasMagick()) return null;
 
-  const stats = { converted: 0, skipped: 0 };
+  let converted = 0;
+  let skipped = 0;
+
   for (const input of sourceFiles) {
     const { thumbOut, largeOut } = targetPaths(input);
-    const bothExist = fs.existsSync(thumbOut) && fs.existsSync(largeOut);
+    const needsThumb = force || !fs.existsSync(thumbOut);
+    const needsLarge = force || !fs.existsSync(largeOut);
 
-    if (bothExist && !force) {
-      stats.skipped += 1;
+    if (!needsThumb && !needsLarge) {
+      skipped++;
       continue;
     }
 
     ensureDir(thumbOut);
     ensureDir(largeOut);
 
-    runMagick([
-      input,
-      '-auto-orient',
-      '-resize',
-      `${THUMB_MAX}x${THUMB_MAX}>`,
-      '-quality',
-      String(THUMB_QUALITY),
-      thumbOut
-    ]);
+    if (needsThumb) {
+      const thumbResult = spawnSync(
+        'magick',
+        [input, '-auto-orient', '-resize', `${THUMB_MAX}x${THUMB_MAX}>`, '-quality', `${THUMB_QUALITY}`, thumbOut],
+        { stdio: 'inherit', shell: true }
+      );
+      if (thumbResult.status !== 0) {
+        throw new Error(`ImageMagick failed for ${input}`);
+      }
+    }
 
-    runMagick([
-      input,
-      '-auto-orient',
-      '-resize',
-      `${LARGE_MAX}x${LARGE_MAX}>`,
-      '-quality',
-      String(LARGE_QUALITY),
-      largeOut
-    ]);
+    if (needsLarge) {
+      const largeResult = spawnSync(
+        'magick',
+        [input, '-auto-orient', '-resize', `${LARGE_MAX}x${LARGE_MAX}>`, '-quality', `${LARGE_QUALITY}`, largeOut],
+        { stdio: 'inherit', shell: true }
+      );
+      if (largeResult.status !== 0) {
+        throw new Error(`ImageMagick failed for ${input}`);
+      }
+    }
 
-    stats.converted += 1;
+    converted++;
     console.log(`magick: ${path.relative(projectRoot, input)}`);
   }
 
-  return stats;
+  return { converted, skipped };
 }
 
 async function main() {

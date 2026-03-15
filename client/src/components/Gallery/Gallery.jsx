@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
+import './Gallery.css'
 
 function getSpanClassWithIndex(ratio, index) {
   if (!ratio) return 'item--square'
@@ -42,13 +43,13 @@ function loadAspectRatio(src) {
   })
 }
 
-const thumbModules = import.meta.glob('../images/thumbs/**/*.{webp,jpg,jpeg,png,svg,gif}', {
+const thumbModules = import.meta.glob('../../images/thumbs/**/*.{webp,jpg,jpeg,png,svg,gif}', {
   eager: true,
   query: '?url',
   import: 'default'
 })
 
-const fullModules = import.meta.glob('../images/full/**/*.{webp,jpg,jpeg,png,svg,gif}', {
+const fullModules = import.meta.glob('../../images/full/**/*.{webp,jpg,jpeg,png,svg,gif}', {
   eager: true,
   query: '?url',
   import: 'default'
@@ -68,7 +69,7 @@ function stripExt(p) {
 }
 
 function getVariantInfo(filePath, rootSegment, suffix) {
-  const prefix = `../images/${rootSegment}/`
+  const prefix = `../../images/${rootSegment}/`
   const relative = filePath.startsWith(prefix) ? filePath.slice(prefix.length) : filePath
   const base = stripExt(relative).replace(new RegExp(`${suffix}$`), '')
   const parts = base.split('/')

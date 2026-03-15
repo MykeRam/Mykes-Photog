@@ -1,4 +1,5 @@
 import React from 'react'
+import './Coding.css'
 
 export default function Coding() {
   return (

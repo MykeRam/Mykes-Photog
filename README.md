@@ -1,25 +1,29 @@
 # Mykes-Photog
-Photography website showcasing my photos
 
-## Preview
+Photography website showcasing Myke's photos.
 
-Open the demo in a browser to see the grid layout:
+## App
 
-- File: [src/index.html](src/index.html)
+The working app lives in `client/`.
 
-No build step required — just open the file in your browser or serve the `src` folder with a static server.
-
-Example using Python's simple server (run in the project root):
+Common commands:
 
 ```bash
-python -m http.server 3000
-# then open http://localhost:3000/src/index.html
+cd client
+npm install
+npm run dev
+npm run build
+npm run convert-images
+npm run convert-images:force
 ```
 
+## Structure
 
-Next:
-- use https://animate.style/ to find a nice transiational starting style and hover  effect for nav bar links
-- create footer
-- complete about section + link
-- top left logo clickable to home page
-- add socials somewhere in the nav bar
+- `client/` React + Vite app
+- `client/scripts/convert-images.js` image processing helper
+- `client/src/components/*` colocated component folders
+
+## Notes
+
+- `client/dist/` is generated output and can be deleted anytime.
+- `node_modules/` is generated and should not be committed.

@@ -1,8 +1,9 @@
 import React from 'react'
-import instagramIcon from '../assets/social/IG.svg.svg'
-import threadsIcon from '../assets/social/Threads.svg.svg'
-import twitchIcon from '../assets/social/Twitch.svg.svg'
-import youtubeIcon from '../assets/social/YT.svg.svg'
+import instagramIcon from '../../assets/social/IG.svg.svg'
+import threadsIcon from '../../assets/social/Threads.svg.svg'
+import twitchIcon from '../../assets/social/Twitch.svg.svg'
+import youtubeIcon from '../../assets/social/YT.svg.svg'
+import './SocialLinks.css'
 
 const socials = [
   {
