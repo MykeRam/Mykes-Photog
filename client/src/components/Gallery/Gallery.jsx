@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
 import './Gallery.css'
 
 function getSpanClassWithIndex(ratio, index) {
@@ -86,6 +87,7 @@ function getVariantInfo(filePath, rootSegment, suffix) {
 }
 
 export default function Gallery() {
+  const shouldReduceMotion = useReducedMotion()
   const [parentFilter, setParentFilter] = useState('All')
   const [childFilter, setChildFilter] = useState(null)
   const [activeImage, setActiveImage] = useState(null)
@@ -239,6 +241,11 @@ export default function Gallery() {
     return images.filter((i) => i.parent === parentFilter && i.child === childFilter)
   }, [images, parentFilter, childFilter])
 
+  const isGridReady = useMemo(
+    () => images.length === 0 || images.every((image) => aspectRatios[image.thumb] !== undefined),
+    [images, aspectRatios]
+  )
+
   return (
     <div>
       <div className="filters">
@@ -276,20 +283,31 @@ export default function Gallery() {
         </div>
       ) : null}
 
-      <section className="grid">
-        {visible.map((it, i) => (
-          <div key={i} className={`item ${getSpanClassWithIndex(aspectRatios[it.thumb], i)}`}>
-            <button
-              type="button"
-              className="item-btn"
-              onClick={() => setActiveImage({ src: it.full, alt: `${it.folder}-${i}` })}
-              aria-label={`Open ${it.folder} image ${i + 1}`}
-            >
-              <img src={it.thumb} alt={`${it.folder}-${i}`} loading="lazy" decoding="async" />
-            </button>
-          </div>
-        ))}
-      </section>
+      {isGridReady ? (
+        <motion.section
+          className="grid"
+          {...(!shouldReduceMotion
+            ? {
+                initial: { opacity: 0 },
+                animate: { opacity: 1 },
+                transition: { duration: 1.05, ease: [0.22, 1, 0.36, 1] }
+              }
+            : {})}
+        >
+          {visible.map((it, i) => (
+            <div key={i} className={`item ${getSpanClassWithIndex(aspectRatios[it.thumb], i)}`}>
+              <button
+                type="button"
+                className="item-btn"
+                onClick={() => setActiveImage({ src: it.full, alt: `${it.folder}-${i}` })}
+                aria-label={`Open ${it.folder} image ${i + 1}`}
+              >
+                <img src={it.thumb} alt={`${it.folder}-${i}`} loading="lazy" decoding="async" />
+              </button>
+            </div>
+          ))}
+        </motion.section>
+      ) : null}
 
       {activeImage ? (
         <div className="lightbox" role="dialog" aria-modal="true" onClick={() => setActiveImage(null)}>
