@@ -4,11 +4,11 @@ import SocialLinks from '../SocialLinks/SocialLinks'
 import { enterAnimation } from '../../lib/enterMotion'
 import './Header.css'
 
-function NavLink({ href, label, currentPath, navigate }) {
+function NavLink({ href, label, currentPath, navigate, motionProps }) {
   const isActive = currentPath === href
 
   return (
-    <a
+    <motion.a
       href={href}
       className={isActive ? 'is-active' : ''}
       aria-current={isActive ? 'page' : undefined}
@@ -16,9 +16,10 @@ function NavLink({ href, label, currentPath, navigate }) {
         event.preventDefault()
         navigate(href)
       }}
+      {...motionProps}
     >
       {label}
-    </a>
+    </motion.a>
   )
 }
 
@@ -44,8 +45,36 @@ export default function Header({ currentPath, navigate }) {
         <div className="header-actions">
           <SocialLinks animateOnEnter baseDelay={0.24} stagger={0.1} />
           <nav className="header-nav" aria-label="Main">
-            <NavLink href="/about" label="about" currentPath={currentPath} navigate={navigate} />
-            <NavLink href="/coding" label="coding" currentPath={currentPath} navigate={navigate} />
+            <NavLink
+              href="/about"
+              label="about"
+              currentPath={currentPath}
+              navigate={navigate}
+              motionProps={
+                !shouldReduceMotion
+                  ? {
+                      initial: { opacity: 0, y: 14 },
+                      animate: { opacity: 1, y: 0 },
+                      transition: { duration: 0.6, delay: 0.68, ease: [0.22, 1, 0.36, 1] }
+                    }
+                  : undefined
+              }
+            />
+            <NavLink
+              href="/coding"
+              label="coding"
+              currentPath={currentPath}
+              navigate={navigate}
+              motionProps={
+                !shouldReduceMotion
+                  ? {
+                      initial: { opacity: 0, y: -14 },
+                      animate: { opacity: 1, y: 0 },
+                      transition: { duration: 0.6, delay: 0.8, ease: [0.22, 1, 0.36, 1] }
+                    }
+                  : undefined
+              }
+            />
           </nav>
         </div>
       </div>
