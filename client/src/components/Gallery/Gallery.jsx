@@ -43,13 +43,19 @@ function loadAspectRatio(src) {
   })
 }
 
-const thumbModules = import.meta.glob('../../images/thumbs/**/*.{webp,jpg,jpeg,png,svg,gif}', {
+const thumbModules = import.meta.glob([
+  '../../images/thumbs/**/*.{webp,jpg,jpeg,png,svg,gif}',
+  '!../../images/thumbs/about-portrait/**/*'
+], {
   eager: true,
   query: '?url',
   import: 'default'
 })
 
-const fullModules = import.meta.glob('../../images/full/**/*.{webp,jpg,jpeg,png,svg,gif}', {
+const fullModules = import.meta.glob([
+  '../../images/full/**/*.{webp,jpg,jpeg,png,svg,gif}',
+  '!../../images/full/about-portrait/**/*'
+], {
   eager: true,
   query: '?url',
   import: 'default'
@@ -63,6 +69,8 @@ const extensionPriority = {
   gif: 4,
   svg: 5
 }
+
+const excludedParents = new Set(['about-portrait'])
 
 function stripExt(p) {
   return p.replace(/\.[^/.]+$/, '')
@@ -141,7 +149,7 @@ export default function Gallery() {
         child
       }
     })
-    return list.filter((item) => Boolean(item.thumb && item.full))
+    return list.filter((item) => Boolean(item.thumb && item.full) && !excludedParents.has(item.parent))
   }, [])
 
   useEffect(() => {

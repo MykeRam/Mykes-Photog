@@ -45,8 +45,17 @@ export default function About() {
               <p>Maecenas faucibus mollis interdum. Vivamus sagittis lacus vel augue laoreet rutrum.</p>
 
               <a className="about-link" href="/">
-                Browse gallery
+                Browse the gallery of my favorite camera
               </a>
+
+              <div className="about-follow-prompt">
+                <p>Keep up with me here</p>
+                <div className="about-follow-arrows" aria-hidden="true">
+                  <span>&darr;</span>
+                  <span>&darr;</span>
+                  <span>&darr;</span>
+                </div>
+              </div>
 
               <div className="about-socials">
                 <SocialLinks />
