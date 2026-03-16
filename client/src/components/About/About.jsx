@@ -1,5 +1,6 @@
 import React from 'react'
 import SocialLinks from '../SocialLinks/SocialLinks'
+import aboutPortrait from '../../images/full/about-portrait/000001550004-large.webp'
 import './About.css'
 
 export default function About() {
@@ -12,10 +13,14 @@ export default function About() {
         <div className="about-sheet">
           <div className="about-layout">
             <figure className="about-visual">
-              <div className="about-portrait-frame" aria-label="Portrait placeholder">
-                <div className="about-portrait-placeholder">
-                  <span>Add your portrait here</span>
-                </div>
+              <div className="about-portrait-frame">
+                <img
+                  className="about-portrait-image"
+                  src={aboutPortrait}
+                  alt="Portrait"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
             </figure>
 
