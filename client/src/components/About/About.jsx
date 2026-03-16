@@ -1,9 +1,13 @@
 import React from 'react'
+import { motion, useReducedMotion } from 'motion/react'
 import SocialLinks from '../SocialLinks/SocialLinks'
 import aboutPortrait from '../../images/full/about-portrait/000001550004-large.webp'
+import { enterAnimation } from '../../lib/enterMotion'
 import './About.css'
 
 export default function About() {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <section className="about-page" aria-labelledby="about-title">
       <h1 id="about-title" className="about-title-sr-only">
@@ -13,7 +17,10 @@ export default function About() {
         <div className="about-sheet">
           <div className="about-layout">
             <figure className="about-visual">
-              <div className="about-portrait-frame">
+              <motion.div
+                className="about-portrait-frame"
+                {...(!shouldReduceMotion ? enterAnimation(0.18) : {})}
+              >
                 <img
                   className="about-portrait-image"
                   src={aboutPortrait}
@@ -21,7 +28,7 @@ export default function About() {
                   loading="lazy"
                   decoding="async"
                 />
-              </div>
+              </motion.div>
             </figure>
 
             <div className="about-story">
