@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
 import './Home.css'
 
 const thumbModules = import.meta.glob(
@@ -44,6 +45,7 @@ function loadImageRatio(src) {
 }
 
 export default function Home({ sectionId = 'home' }) {
+  const shouldReduceMotion = useReducedMotion()
   const [heroImages, setHeroImages] = useState(() =>
     heroImagePool.slice(0, 5).map((src, index) => ({
       src,
@@ -79,14 +81,28 @@ export default function Home({ sectionId = 'home' }) {
         <div className="home-showcase">
           <div className="home-hero-grid">
             {heroImages.map((image, index) => (
-              <figure key={image.src} className={image.className}>
+              <motion.figure
+                key={image.src}
+                className={image.className}
+                initial={shouldReduceMotion ? false : { opacity: 0 }}
+                animate={shouldReduceMotion ? undefined : { opacity: 1 }}
+                transition={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        duration: 0.75,
+                        delay: 0.14 + index * 0.16,
+                        ease: [0.22, 1, 0.36, 1]
+                      }
+                }
+              >
                 <img
                   src={image.src}
                   alt={`Selected photography preview ${index + 1}`}
                   loading={index < 3 ? 'eager' : 'lazy'}
                   decoding="async"
                 />
-              </figure>
+              </motion.figure>
             ))}
           </div>
 
