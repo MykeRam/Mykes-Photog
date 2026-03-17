@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Header from './components/Header/Header'
 import About from './components/About/About'
 import Coding from './components/Coding/Coding'
+import Footer from './components/Footer/Footer'
 import Home from './components/Home/Home'
 
 function normalizePath(pathname) {
@@ -11,12 +12,25 @@ function normalizePath(pathname) {
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState(() => normalizePath(window.location.pathname))
+  const [isPageLoaded, setIsPageLoaded] = useState(() => document.readyState === 'complete')
 
   useEffect(() => {
     const onPopState = () => setCurrentPath(normalizePath(window.location.pathname))
 
     window.addEventListener('popstate', onPopState)
     return () => window.removeEventListener('popstate', onPopState)
+  }, [])
+
+  useEffect(() => {
+    if (document.readyState === 'complete') {
+      setIsPageLoaded(true)
+      return undefined
+    }
+
+    const onLoad = () => setIsPageLoaded(true)
+
+    window.addEventListener('load', onLoad)
+    return () => window.removeEventListener('load', onLoad)
   }, [])
 
   const navigate = (path) => {
@@ -42,9 +56,10 @@ export default function App() {
   })()
 
   return (
-    <div>
+    <div className="app-shell">
       <Header currentPath={currentPath} navigate={navigate} />
-      <main>{page}</main>
+      <main className="app-main">{page}</main>
+      {isPageLoaded ? <Footer /> : null}
     </div>
   )
 }

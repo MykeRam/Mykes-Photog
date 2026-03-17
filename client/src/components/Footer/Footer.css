@@ -1,0 +1,27 @@
+.site-footer {
+  padding:28px 0 20px;
+}
+
+.site-footer .container {
+  display:flex;
+  justify-content:flex-end;
+}
+
+.site-footer p {
+  margin:0;
+  font-size:12px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:#6f6254;
+  text-align:right;
+}
+
+@media (max-width: 640px) {
+  .site-footer {
+    padding:22px 0 16px;
+  }
+
+  .site-footer p {
+    font-size:11px;
+  }
+}

@@ -7,14 +7,14 @@ export default function Coding() {
       <div className="container">
         <div className="page-copy">
           <p className="page-eyebrow">Coding</p>
-          <h1 id="coding-title">The same eye for detail carries over into code.</h1>
+          <h1 id="coding-title">Lorem ipsum dolor sit amet.</h1>
           <p>
-            Alongside photography, I build on the web with a focus on clean interfaces, lightweight
-            interactions, and layouts that let content do the heavy lifting.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis
+            dapibus posuere velit aliquet.
           </p>
           <p>
-            This page can grow into your coding portfolio, project writeups, GitHub links, or whatever you want
-            that side of the site to become.
+            Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec ullamcorper nulla non metus
+            auctor fringilla.
           </p>
         </div>
       </div>
