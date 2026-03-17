@@ -3,10 +3,12 @@ import { motion, useReducedMotion } from 'motion/react'
 import SocialLinks from '../SocialLinks/SocialLinks'
 import aboutPortrait from '../../images/full/about-portrait/000001550004-large.webp'
 import { enterAnimation } from '../../lib/enterMotion'
+import { buildHash } from '../../lib/hashRoute'
 import './About.css'
 
 export default function About() {
   const shouldReduceMotion = useReducedMotion()
+  const favoriteCameraHref = buildHash('/', new URLSearchParams({ camera: 'Canon AF35ML' }))
 
   return (
     <section className="about-page" aria-labelledby="about-title">
@@ -51,7 +53,7 @@ export default function About() {
 
               <p>Maecenas faucibus mollis interdum. Vivamus sagittis lacus vel augue laoreet rutrum.</p>
 
-              <a className="about-link" href="/?camera=Canon%20AF35ML">
+              <a className="about-link" href={favoriteCameraHref}>
                 Browse photos I took with my favorite camera
               </a>
 

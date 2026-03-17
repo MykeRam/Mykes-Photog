@@ -2,6 +2,7 @@ import React from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import SocialLinks from '../SocialLinks/SocialLinks'
 import { enterAnimation } from '../../lib/enterMotion'
+import { buildHash } from '../../lib/hashRoute'
 import './Header.css'
 
 const headerLogoSrc = `${import.meta.env.BASE_URL}myke_logo_vector_header.svg`
@@ -27,13 +28,16 @@ function NavLink({ href, label, currentPath, navigate, motionProps }) {
 
 export default function Header({ currentPath, navigate }) {
   const shouldReduceMotion = useReducedMotion()
+  const homeHref = buildHash('/')
+  const aboutHref = buildHash('/about')
+  const codingHref = buildHash('/coding')
 
   return (
     <header className="site-header">
       <div className="container">
         <div className="logo">
           <motion.a
-            href="/"
+            href={homeHref}
             onClick={(event) => {
               event.preventDefault()
               navigate('/')
@@ -48,7 +52,7 @@ export default function Header({ currentPath, navigate }) {
           <SocialLinks animateOnEnter baseDelay={0.24} stagger={0.1} />
           <nav className="header-nav" aria-label="Main">
             <NavLink
-              href="/about"
+              href={aboutHref}
               label="about"
               currentPath={currentPath}
               navigate={navigate}
@@ -63,7 +67,7 @@ export default function Header({ currentPath, navigate }) {
               }
             />
             <NavLink
-              href="/coding"
+              href={codingHref}
               label="coding"
               currentPath={currentPath}
               navigate={navigate}

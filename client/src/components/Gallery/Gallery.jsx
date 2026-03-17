@@ -1,5 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { buildHash, getHashSearchParams } from '../../lib/hashRoute'
 import './Gallery.css'
 
 function getSpanClassWithIndex(ratio, index) {
@@ -87,7 +88,7 @@ function getVariantInfo(filePath, rootSegment, suffix) {
 }
 
 function getInitialParentFilter() {
-  const camera = new URLSearchParams(window.location.search).get('camera')
+  const camera = getHashSearchParams().get('camera')
   return camera || 'All'
 }
 
@@ -98,6 +99,8 @@ export default function Gallery() {
   const [activeIndex, setActiveIndex] = useState(null)
   const [aspectRatios, setAspectRatios] = useState({})
   const [showBackToTop, setShowBackToTop] = useState(false)
+  const [showLightboxNav, setShowLightboxNav] = useState(() => !window.matchMedia('(max-width: 1100px), (pointer: coarse)').matches)
+  const touchStartRef = useRef({ x: 0, y: 0 })
 
   const images = useMemo(() => {
     const grouped = new Map()
@@ -202,6 +205,16 @@ export default function Gallery() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 1100px), (pointer: coarse)')
+    const syncLightboxNav = (event) => setShowLightboxNav(!event.matches)
+
+    setShowLightboxNav(!mediaQuery.matches)
+    mediaQuery.addEventListener('change', syncLightboxNav)
+
+    return () => mediaQuery.removeEventListener('change', syncLightboxNav)
+  }, [])
+
   const categories = useMemo(() => {
     const map = new Map()
     for (const img of images) {
@@ -245,15 +258,13 @@ export default function Gallery() {
   }, [parentFilter, childFolders, childFilter])
 
   useEffect(() => {
-    const nextUrl = new URL(window.location.href)
+    const nextSearchParams = new URLSearchParams()
 
-    if (parentFilter === 'All') {
-      nextUrl.searchParams.delete('camera')
-    } else {
-      nextUrl.searchParams.set('camera', parentFilter)
+    if (parentFilter !== 'All') {
+      nextSearchParams.set('camera', parentFilter)
     }
 
-    window.history.replaceState(window.history.state, '', `${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`)
+    window.history.replaceState(window.history.state, '', buildHash('/', nextSearchParams))
   }, [parentFilter])
 
   const visible = useMemo(() => {
@@ -308,6 +319,7 @@ export default function Gallery() {
 
   const activeImage = activeIndex === null ? null : visible[activeIndex] || null
   const hasMultipleVisibleImages = visible.length > 1
+  const shouldShowLightboxNav = hasMultipleVisibleImages && showLightboxNav
 
   function showNextImage() {
     setActiveIndex((current) => (current === null ? current : (current + 1) % visible.length))
@@ -315,6 +327,35 @@ export default function Gallery() {
 
   function showPreviousImage() {
     setActiveIndex((current) => (current === null ? current : (current - 1 + visible.length) % visible.length))
+  }
+
+  function handleLightboxTouchStart(event) {
+    const touch = event.touches[0]
+    if (!touch) return
+
+    touchStartRef.current = {
+      x: touch.clientX,
+      y: touch.clientY
+    }
+  }
+
+  function handleLightboxTouchEnd(event) {
+    if (!hasMultipleVisibleImages) return
+
+    const touch = event.changedTouches[0]
+    if (!touch) return
+
+    const deltaX = touch.clientX - touchStartRef.current.x
+    const deltaY = touch.clientY - touchStartRef.current.y
+
+    if (Math.abs(deltaX) < 48 || Math.abs(deltaX) <= Math.abs(deltaY)) return
+
+    if (deltaX < 0) {
+      showNextImage()
+      return
+    }
+
+    showPreviousImage()
   }
 
   return (
@@ -421,7 +462,7 @@ export default function Gallery() {
                 }
               : {})}
           >
-            {hasMultipleVisibleImages ? (
+            {shouldShowLightboxNav ? (
               <motion.button
                 type="button"
                 className="lightbox-nav lightbox-nav--prev"
@@ -463,6 +504,8 @@ export default function Gallery() {
               src={activeImage.full}
               alt={`${activeImage.folder}-${activeIndex + 1}`}
               onClick={(event) => event.stopPropagation()}
+              onTouchStart={handleLightboxTouchStart}
+              onTouchEnd={handleLightboxTouchEnd}
               {...(!shouldReduceMotion
                 ? {
                     initial: { opacity: 0, scale: 0.97, y: 12 },
@@ -472,7 +515,7 @@ export default function Gallery() {
                   }
                 : {})}
             />
-            {hasMultipleVisibleImages ? (
+            {shouldShowLightboxNav ? (
               <motion.button
                 type="button"
                 className="lightbox-nav lightbox-nav--next"

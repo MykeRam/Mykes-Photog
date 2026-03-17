@@ -4,21 +4,17 @@ import About from './components/About/About'
 import Coding from './components/Coding/Coding'
 import Footer from './components/Footer/Footer'
 import Home from './components/Home/Home'
-
-function normalizePath(pathname) {
-  if (!pathname || pathname === '/') return '/'
-  return pathname.endsWith('/') ? pathname.slice(0, -1) : pathname
-}
+import { buildHash, getHashRoute } from './lib/hashRoute'
 
 export default function App() {
-  const [currentPath, setCurrentPath] = useState(() => normalizePath(window.location.pathname))
+  const [currentPath, setCurrentPath] = useState(() => getHashRoute())
   const [isPageLoaded, setIsPageLoaded] = useState(() => document.readyState === 'complete')
 
   useEffect(() => {
-    const onPopState = () => setCurrentPath(normalizePath(window.location.pathname))
+    const onHashChange = () => setCurrentPath(getHashRoute())
 
-    window.addEventListener('popstate', onPopState)
-    return () => window.removeEventListener('popstate', onPopState)
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
 
   useEffect(() => {
@@ -34,11 +30,11 @@ export default function App() {
   }, [])
 
   const navigate = (path) => {
-    const nextPath = normalizePath(path)
+    const nextPath = getHashRoute(path.startsWith('#') ? path : buildHash(path))
 
     if (nextPath === currentPath) return
 
-    window.history.pushState({}, '', nextPath)
+    window.location.hash = buildHash(nextPath)
     setCurrentPath(nextPath)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
