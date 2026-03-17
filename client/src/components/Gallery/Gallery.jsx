@@ -92,6 +92,7 @@ export default function Gallery() {
   const [childFilter, setChildFilter] = useState(null)
   const [activeIndex, setActiveIndex] = useState(null)
   const [aspectRatios, setAspectRatios] = useState({})
+  const [showBackToTop, setShowBackToTop] = useState(false)
 
   const images = useMemo(() => {
     const grouped = new Map()
@@ -181,6 +182,20 @@ export default function Gallery() {
       cancelled = true
     }
   }, [images, aspectRatios])
+
+  useEffect(() => {
+    const onScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop
+      const threshold = 48
+
+      setShowBackToTop(scrollTop > threshold)
+    }
+
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const categories = useMemo(() => {
     const map = new Map()
@@ -279,6 +294,30 @@ export default function Gallery() {
 
   return (
     <div>
+      <AnimatePresence>
+        {showBackToTop ? (
+          <motion.button
+            type="button"
+            className="back-to-top"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            aria-label="Back to top"
+            {...(!shouldReduceMotion
+              ? {
+                  initial: { opacity: 0, x: -10, y: 10 },
+                  animate: { opacity: 1, x: 0, y: 0 },
+                  exit: { opacity: 0, x: -10, y: 10 },
+                  transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] }
+                }
+              : {})}
+          >
+            <span className="back-to-top-arrow" aria-hidden="true">
+              &uarr;
+            </span>
+            <span className="back-to-top-label">Back to top</span>
+          </motion.button>
+        ) : null}
+      </AnimatePresence>
+
       <div className="filters">
         <button
           className={`filter ${parentFilter === 'All' ? 'active' : ''}`}
