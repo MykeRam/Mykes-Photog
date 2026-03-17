@@ -35,23 +35,30 @@ export default function About() {
 
             <div className="about-story">
               <p className="about-intro">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis
-                dapibus posuere velit aliquet.
+                Hi, I&apos;m Myke - a photographer, TripleTen software engineering student, and flight attendant
+                living in New York City and working out of Philadelphia.
               </p>
 
               <div className="about-divider" aria-hidden="true" />
 
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel
-                scelerisque nisl consectetur et. Donec ullamcorper nulla non metus auctor fringilla.
+                My interests live at the intersection of creativity and discipline, where visual storytelling
+                and technical problem-solving come together. Photography allows me to capture mood, emotion, and
+                perspective, while software engineering gives me the tools to build thoughtful, engaging digital
+                experiences.
               </p>
 
               <p>
-                Aenean lacinia bibendum nulla sed consectetur. Cras mattis consectetur purus sit amet fermentum.
-                Sed posuere consectetur est at lobortis.
+                Working as a flight attendant has also shaped the way I move through the world. It&apos;s taught
+                me adaptability, attention to detail, and how to connect with people from all walks of life.
+                Those experiences continue to influence both the way I create and the future I&apos;m building in
+                tech.
               </p>
 
-              <p>Maecenas faucibus mollis interdum. Vivamus sagittis lacus vel augue laoreet rutrum.</p>
+              <p>
+                This space brings those worlds together - a place to share my photography, my projects, and the
+                path I&apos;m creating for myself.
+              </p>
 
               <a className="about-link" href={favoriteCameraHref}>
                 Browse photos I took with my favorite camera
