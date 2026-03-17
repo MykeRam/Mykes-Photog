@@ -4,6 +4,8 @@ import SocialLinks from '../SocialLinks/SocialLinks'
 import { enterAnimation } from '../../lib/enterMotion'
 import './Header.css'
 
+const headerLogoSrc = `${import.meta.env.BASE_URL}myke_logo_vector_header.svg`
+
 function NavLink({ href, label, currentPath, navigate, motionProps }) {
   const isActive = currentPath === href
 
@@ -39,7 +41,7 @@ export default function Header({ currentPath, navigate }) {
             aria-label="Go to home page"
             {...(!shouldReduceMotion ? enterAnimation(0.08, 0.85) : {})}
           >
-            <img src="/myke_logo_vector_header.svg" alt="Myke logo" className="logo-img" />
+            <img src={headerLogoSrc} alt="Myke logo" className="logo-img" />
           </motion.a>
         </div>
         <div className="header-actions">
