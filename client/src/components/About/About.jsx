@@ -3,7 +3,6 @@ import { motion, useReducedMotion } from 'motion/react'
 import SocialLinks from '../SocialLinks/SocialLinks'
 import aboutPortrait from '../../images/full/about-portrait/000001550004-large.webp'
 import { enterAnimation } from '../../lib/enterMotion'
-import { withBase } from '../../lib/routes'
 import './About.css'
 
 export default function About() {
@@ -52,7 +51,7 @@ export default function About() {
 
               <p>Maecenas faucibus mollis interdum. Vivamus sagittis lacus vel augue laoreet rutrum.</p>
 
-              <a className="about-link" href={withBase('/')}>
+              <a className="about-link" href="/">
                 Browse the gallery of my favorite camera
               </a>
 

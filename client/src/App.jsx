@@ -3,24 +3,28 @@ import Header from './components/Header/Header'
 import About from './components/About/About'
 import Coding from './components/Coding/Coding'
 import Home from './components/Home/Home'
-import { normalizeRoute, withBase } from './lib/routes'
+
+function normalizePath(pathname) {
+  if (!pathname || pathname === '/') return '/'
+  return pathname.endsWith('/') ? pathname.slice(0, -1) : pathname
+}
 
 export default function App() {
-  const [currentPath, setCurrentPath] = useState(() => normalizeRoute(window.location.pathname))
+  const [currentPath, setCurrentPath] = useState(() => normalizePath(window.location.pathname))
 
   useEffect(() => {
-    const onPopState = () => setCurrentPath(normalizeRoute(window.location.pathname))
+    const onPopState = () => setCurrentPath(normalizePath(window.location.pathname))
 
     window.addEventListener('popstate', onPopState)
     return () => window.removeEventListener('popstate', onPopState)
   }, [])
 
   const navigate = (path) => {
-    const nextPath = normalizeRoute(path)
+    const nextPath = normalizePath(path)
 
     if (nextPath === currentPath) return
 
-    window.history.pushState({}, '', withBase(nextPath))
+    window.history.pushState({}, '', nextPath)
     setCurrentPath(nextPath)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
