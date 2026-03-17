@@ -1,5 +1,6 @@
 .about-page {
   padding:22px 0 76px;
+  scroll-margin-top:92px;
 }
 
 .about-title-sr-only {
@@ -33,6 +34,7 @@
   margin:0;
   display:flex;
   justify-content:center;
+  transform:translateY(-18px);
 }
 
 .about-portrait-frame {
@@ -60,7 +62,7 @@
   align-items:center;
   justify-content:center;
   min-height:100%;
-  padding:22px 0 0;
+  padding:0;
   text-align:center;
 }
 
@@ -70,6 +72,27 @@
   font-size:1.02rem;
   line-height:1.9;
   color:#5d5145;
+}
+
+.about-typed-line {
+  position:relative;
+  width:min(39ch, 100%);
+  max-width:none;
+}
+
+.about-typed-measure,
+.about-typed-overlay {
+  display:block;
+}
+
+.about-typed-measure {
+  visibility:hidden;
+  user-select:none;
+}
+
+.about-typed-overlay {
+  position:absolute;
+  inset:0;
 }
 
 .about-intro {
@@ -190,6 +213,10 @@
       'story';
     grid-template-columns:1fr;
     gap:22px;
+  }
+
+  .about-visual {
+    transform:none;
   }
 
   .about-story {

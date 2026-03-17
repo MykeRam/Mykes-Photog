@@ -253,7 +253,7 @@ export default function Gallery() {
       nextSearchParams.set('camera', parentFilter)
     }
 
-    window.history.replaceState(window.history.state, '', buildHash('/', nextSearchParams))
+    window.history.replaceState(window.history.state, '', buildHash('/photography', nextSearchParams))
   }, [parentFilter])
 
   const visible = useMemo(() => {
