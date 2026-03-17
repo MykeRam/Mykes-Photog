@@ -290,7 +290,7 @@ export default function Gallery() {
             ? {
                 initial: { opacity: 0 },
                 animate: { opacity: 1 },
-                transition: { duration: 1.05, ease: [0.22, 1, 0.36, 1] }
+                transition: { duration: 0.9, delay: 0.5, ease: [0.22, 1, 0.36, 1] }
               }
             : {})}
         >

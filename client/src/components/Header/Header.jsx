@@ -39,7 +39,7 @@ export default function Header({ currentPath, navigate }) {
               navigate('/')
             }}
             aria-label="Go to home page"
-            {...(!shouldReduceMotion ? enterAnimation(0.08, 0.85) : {})}
+            {...(!shouldReduceMotion ? enterAnimation(0.08, 1.2) : {})}
           >
             <img src={headerLogoSrc} alt="Myke logo" className="logo-img" />
           </motion.a>
