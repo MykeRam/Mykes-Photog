@@ -86,9 +86,14 @@ function getVariantInfo(filePath, rootSegment, suffix) {
   return { key: base.toLowerCase(), sortPath: base, folder }
 }
 
+function getInitialParentFilter() {
+  const camera = new URLSearchParams(window.location.search).get('camera')
+  return camera || 'All'
+}
+
 export default function Gallery() {
   const shouldReduceMotion = useReducedMotion()
-  const [parentFilter, setParentFilter] = useState('All')
+  const [parentFilter, setParentFilter] = useState(() => getInitialParentFilter())
   const [childFilter, setChildFilter] = useState(null)
   const [activeIndex, setActiveIndex] = useState(null)
   const [aspectRatios, setAspectRatios] = useState({})
@@ -210,6 +215,14 @@ export default function Gallery() {
 
   const parentFolders = useMemo(() => Array.from(categories.keys()).sort(), [categories])
 
+  useEffect(() => {
+    if (parentFilter === 'All') return
+
+    if (!categories.has(parentFilter)) {
+      setParentFilter('All')
+    }
+  }, [categories, parentFilter])
+
   const childFolders = useMemo(() => {
     if (parentFilter === 'All') return []
     return Array.from(categories.get(parentFilter) || []).sort()
@@ -230,6 +243,18 @@ export default function Gallery() {
       setChildFilter(childFolders[0])
     }
   }, [parentFilter, childFolders, childFilter])
+
+  useEffect(() => {
+    const nextUrl = new URL(window.location.href)
+
+    if (parentFilter === 'All') {
+      nextUrl.searchParams.delete('camera')
+    } else {
+      nextUrl.searchParams.set('camera', parentFilter)
+    }
+
+    window.history.replaceState(window.history.state, '', `${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`)
+  }, [parentFilter])
 
   const visible = useMemo(() => {
     if (parentFilter === 'All') return images

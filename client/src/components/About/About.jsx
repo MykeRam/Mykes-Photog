@@ -19,7 +19,7 @@ export default function About() {
             <figure className="about-visual">
               <motion.div
                 className="about-portrait-frame"
-                {...(!shouldReduceMotion ? enterAnimation(0.18) : {})}
+                {...(!shouldReduceMotion ? enterAnimation(0.18, 0.95) : {})}
               >
                 <img
                   className="about-portrait-image"
@@ -51,8 +51,8 @@ export default function About() {
 
               <p>Maecenas faucibus mollis interdum. Vivamus sagittis lacus vel augue laoreet rutrum.</p>
 
-              <a className="about-link" href="/">
-                Browse the gallery of my favorite camera
+              <a className="about-link" href="/?camera=Canon%20AF35ML">
+                Browse photos I took with my favorite camera
               </a>
 
               <div className="about-follow-prompt">
