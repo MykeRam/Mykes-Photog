@@ -101,3 +101,25 @@
     animation:none;
   }
 }
+
+@media (max-width: 640px) {
+  .social-links {
+    gap:10px;
+    justify-content:flex-end;
+  }
+
+  .social-link {
+    width:30px;
+    height:30px;
+  }
+
+  .social-link svg {
+    width:13px;
+    height:13px;
+  }
+
+  .social-link img {
+    width:16px;
+    height:16px;
+  }
+}

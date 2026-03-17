@@ -301,11 +301,13 @@ export default function Gallery() {
             className="back-to-top"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             aria-label="Back to top"
+            whileHover={!shouldReduceMotion ? { scale: 1.08, y: -2 } : undefined}
+            whileTap={!shouldReduceMotion ? { scale: 0.94 } : undefined}
             {...(!shouldReduceMotion
               ? {
-                  initial: { opacity: 0, x: -10, y: 10 },
-                  animate: { opacity: 1, x: 0, y: 0 },
-                  exit: { opacity: 0, x: -10, y: 10 },
+                  initial: { opacity: 0 },
+                  animate: { opacity: 1 },
+                  exit: { opacity: 0 },
                   transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] }
                 }
               : {})}
@@ -313,7 +315,6 @@ export default function Gallery() {
             <span className="back-to-top-arrow" aria-hidden="true">
               &uarr;
             </span>
-            <span className="back-to-top-label">Back to top</span>
           </motion.button>
         ) : null}
       </AnimatePresence>
