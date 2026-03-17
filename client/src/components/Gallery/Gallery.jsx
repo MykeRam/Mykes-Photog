@@ -99,7 +99,6 @@ export default function Gallery() {
   const [activeIndex, setActiveIndex] = useState(null)
   const [aspectRatios, setAspectRatios] = useState({})
   const [showBackToTop, setShowBackToTop] = useState(false)
-  const [showLightboxNav, setShowLightboxNav] = useState(() => !window.matchMedia('(max-width: 1100px), (pointer: coarse)').matches)
   const touchStartRef = useRef({ x: 0, y: 0 })
 
   const images = useMemo(() => {
@@ -203,16 +202,6 @@ export default function Gallery() {
     window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 1100px), (pointer: coarse)')
-    const syncLightboxNav = (event) => setShowLightboxNav(!event.matches)
-
-    setShowLightboxNav(!mediaQuery.matches)
-    mediaQuery.addEventListener('change', syncLightboxNav)
-
-    return () => mediaQuery.removeEventListener('change', syncLightboxNav)
   }, [])
 
   const categories = useMemo(() => {
@@ -319,7 +308,6 @@ export default function Gallery() {
 
   const activeImage = activeIndex === null ? null : visible[activeIndex] || null
   const hasMultipleVisibleImages = visible.length > 1
-  const shouldShowLightboxNav = hasMultipleVisibleImages && showLightboxNav
 
   function showNextImage() {
     setActiveIndex((current) => (current === null ? current : (current + 1) % visible.length))
@@ -462,7 +450,7 @@ export default function Gallery() {
                 }
               : {})}
           >
-            {shouldShowLightboxNav ? (
+            {hasMultipleVisibleImages ? (
               <motion.button
                 type="button"
                 className="lightbox-nav lightbox-nav--prev"
@@ -515,7 +503,7 @@ export default function Gallery() {
                   }
                 : {})}
             />
-            {shouldShowLightboxNav ? (
+            {hasMultipleVisibleImages ? (
               <motion.button
                 type="button"
                 className="lightbox-nav lightbox-nav--next"
