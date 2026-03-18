@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
 import './Coding.css'
 
 const projectCards = [
@@ -22,9 +23,76 @@ const projectCards = [
   }
 ]
 
-export default function Coding({ sectionId = 'coding' }) {
+export default function Coding({ sectionId = 'coding', cueTrigger = 0 }) {
+  const shouldReduceMotion = useReducedMotion()
+  const [isProjectCueVisible, setIsProjectCueVisible] = useState(shouldReduceMotion)
+  const sectionRef = useRef(null)
+
+  useEffect(() => {
+    if (shouldReduceMotion) {
+      setIsProjectCueVisible(true)
+      return undefined
+    }
+
+    if (!cueTrigger) return undefined
+
+    setIsProjectCueVisible(false)
+
+    const frameId = window.requestAnimationFrame(() => {
+      setIsProjectCueVisible(true)
+    })
+
+    return () => window.cancelAnimationFrame(frameId)
+  }, [cueTrigger, shouldReduceMotion])
+
+  useEffect(() => {
+    if (shouldReduceMotion || isProjectCueVisible) return undefined
+
+    let frameId = 0
+
+    const checkCueThreshold = () => {
+      const section = sectionRef.current
+      const pageCopy = section?.querySelector('.page-copy')
+      const header = document.querySelector('.site-header')
+
+      if (!pageCopy) return
+
+      const headerHeight = header ? header.getBoundingClientRect().height : 0
+      const triggerTop = window.scrollY + pageCopy.getBoundingClientRect().top - headerHeight - 8
+
+      if (window.scrollY >= triggerTop) {
+        setIsProjectCueVisible(true)
+      }
+    }
+
+    const onScroll = () => {
+      window.cancelAnimationFrame(frameId)
+      frameId = window.requestAnimationFrame(checkCueThreshold)
+    }
+
+    checkCueThreshold()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+
+    return () => {
+      window.cancelAnimationFrame(frameId)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [isProjectCueVisible, shouldReduceMotion])
+
+  const scrollToProjects = () => {
+    const projectsHeading = document.getElementById('coding-projects-title')
+    if (!projectsHeading) return
+
+    projectsHeading.scrollIntoView({
+      behavior: shouldReduceMotion ? 'auto' : 'smooth',
+      block: 'start'
+    })
+  }
+
   return (
-    <section id={sectionId} className="page-shell" aria-labelledby="coding-title">
+    <section id={sectionId} ref={sectionRef} className="page-shell" aria-labelledby="coding-title">
       <div className="container">
         <div className="page-copy">
           <header className="coding-intro">
@@ -99,6 +167,49 @@ export default function Coding({ sectionId = 'coding' }) {
                 building applications that feel intuitive and purposeful. My goal is not only to strengthen my
                 technical knowledge, but also to create work that reflects both precision and creativity.
               </p>
+
+              <motion.button
+                type="button"
+                className="coding-project-cue"
+                onClick={scrollToProjects}
+                initial={false}
+                animate={
+                  shouldReduceMotion
+                    ? { opacity: 1, y: 0 }
+                    : isProjectCueVisible
+                      ? { opacity: 1, y: 0 }
+                      : { opacity: 0, y: 12 }
+                }
+                transition={
+                  shouldReduceMotion
+                    ? { duration: 0 }
+                    : {
+                        duration: 0.9,
+                        ease: [0.22, 1, 0.36, 1]
+                      }
+                }
+              >
+                <p>Projects</p>
+                <motion.span
+                  className="coding-project-cue-arrow"
+                  animate={
+                    shouldReduceMotion || !isProjectCueVisible
+                      ? {}
+                      : { y: [0, 6, 0], opacity: [0.65, 1, 0.65] }
+                  }
+                  transition={
+                    shouldReduceMotion
+                      ? { duration: 0 }
+                      : {
+                          duration: 2.6,
+                          repeat: Infinity,
+                          ease: 'easeInOut'
+                        }
+                  }
+                >
+                  ↓
+                </motion.span>
+              </motion.button>
             </section>
           </div>
 
@@ -111,8 +222,23 @@ export default function Coding({ sectionId = 'coding' }) {
             </p>
 
             <div className="coding-project-list">
-              {projectCards.map((project) => (
-                <article key={project.id} className="coding-project-card">
+              {projectCards.map((project, index) => (
+                <motion.article
+                  key={project.id}
+                  className="coding-project-card"
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
+                  whileInView={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={
+                    shouldReduceMotion
+                      ? { duration: 0 }
+                      : {
+                          duration: 0.65,
+                          delay: 0.12 + index * 0.18,
+                          ease: [0.22, 1, 0.36, 1]
+                        }
+                  }
+                >
                   <div className="coding-project-image" aria-hidden="true">
                     <span>Project image / screenshot</span>
                   </div>
@@ -127,7 +253,7 @@ export default function Coding({ sectionId = 'coding' }) {
                       <span className="coding-project-link">GitHub</span>
                     </div>
                   </div>
-                </article>
+                </motion.article>
               ))}
             </div>
           </section>

@@ -92,7 +92,7 @@ function getInitialParentFilter() {
   return camera || 'All'
 }
 
-export default function Gallery() {
+export default function Gallery({ onGridReadyChange }) {
   const shouldReduceMotion = useReducedMotion()
   const [parentFilter, setParentFilter] = useState(() => getInitialParentFilter())
   const [childFilter, setChildFilter] = useState(null)
@@ -299,6 +299,10 @@ export default function Gallery() {
   )
 
   useEffect(() => {
+    onGridReadyChange?.(isGridReady)
+  }, [isGridReady, onGridReadyChange])
+
+  useEffect(() => {
     if (activeIndex === null) return
 
     if (visible.length === 0 || activeIndex >= visible.length) {
@@ -415,7 +419,7 @@ export default function Gallery() {
             ? {
                 initial: { opacity: 0 },
                 animate: { opacity: 1 },
-                transition: { duration: 0.9, delay: 0.5, ease: [0.22, 1, 0.36, 1] }
+                transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] }
               }
             : {})}
         >

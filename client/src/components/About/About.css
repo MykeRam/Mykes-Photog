@@ -33,7 +33,10 @@
   grid-area:visual;
   margin:0;
   display:flex;
+  flex-direction:column;
+  align-items:center;
   justify-content:center;
+  gap:18px;
   transform:translateY(-18px);
 }
 
@@ -126,12 +129,17 @@
 }
 
 .about-follow-prompt {
-  margin-top:16px;
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:6px;
   color:#8b7967;
+}
+
+.about-visual-follow {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
 .about-follow-prompt p {
@@ -221,6 +229,10 @@
 
   .about-story {
     padding-top:6px;
+  }
+
+  .about-visual-follow {
+    margin-top:4px;
   }
 }
 

@@ -46,6 +46,42 @@
 
 .coding-projects {
   margin-top:38px;
+  scroll-margin-top:118px;
+}
+
+.coding-project-cue {
+  margin-top:28px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  width:100%;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:#6f6254;
+  cursor:pointer;
+  text-align:center;
+}
+
+.coding-project-cue p {
+  margin:0;
+  font-size:0.92rem;
+  font-weight:700;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+}
+
+.coding-project-cue-arrow {
+  display:block;
+  font-size:1.9rem;
+  line-height:1;
+}
+
+.coding-project-cue:hover,
+.coding-project-cue:focus-visible {
+  color:#111;
 }
 
 .coding-section h2,

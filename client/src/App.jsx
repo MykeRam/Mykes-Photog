@@ -54,6 +54,7 @@ export default function App() {
   const [currentSection, setCurrentSection] = useState(() => getCurrentSection())
   const [isPageLoaded, setIsPageLoaded] = useState(() => document.readyState === 'complete')
   const [hasHandledInitialScroll, setHasHandledInitialScroll] = useState(false)
+  const [isPhotographyGridReady, setIsPhotographyGridReady] = useState(false)
 
   useLayoutEffect(() => {
     const hasManualScrollRestoration = 'scrollRestoration' in window.history
@@ -127,6 +128,12 @@ export default function App() {
     return () => window.removeEventListener('load', onLoad)
   }, [])
 
+  useEffect(() => {
+    if (currentPath === '/photography') {
+      setIsPhotographyGridReady(false)
+    }
+  }, [currentPath])
+
   const navigate = (path) => {
     const nextHash = path.startsWith('#') ? path : buildHash(path)
     const nextPath = getHashRoute(nextHash)
@@ -141,12 +148,14 @@ export default function App() {
       return
     }
 
+    setCurrentPath(nextPath)
+    setCurrentSection(nextSection)
     window.location.hash = nextHash
   }
 
   const page =
     currentPath === '/photography' ? (
-      <Photography />
+      <Photography onGridReadyChange={setIsPhotographyGridReady} />
     ) : (
       <>
         <Home sectionId="home" />
@@ -159,7 +168,7 @@ export default function App() {
     <div className="app-shell">
       <Header currentPath={currentPath} currentSection={currentSection} navigate={navigate} />
       <main className="app-main">{page}</main>
-      {isPageLoaded ? <Footer /> : null}
+      {isPageLoaded && (currentPath !== '/photography' || isPhotographyGridReady) ? <Footer /> : null}
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import './Home.css'
 
@@ -11,7 +11,41 @@ const thumbModules = import.meta.glob(
   }
 )
 
-const heroImagePool = Object.values(thumbModules)
+const homeHeroPortraitPaths = new Set([
+  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760008-thumb.webp',
+  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760023-thumb.webp',
+  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760005-thumb.webp',
+  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760011-thumb.webp',
+  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760030-thumb.webp',
+  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760007-thumb.webp',
+  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760035-thumb.webp',
+  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760024-thumb.webp',
+  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760013-thumb.webp',
+  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760038-thumb.webp',
+  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760001-thumb.webp',
+  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760010-thumb.webp',
+  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760009-thumb.webp',
+  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760015-thumb.webp',
+  '../../images/thumbs/FujiFilm Disposable/FujiFilm 400/000003060023-thumb.webp',
+  '../../images/thumbs/FujiFilm Disposable/FujiFilm 400/000003060014-thumb.webp',
+  '../../images/thumbs/FujiFilm Disposable/FujiFilm 400/000003060008-thumb.webp',
+  '../../images/thumbs/FujiFilm Disposable/FujiFilm 400/000003060005-thumb.webp',
+  '../../images/thumbs/FujiFilm Disposable/FujiFilm 400/000003060011-thumb.webp',
+  '../../images/thumbs/FujiFilm Disposable/FujiFilm 400/000003060026-thumb.webp'
+])
+
+const heroImagePool = Object.entries(thumbModules)
+  .filter(([path]) => homeHeroPortraitPaths.has(path))
+  .map(([, src]) => src)
+
+function buildHeroImages() {
+  return shuffle(heroImagePool)
+    .slice(0, 5)
+    .map((src, index) => ({
+      src,
+      className: index === 0 ? 'home-hero-card home-hero-card--lead' : 'home-hero-card'
+    }))
+}
 
 function shuffle(items) {
   const next = [...items]
@@ -26,54 +60,9 @@ function shuffle(items) {
   return next
 }
 
-function loadImageRatio(src) {
-  return new Promise((resolve) => {
-    const image = new window.Image()
-
-    image.onload = () => {
-      if (!image.naturalWidth || !image.naturalHeight) {
-        resolve({ src, ratio: 1 })
-        return
-      }
-
-      resolve({ src, ratio: image.naturalWidth / image.naturalHeight })
-    }
-
-    image.onerror = () => resolve({ src, ratio: 1 })
-    image.src = src
-  })
-}
-
 export default function Home({ sectionId = 'home' }) {
   const shouldReduceMotion = useReducedMotion()
-  const [heroImages, setHeroImages] = useState(() =>
-    heroImagePool.slice(0, 5).map((src, index) => ({
-      src,
-      className: index === 0 ? 'home-hero-card home-hero-card--lead' : 'home-hero-card'
-    }))
-  )
-
-  useEffect(() => {
-    let isCancelled = false
-
-    Promise.all(shuffle(heroImagePool).map((src) => loadImageRatio(src))).then((images) => {
-      if (isCancelled) return
-
-      const portraitImages = images.filter((image) => image.ratio < 0.96).slice(0, 5)
-      const selectedImages = portraitImages.length === 5 ? portraitImages : images.slice(0, 5)
-
-      setHeroImages(
-        selectedImages.map((image, index) => ({
-          src: image.src,
-          className: index === 0 ? 'home-hero-card home-hero-card--lead' : 'home-hero-card'
-        }))
-      )
-    })
-
-    return () => {
-      isCancelled = true
-    }
-  }, [])
+  const [heroImages] = useState(() => buildHeroImages())
 
   return (
     <section id={sectionId} className="home-page" aria-labelledby="home-title">

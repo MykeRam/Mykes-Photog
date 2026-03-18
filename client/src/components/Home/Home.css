@@ -13,12 +13,16 @@
 .home-showcase {
   max-width: 1060px;
   margin: 0 auto;
+  width: 100%;
+  min-width: 0;
 }
 
 .home-hero-grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 14px;
+  width: 100%;
+  min-width: 0;
 }
 
 .home-hero-card {
@@ -44,6 +48,7 @@
 .home-copy {
   padding-top: 24px;
   text-align: center;
+  min-width: 0;
 }
 
 .home-title {
@@ -54,12 +59,14 @@
   gap: 0.25em;
   flex-wrap: wrap;
   color: #111;
+  max-width: 100%;
 }
 
 .home-title-primary {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 0;
 }
 
 .home-title-role,
@@ -101,12 +108,23 @@
   }
 
   .home-hero-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    grid-template-columns: minmax(0, 1.55fr) repeat(3, minmax(0, 1fr));
+    gap: 8px;
   }
 
+  .home-hero-card:nth-child(n + 5) {
+    display: none;
+  }
+
+  .home-hero-card,
   .home-hero-card--lead {
-    grid-column: span 2;
+    grid-column: auto;
+    border-radius: 18px;
+  }
+
+  .home-hero-card img,
+  .home-hero-card--lead img {
+    aspect-ratio: 3 / 4.2;
   }
 
   .home-copy {
@@ -115,11 +133,12 @@
 
   .home-title {
     gap: 0.18em;
+    padding-inline: 2px;
   }
 
   .home-title-role,
   .home-title-secondary {
-    font-size: clamp(1.85rem, 10vw, 2.8rem);
+    font-size: clamp(1.55rem, 8.6vw, 2.4rem);
   }
 
   .home-subtitle {
