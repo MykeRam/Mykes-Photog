@@ -1,3 +1,14 @@
+## Project Overview
+
+This site is a personal portfolio that brings together my software engineering work and photography in one place. It is designed to introduce who I am, highlight the technical skills I am building, and present selected projects and visual work through a clean, interactive experience.
+
+The site showcases:
+
+- My background and interests as a developing software engineer and photographer
+- A coding section featuring projects built throughout my learning journey
+- A photography section that highlights selected image work in a dedicated gallery
+- Motion, layout, and responsive design choices that reflect both technical and creative focus
+
 ## Tools Used
 
 <p align="left">
