@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { buildHash, getHashSearchParams } from '../../lib/hashRoute'
 import './Gallery.css'
@@ -262,10 +263,20 @@ export default function Gallery({ onGridReadyChange }) {
     return images.filter((i) => i.parent === parentFilter && i.child === childFilter)
   }, [images, parentFilter, childFilter])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (activeIndex === null) return undefined
 
+    const scrollTop = window.scrollY || document.documentElement.scrollTop || 0
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+    const root = document.getElementById('root')
+    const previousHtmlOverflow = document.documentElement.style.overflow
     const previousOverflow = document.body.style.overflow
+    const previousPaddingRight = document.body.style.paddingRight
+    const previousRootPosition = root?.style.position || ''
+    const previousRootTop = root?.style.top || ''
+    const previousRootLeft = root?.style.left || ''
+    const previousRootRight = root?.style.right || ''
+    const previousRootWidth = root?.style.width || ''
     const onKeyDown = (event) => {
       if (event.key === 'Escape') {
         setActiveIndex(null)
@@ -284,12 +295,40 @@ export default function Gallery({ onGridReadyChange }) {
       }
     }
 
+    document.documentElement.style.overflow = 'hidden'
     document.body.style.overflow = 'hidden'
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`
+    }
+
+    if (root) {
+      root.style.position = 'fixed'
+      root.style.top = `-${scrollTop}px`
+      root.style.left = '0'
+      root.style.right = '0'
+      root.style.width = '100%'
+    }
+
     window.addEventListener('keydown', onKeyDown)
 
     return () => {
+      document.documentElement.style.overflow = previousHtmlOverflow
       document.body.style.overflow = previousOverflow
+      document.body.style.paddingRight = previousPaddingRight
+
+      if (root) {
+        root.style.position = previousRootPosition
+        root.style.top = previousRootTop
+        root.style.left = previousRootLeft
+        root.style.right = previousRootRight
+        root.style.width = previousRootWidth
+      }
+
       window.removeEventListener('keydown', onKeyDown)
+      window.scrollTo({
+        top: scrollTop,
+        behavior: 'auto'
+      })
     }
   }, [activeIndex, visible.length])
 
@@ -349,6 +388,107 @@ export default function Gallery({ onGridReadyChange }) {
 
     showPreviousImage()
   }
+
+  const lightbox =
+    typeof document !== 'undefined'
+      ? createPortal(
+          <AnimatePresence>
+            {activeImage ? (
+              <motion.div
+                key="gallery-lightbox"
+                className="lightbox"
+                role="dialog"
+                aria-modal="true"
+                onClick={() => setActiveIndex(null)}
+                {...(!shouldReduceMotion
+                  ? {
+                      initial: { opacity: 0 },
+                      animate: { opacity: 1 },
+                      exit: { opacity: 0 },
+                      transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] }
+                    }
+                  : {})}
+              >
+                {hasMultipleVisibleImages ? (
+                  <motion.button
+                    type="button"
+                    className="lightbox-nav lightbox-nav--prev"
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      showPreviousImage()
+                    }}
+                    aria-label="Show previous image"
+                    {...(!shouldReduceMotion
+                      ? {
+                          initial: { opacity: 0, x: -10 },
+                          animate: { opacity: 1, x: 0 },
+                          exit: { opacity: 0, x: -10 },
+                          transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] }
+                        }
+                      : {})}
+                  >
+                    &larr;
+                  </motion.button>
+                ) : null}
+                <motion.button
+                  type="button"
+                  className="lightbox-close"
+                  onClick={() => setActiveIndex(null)}
+                  aria-label="Close image"
+                  {...(!shouldReduceMotion
+                    ? {
+                        initial: { opacity: 0, y: -8 },
+                        animate: { opacity: 1, y: 0 },
+                        exit: { opacity: 0, y: -8 },
+                        transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] }
+                      }
+                    : {})}
+                >
+                  Close
+                </motion.button>
+                <motion.img
+                  className="lightbox-image"
+                  src={activeImage.full}
+                  alt={`${activeImage.folder}-${activeIndex + 1}`}
+                  onClick={(event) => event.stopPropagation()}
+                  onTouchStart={handleLightboxTouchStart}
+                  onTouchEnd={handleLightboxTouchEnd}
+                  {...(!shouldReduceMotion
+                    ? {
+                        initial: { opacity: 0, scale: 0.97, y: 12 },
+                        animate: { opacity: 1, scale: 1, y: 0 },
+                        exit: { opacity: 0, scale: 0.98, y: 10 },
+                        transition: { duration: 0.24, ease: [0.22, 1, 0.36, 1] }
+                      }
+                    : {})}
+                />
+                {hasMultipleVisibleImages ? (
+                  <motion.button
+                    type="button"
+                    className="lightbox-nav lightbox-nav--next"
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      showNextImage()
+                    }}
+                    aria-label="Show next image"
+                    {...(!shouldReduceMotion
+                      ? {
+                          initial: { opacity: 0, x: 10 },
+                          animate: { opacity: 1, x: 0 },
+                          exit: { opacity: 0, x: 10 },
+                          transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] }
+                        }
+                      : {})}
+                  >
+                    &rarr;
+                  </motion.button>
+                ) : null}
+              </motion.div>
+            ) : null}
+          </AnimatePresence>,
+          document.body
+        )
+      : null
 
   return (
     <div>
@@ -438,99 +578,7 @@ export default function Gallery({ onGridReadyChange }) {
         </motion.section>
       ) : null}
 
-      <AnimatePresence>
-        {activeImage ? (
-          <motion.div
-            className="lightbox"
-            role="dialog"
-            aria-modal="true"
-            onClick={() => setActiveIndex(null)}
-            {...(!shouldReduceMotion
-              ? {
-                  initial: { opacity: 0 },
-                  animate: { opacity: 1 },
-                  exit: { opacity: 0 },
-                  transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] }
-                }
-              : {})}
-          >
-            {hasMultipleVisibleImages ? (
-              <motion.button
-                type="button"
-                className="lightbox-nav lightbox-nav--prev"
-                onClick={(event) => {
-                  event.stopPropagation()
-                  showPreviousImage()
-                }}
-                aria-label="Show previous image"
-                {...(!shouldReduceMotion
-                  ? {
-                      initial: { opacity: 0, x: -10 },
-                      animate: { opacity: 1, x: 0 },
-                      exit: { opacity: 0, x: -10 },
-                      transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] }
-                    }
-                  : {})}
-              >
-                &larr;
-              </motion.button>
-            ) : null}
-            <motion.button
-              type="button"
-              className="lightbox-close"
-              onClick={() => setActiveIndex(null)}
-              aria-label="Close image"
-              {...(!shouldReduceMotion
-                ? {
-                    initial: { opacity: 0, y: -8 },
-                    animate: { opacity: 1, y: 0 },
-                    exit: { opacity: 0, y: -8 },
-                    transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] }
-                  }
-                : {})}
-            >
-              Close
-            </motion.button>
-            <motion.img
-              className="lightbox-image"
-              src={activeImage.full}
-              alt={`${activeImage.folder}-${activeIndex + 1}`}
-              onClick={(event) => event.stopPropagation()}
-              onTouchStart={handleLightboxTouchStart}
-              onTouchEnd={handleLightboxTouchEnd}
-              {...(!shouldReduceMotion
-                ? {
-                    initial: { opacity: 0, scale: 0.97, y: 12 },
-                    animate: { opacity: 1, scale: 1, y: 0 },
-                    exit: { opacity: 0, scale: 0.98, y: 10 },
-                    transition: { duration: 0.24, ease: [0.22, 1, 0.36, 1] }
-                  }
-                : {})}
-            />
-            {hasMultipleVisibleImages ? (
-              <motion.button
-                type="button"
-                className="lightbox-nav lightbox-nav--next"
-                onClick={(event) => {
-                  event.stopPropagation()
-                  showNextImage()
-                }}
-                aria-label="Show next image"
-                {...(!shouldReduceMotion
-                  ? {
-                      initial: { opacity: 0, x: 10 },
-                      animate: { opacity: 1, x: 0 },
-                      exit: { opacity: 0, x: 10 },
-                      transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] }
-                    }
-                  : {})}
-              >
-                &rarr;
-              </motion.button>
-            ) : null}
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      {lightbox}
     </div>
   )
 }

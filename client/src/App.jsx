@@ -92,13 +92,8 @@ export default function App() {
       setHasHandledInitialScroll(true)
     })
 
-    window.addEventListener('load', scrollToTop)
-    window.addEventListener('pageshow', scrollToTop)
-
     return () => {
       window.cancelAnimationFrame(frameId)
-      window.removeEventListener('load', scrollToTop)
-      window.removeEventListener('pageshow', scrollToTop)
 
       if (hasManualScrollRestoration && previousScrollRestoration) {
         window.history.scrollRestoration = previousScrollRestoration
