@@ -23,10 +23,119 @@ const projectCards = [
   }
 ]
 
+const headingAnimations = {
+  thoughtful: {
+    initial: { opacity: 0, filter: 'blur(8px)' },
+    whileInView: { opacity: 1, filter: 'blur(0px)' },
+    transition: {
+      duration: 1.05,
+      delay: 0.08,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  },
+  responsive: {
+    initial: { opacity: 0, x: 28 },
+    whileInView: { opacity: 1, x: 0 },
+    transition: {
+      duration: 0.72,
+      delay: 0.26,
+      ease: [0.22, 1, 0.36, 1]
+    },
+    hover: {
+      rotate: [0, -2.1, 2.1],
+      x: [0, -1.5, 1.5],
+      transition: {
+        duration: 0.82,
+        ease: 'easeInOut',
+        repeat: Infinity,
+        repeatType: 'mirror'
+      }
+    }
+  },
+  softwareEngineering: {
+    initial: { y: '102%' },
+    whileInView: { y: '0%' },
+    transition: {
+      duration: 0.82,
+      delay: 0.46,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+}
+
+const headingActivationDelayMs = 140
+const sectionLandingOffsetPx = 8
+const headingTriggerLeadPx = 148
+
+function getSectionLandingTop(section) {
+  const pageCopy = section?.querySelector('.page-copy')
+  const header = document.querySelector('.site-header')
+  if (!pageCopy) return null
+
+  const headerHeight = header ? header.getBoundingClientRect().height : 0
+  const targetTop = window.scrollY + pageCopy.getBoundingClientRect().top
+  return Math.max(0, targetTop - headerHeight - sectionLandingOffsetPx)
+}
+
 export default function Coding({ sectionId = 'coding', cueTrigger = 0 }) {
   const shouldReduceMotion = useReducedMotion()
   const [isProjectCueVisible, setIsProjectCueVisible] = useState(shouldReduceMotion)
+  const [hasHeadingActivated, setHasHeadingActivated] = useState(shouldReduceMotion)
+  const [isResponsiveHoverEnabled, setIsResponsiveHoverEnabled] = useState(false)
+  const [isResponsiveHovered, setIsResponsiveHovered] = useState(false)
   const sectionRef = useRef(null)
+
+  useEffect(() => {
+    if (shouldReduceMotion) {
+      setHasHeadingActivated(true)
+      return undefined
+    }
+
+    if (hasHeadingActivated) return undefined
+
+    let frameId = 0
+    let settleTimerId = 0
+    let hasScheduledActivation = false
+
+    const clearSettleTimer = () => {
+      window.clearTimeout(settleTimerId)
+      hasScheduledActivation = false
+    }
+
+    const checkHeadingThreshold = () => {
+      const section = sectionRef.current
+      const triggerTop = getSectionLandingTop(section)
+      if (triggerTop === null) return
+
+      if (window.scrollY >= Math.max(0, triggerTop - headingTriggerLeadPx)) {
+        if (!hasScheduledActivation) {
+          hasScheduledActivation = true
+          settleTimerId = window.setTimeout(() => {
+            setHasHeadingActivated(true)
+          }, headingActivationDelayMs)
+        }
+        return
+      }
+
+      clearSettleTimer()
+    }
+
+    const onScroll = () => {
+      window.cancelAnimationFrame(frameId)
+      frameId = window.requestAnimationFrame(checkHeadingThreshold)
+    }
+
+    checkHeadingThreshold()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+
+    return () => {
+      clearSettleTimer()
+      window.cancelAnimationFrame(frameId)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [hasHeadingActivated, shouldReduceMotion])
 
   useEffect(() => {
     if (shouldReduceMotion) {
@@ -52,13 +161,8 @@ export default function Coding({ sectionId = 'coding', cueTrigger = 0 }) {
 
     const checkCueThreshold = () => {
       const section = sectionRef.current
-      const pageCopy = section?.querySelector('.page-copy')
-      const header = document.querySelector('.site-header')
-
-      if (!pageCopy) return
-
-      const headerHeight = header ? header.getBoundingClientRect().height : 0
-      const triggerTop = window.scrollY + pageCopy.getBoundingClientRect().top - headerHeight - 8
+      const triggerTop = getSectionLandingTop(section)
+      if (triggerTop === null) return
 
       if (window.scrollY >= triggerTop) {
         setIsProjectCueVisible(true)
@@ -96,9 +200,98 @@ export default function Coding({ sectionId = 'coding', cueTrigger = 0 }) {
       <div className="container">
         <div className="page-copy">
           <header className="coding-intro">
-            <h2 id="coding-title" className="coding-intro-title">
-              Building thoughtful, responsive experiences through software engineering.
-            </h2>
+            <motion.h2
+              id="coding-title"
+              className="coding-intro-title"
+              initial={false}
+            >
+              Building{' '}
+              <motion.span
+                className="coding-title-emphasis coding-title-emphasis--thoughtful"
+                initial={shouldReduceMotion ? false : headingAnimations.thoughtful.initial}
+                animate={
+                  shouldReduceMotion || hasHeadingActivated ? headingAnimations.thoughtful.whileInView : {}
+                }
+                transition={shouldReduceMotion ? { duration: 0 } : headingAnimations.thoughtful.transition}
+              >
+                thoughtful,
+              </motion.span>
+              {' '}
+              <motion.span
+                className="coding-title-emphasis coding-title-emphasis--responsive"
+                initial={shouldReduceMotion ? false : headingAnimations.responsive.initial}
+                animate={
+                  shouldReduceMotion
+                    ? { ...headingAnimations.responsive.whileInView, rotate: 0 }
+                    : !hasHeadingActivated
+                      ? headingAnimations.responsive.initial
+                      : isResponsiveHoverEnabled && isResponsiveHovered
+                        ? {
+                            ...headingAnimations.responsive.whileInView,
+                            rotate: headingAnimations.responsive.hover.rotate,
+                            x: headingAnimations.responsive.hover.x
+                          }
+                        : {
+                            ...headingAnimations.responsive.whileInView,
+                            rotate: 0
+                          }
+                }
+                transition={
+                  shouldReduceMotion
+                    ? { duration: 0 }
+                    : !hasHeadingActivated
+                      ? { duration: 0 }
+                      : isResponsiveHoverEnabled && isResponsiveHovered
+                        ? {
+                            opacity: { duration: 0.18 },
+                            x: headingAnimations.responsive.hover.transition,
+                            rotate: headingAnimations.responsive.hover.transition
+                          }
+                        : isResponsiveHoverEnabled
+                          ? {
+                              duration: 0.22,
+                              ease: [0.22, 1, 0.36, 1]
+                            }
+                          : headingAnimations.responsive.transition
+                }
+                onHoverStart={() => {
+                  if (!shouldReduceMotion && isResponsiveHoverEnabled) {
+                    setIsResponsiveHovered(true)
+                  }
+                }}
+                onHoverEnd={() => {
+                  setIsResponsiveHovered(false)
+                }}
+                onAnimationComplete={() => {
+                  if (!shouldReduceMotion && hasHeadingActivated && !isResponsiveHoverEnabled) {
+                    setIsResponsiveHoverEnabled(true)
+                  }
+                }}
+              >
+                responsive
+              </motion.span>{' '}
+              experiences{' '}
+              <span className="coding-title-cluster">
+                <span className="coding-title-prefix">through</span>{' '}
+                <span className="coding-title-mask">
+                  <motion.span
+                    className="coding-title-emphasis coding-title-emphasis--software"
+                    initial={shouldReduceMotion ? false : headingAnimations.softwareEngineering.initial}
+                    animate={
+                      shouldReduceMotion || hasHeadingActivated
+                        ? headingAnimations.softwareEngineering.whileInView
+                        : {}
+                    }
+                    transition={
+                      shouldReduceMotion ? { duration: 0 } : headingAnimations.softwareEngineering.transition
+                    }
+                  >
+                    software engineering
+                  </motion.span>
+                </span>
+                .
+              </span>
+            </motion.h2>
             <p className="coding-intro-text">
               I&apos;m currently studying software engineering with TripleTen, where I&apos;m building a strong
               foundation in front-end and full-stack development. I enjoy creating clean, responsive, and
