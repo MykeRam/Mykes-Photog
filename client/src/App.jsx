@@ -8,6 +8,36 @@ import Photography from './components/Photography/Photography'
 import { buildHash, getHashRoute, getHashSearchParams } from './lib/hashRoute'
 
 const mainPageRoutes = new Set(['/', '/about', '/coding'])
+const activeSectionLeadPx = 96
+
+function getHeaderHeight() {
+  const header = document.querySelector('.site-header')
+  return header ? header.getBoundingClientRect().height : 0
+}
+
+function getSectionTarget(section) {
+  if (section === 'home') return null
+
+  return section === 'about'
+    ? document.querySelector('#about .about-sheet')
+    : section === 'coding'
+      ? document.querySelector('#coding .page-copy')
+      : document.getElementById(section)
+}
+
+function getSectionScrollTop(section) {
+  if (section === 'home') return 0
+
+  const target = getSectionTarget(section)
+  if (!target) return 0
+
+  const headerHeight = getHeaderHeight()
+  const targetTop = window.scrollY + target.getBoundingClientRect().top
+
+  return section === 'about' || section === 'coding'
+    ? Math.max(0, targetTop - headerHeight - 8)
+    : Math.max(0, targetTop)
+}
 
 function scrollToSection(section, behavior = 'smooth') {
   if (section === 'home') {
@@ -18,25 +48,8 @@ function scrollToSection(section, behavior = 'smooth') {
     return
   }
 
-  const target =
-    section === 'about'
-      ? document.querySelector('#about .about-sheet')
-      : section === 'coding'
-        ? document.querySelector('#coding .page-copy')
-        : document.getElementById(section)
-
-  if (!target) return
-
-  const header = document.querySelector('.site-header')
-  const headerHeight = header ? header.getBoundingClientRect().height : 0
-  const targetTop = window.scrollY + target.getBoundingClientRect().top
-  const nextTop =
-    section === 'about' || section === 'coding'
-      ? Math.max(0, targetTop - headerHeight - 8)
-      : Math.max(0, targetTop)
-
   window.scrollTo({
-    top: nextTop,
+    top: getSectionScrollTop(section),
     behavior
   })
 }
@@ -52,6 +65,7 @@ function getCurrentSection(path = getHashRoute(), hash = window.location.hash) {
 export default function App() {
   const [currentPath, setCurrentPath] = useState(() => getHashRoute())
   const [currentSection, setCurrentSection] = useState(() => getCurrentSection())
+  const [activeSection, setActiveSection] = useState(() => getCurrentSection())
   const [isPageLoaded, setIsPageLoaded] = useState(() => document.readyState === 'complete')
   const [hasHandledInitialScroll, setHasHandledInitialScroll] = useState(false)
   const [isPhotographyGridReady, setIsPhotographyGridReady] = useState(false)
@@ -102,6 +116,45 @@ export default function App() {
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
+
+  useEffect(() => {
+    if (!mainPageRoutes.has(currentPath) || !hasHandledInitialScroll) return undefined
+
+    let frameId = 0
+    let isTicking = false
+
+    const updateActiveSection = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop || 0
+      const aboutTop = getSectionScrollTop('about')
+      const codingTop = getSectionScrollTop('coding')
+      const nextSection =
+        scrollTop >= codingTop - activeSectionLeadPx
+          ? 'coding'
+          : scrollTop >= aboutTop - activeSectionLeadPx
+            ? 'about'
+            : 'home'
+
+      setActiveSection((current) => (current === nextSection ? current : nextSection))
+      isTicking = false
+    }
+
+    const requestSectionUpdate = () => {
+      if (isTicking) return
+
+      isTicking = true
+      frameId = window.requestAnimationFrame(updateActiveSection)
+    }
+
+    requestSectionUpdate()
+    window.addEventListener('scroll', requestSectionUpdate, { passive: true })
+    window.addEventListener('resize', requestSectionUpdate)
+
+    return () => {
+      window.cancelAnimationFrame(frameId)
+      window.removeEventListener('scroll', requestSectionUpdate)
+      window.removeEventListener('resize', requestSectionUpdate)
+    }
+  }, [currentPath, hasHandledInitialScroll])
 
   useEffect(() => {
     if (!mainPageRoutes.has(currentPath)) return undefined
@@ -166,7 +219,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Header currentPath={currentPath} currentSection={currentSection} navigate={navigate} />
+      <Header currentPath={currentPath} currentSection={activeSection} navigate={navigate} />
       <main className="app-main">{page}</main>
       {isPageLoaded && (currentPath !== '/photography' || isPhotographyGridReady) ? <Footer /> : null}
     </div>
