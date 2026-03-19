@@ -14,7 +14,8 @@ const projectCards = [
     name: 'Personal Portfolio',
     description:
       'A responsive portfolio site that brings together my software engineering work and photography with custom motion, smooth section navigation, and a dedicated gallery experience.',
-    stack: 'React • JavaScript • CSS • Motion • Vite • GitHub Pages',
+    stack:
+      'React • React DOM • JavaScript • CSS • Motion • Vite • Vite Plugin React • Node.js • npm • GitHub Actions • Sharp',
     imageSrc: portfolioPreviewSrc,
     imageAlt: 'Preview of Myke portfolio project branding',
     imageLabel: 'Portfolio Project',
