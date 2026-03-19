@@ -14,7 +14,7 @@ const aboutParagraphs = [
 
 const typingSpeedMs = 9
 
-export default function About({ sectionId = 'about', followTrigger = 0 }) {
+export default function About({ sectionId = 'about', followTrigger = 0, navigate }) {
   const aboutRef = useRef(null)
   const shouldReduceMotion = useReducedMotion()
   const isInView = useInView(aboutRef, { once: true, amount: 0.3 })
@@ -211,6 +211,12 @@ export default function About({ sectionId = 'about', followTrigger = 0 }) {
               <motion.a
                 className="about-link"
                 href={favoriteCameraHref}
+                onClick={(event) => {
+                  if (!navigate) return
+
+                  event.preventDefault()
+                  navigate(favoriteCameraHref)
+                }}
                 initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
                 animate={
                   shouldReduceMotion || isTypingComplete

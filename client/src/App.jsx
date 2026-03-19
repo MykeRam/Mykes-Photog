@@ -207,7 +207,7 @@ export default function App() {
     ) : (
       <>
         <Home sectionId="home" />
-        <About sectionId="about" />
+        <About sectionId="about" navigate={navigate} />
         <Coding sectionId="coding" />
       </>
     )
