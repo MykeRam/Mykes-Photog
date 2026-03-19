@@ -65,7 +65,7 @@ const headingAnimations = {
 
 const headingActivationDelayMs = 140
 const sectionLandingOffsetPx = 8
-const headingTriggerLeadPx = 148
+const headingTriggerLeadPx = 240
 
 function getSectionLandingTop(section) {
   const pageCopy = section?.querySelector('.page-copy')
@@ -77,6 +77,15 @@ function getSectionLandingTop(section) {
   return Math.max(0, targetTop - headerHeight - sectionLandingOffsetPx)
 }
 
+function isHeadingOutOfSight(heading) {
+  const header = document.querySelector('.site-header')
+  const headerHeight = header ? header.getBoundingClientRect().height : 0
+  const rect = heading?.getBoundingClientRect()
+  if (!rect) return false
+
+  return rect.bottom <= headerHeight || rect.top >= window.innerHeight
+}
+
 export default function Coding({ sectionId = 'coding', cueTrigger = 0 }) {
   const shouldReduceMotion = useReducedMotion()
   const [isProjectCueVisible, setIsProjectCueVisible] = useState(shouldReduceMotion)
@@ -84,14 +93,13 @@ export default function Coding({ sectionId = 'coding', cueTrigger = 0 }) {
   const [isResponsiveHoverEnabled, setIsResponsiveHoverEnabled] = useState(false)
   const [isResponsiveHovered, setIsResponsiveHovered] = useState(false)
   const sectionRef = useRef(null)
+  const headingRef = useRef(null)
 
   useEffect(() => {
     if (shouldReduceMotion) {
       setHasHeadingActivated(true)
       return undefined
     }
-
-    if (hasHeadingActivated) return undefined
 
     let frameId = 0
     let settleTimerId = 0
@@ -102,12 +110,27 @@ export default function Coding({ sectionId = 'coding', cueTrigger = 0 }) {
       hasScheduledActivation = false
     }
 
+    const resetHeadingState = () => {
+      clearSettleTimer()
+      setHasHeadingActivated(false)
+      setIsResponsiveHoverEnabled(false)
+      setIsResponsiveHovered(false)
+    }
+
     const checkHeadingThreshold = () => {
       const section = sectionRef.current
+      const heading = headingRef.current
       const triggerTop = getSectionLandingTop(section)
-      if (triggerTop === null) return
+      if (triggerTop === null || !heading) return
 
-      if (window.scrollY >= Math.max(0, triggerTop - headingTriggerLeadPx)) {
+      if (isHeadingOutOfSight(heading)) {
+        if (hasHeadingActivated || isResponsiveHoverEnabled || isResponsiveHovered) {
+          resetHeadingState()
+        }
+        return
+      }
+
+      if (!hasHeadingActivated && window.scrollY >= Math.max(0, triggerTop - headingTriggerLeadPx)) {
         if (!hasScheduledActivation) {
           hasScheduledActivation = true
           settleTimerId = window.setTimeout(() => {
@@ -135,7 +158,7 @@ export default function Coding({ sectionId = 'coding', cueTrigger = 0 }) {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
     }
-  }, [hasHeadingActivated, shouldReduceMotion])
+  }, [hasHeadingActivated, isResponsiveHoverEnabled, isResponsiveHovered, shouldReduceMotion])
 
   useEffect(() => {
     if (shouldReduceMotion) {
@@ -201,6 +224,7 @@ export default function Coding({ sectionId = 'coding', cueTrigger = 0 }) {
         <div className="page-copy">
           <header className="coding-intro">
             <motion.h2
+              ref={headingRef}
               id="coding-title"
               className="coding-intro-title"
               initial={false}
