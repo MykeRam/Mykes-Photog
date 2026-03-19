@@ -2,24 +2,70 @@ import React, { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import './Coding.css'
 
+const portfolioPreviewSrc = `${import.meta.env.BASE_URL}logo.png`
+const wtwrPreviewSrc = `${import.meta.env.BASE_URL}wtwr-home.png`
+const triplePeaksPreviewSrc = `${import.meta.env.BASE_URL}TriplePeaksLibrary.png`
+const triplePeaksCoffeePreviewSrc = `${import.meta.env.BASE_URL}TriplePeaksCoffee.png`
+const aboutMePreviewSrc = `${import.meta.env.BASE_URL}1stSiteMR.png`
+
 const projectCards = [
   {
     id: 1,
-    name: 'Project Name',
-    description: 'Short one- or two-line description of what it is.',
-    stack: 'React • JavaScript • CSS • Vite'
+    name: 'Personal Portfolio',
+    description:
+      'A responsive portfolio site that brings together my software engineering work and photography with custom motion, smooth section navigation, and a dedicated gallery experience.',
+    stack: 'React • JavaScript • CSS • Motion • Vite • GitHub Pages',
+    imageSrc: portfolioPreviewSrc,
+    imageAlt: 'Preview of Myke portfolio project branding',
+    imageLabel: 'Portfolio Project',
+    imageClassName: 'coding-project-image--logo',
+    liveHref: 'https://mykeram.github.io/Mykes-Photog/',
+    githubHref: 'https://github.com/MykeRam/Mykes-Photog'
   },
   {
     id: 2,
-    name: 'Project Name',
-    description: 'Short one- or two-line description of what it is.',
-    stack: 'React • JavaScript • CSS • Vite'
+    name: 'WTWR (What to Wear?)',
+    description:
+      'A React weather app that helps users choose clothing based on current conditions, recommends items for the forecast, and supports item preview modals for a more interactive experience.',
+    stack:
+      'React • JavaScript (ES6+) • CSS • BEM • Vite • OpenWeatherMap API • Conditional Rendering',
+    imageSrc: wtwrPreviewSrc,
+    imageAlt: 'Screenshot of the WTWR clothing recommendation application',
+    githubHref: 'https://github.com/MykeRam/se_project_react'
   },
   {
     id: 3,
-    name: 'Project Name',
-    description: 'Short one- or two-line description of what it is.',
-    stack: 'React • JavaScript • CSS • Vite'
+    name: 'Triple Peaks Library',
+    description:
+      'A library landing page built from a design brief as part of the TripleTen software engineering program, focused on clean structure, layout accuracy, and foundational front-end styling techniques.',
+    stack: 'HTML5 • CSS • Semantic HTML • Flexbox • Positioning • Z-Index',
+    imageSrc: triplePeaksPreviewSrc,
+    imageAlt: 'Screenshot of the Triple Peaks Library webpage',
+    liveHref: 'https://mykeram.github.io/TriplePeaksLibrary/',
+    githubHref: 'https://github.com/MykeRam/TriplePeaksLibrary'
+  },
+  {
+    id: 4,
+    name: 'Triple Peaks Coffee Shop',
+    description:
+      'A coffee shop site built from a TripleTen design brief with a structured multi-section layout, custom form work, and motion-focused touches using CSS animation and transforms.',
+    stack:
+      'HTML5 • CSS • Semantic HTML • Flexbox • Positioning • BEM • Custom Forms • CSS Animation • Transform',
+    imageSrc: triplePeaksCoffeePreviewSrc,
+    imageAlt: 'Screenshot of the Triple Peaks Coffee Shop webpage',
+    liveHref: 'https://mykeram.github.io/se_project_coffeeshop/#menu',
+    githubHref: 'https://github.com/MykeRam/se_project_coffeeshop'
+  },
+  {
+    id: 0,
+    name: 'About Me',
+    description:
+      'A simple landing page created as the first demo project in the TripleTen software engineering program, focused on core page structure and foundational front-end layout work.',
+    stack: 'HTML5 • CSS • Semantic HTML • Flexbox',
+    imageSrc: aboutMePreviewSrc,
+    imageAlt: 'Screenshot of the About Me landing page project',
+    liveHref: 'https://mykeram.github.io/About-me-TT/',
+    githubHref: 'https://github.com/MykeRam/About-me-TT'
   }
 ]
 
@@ -401,7 +447,7 @@ export default function Coding({ sectionId = 'coding', cueTrigger = 0 }) {
                   shouldReduceMotion
                     ? { duration: 0 }
                     : {
-                        duration: 0.9,
+                        duration: 1.45,
                         ease: [0.22, 1, 0.36, 1]
                       }
                 }
@@ -456,8 +502,14 @@ export default function Coding({ sectionId = 'coding', cueTrigger = 0 }) {
                         }
                   }
                 >
-                  <div className="coding-project-image" aria-hidden="true">
-                    <span>Project image / screenshot</span>
+                  <div
+                    className={['coding-project-image', project.imageClassName].filter(Boolean).join(' ')}
+                  >
+                    {project.imageSrc ? (
+                      <img src={project.imageSrc} alt={project.imageAlt || `${project.name} preview`} />
+                    ) : (
+                      <span aria-hidden="true">{project.imageLabel || 'Project image / screenshot'}</span>
+                    )}
                   </div>
 
                   <div className="coding-project-body">
@@ -466,8 +518,32 @@ export default function Coding({ sectionId = 'coding', cueTrigger = 0 }) {
                     <p className="coding-project-stack">{project.stack}</p>
 
                     <div className="coding-project-links" aria-label={`${project.name} links`}>
-                      <span className="coding-project-link">Live Demo</span>
-                      <span className="coding-project-link">GitHub</span>
+                      {project.liveHref ? (
+                        <a
+                          className="coding-project-link"
+                          href={project.liveHref}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Live Demo
+                        </a>
+                      ) : null}
+                      {project.githubHref ? (
+                        <a
+                          className="coding-project-link"
+                          href={project.githubHref}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          GitHub
+                        </a>
+                      ) : null}
+                      {!project.liveHref && !project.githubHref ? (
+                        <>
+                          <span className="coding-project-link">Live Demo</span>
+                          <span className="coding-project-link">GitHub</span>
+                        </>
+                      ) : null}
                     </div>
                   </div>
                 </motion.article>
