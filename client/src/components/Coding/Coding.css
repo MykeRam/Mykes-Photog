@@ -51,6 +51,13 @@
   vertical-align:baseline;
 }
 
+.coding-title-software-stack {
+  display:inline-flex;
+  align-items:baseline;
+  gap:0.14em;
+  flex-wrap:nowrap;
+}
+
 .coding-title-prefix {
   display:inline-block;
   line-height:inherit;
@@ -273,5 +280,39 @@
 
   .coding-project-image {
     font-size:0.72rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .coding-intro-title {
+    text-wrap:initial;
+  }
+
+  .coding-title-cluster {
+    display:inline-grid;
+    grid-template-columns:auto auto;
+    column-gap:0.34em;
+    align-items:start;
+    justify-content:center;
+  }
+
+  .coding-title-prefix {
+    line-height:0.92;
+    padding-right:0.02em;
+  }
+
+  .coding-title-software-stack {
+    display:grid;
+    gap:0;
+    margin-left:0;
+  }
+
+  .coding-title-mask {
+    overflow:visible;
+  }
+
+  .coding-title-emphasis--software {
+    display:block;
+    line-height:0.96;
   }
 }

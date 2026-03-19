@@ -342,24 +342,46 @@ export default function Coding({ sectionId = 'coding', cueTrigger = 0 }) {
               </motion.span>{' '}
               experiences{' '}
               <span className="coding-title-cluster">
-                <span className="coding-title-prefix">through</span>{' '}
-                <span className="coding-title-mask">
-                  <motion.span
-                    className="coding-title-emphasis coding-title-emphasis--software"
-                    initial={shouldReduceMotion ? false : headingAnimations.softwareEngineering.initial}
-                    animate={
-                      shouldReduceMotion || hasHeadingActivated
-                        ? headingAnimations.softwareEngineering.whileInView
-                        : {}
-                    }
-                    transition={
-                      shouldReduceMotion ? { duration: 0 } : headingAnimations.softwareEngineering.transition
-                    }
-                  >
-                    software engineering
-                  </motion.span>
+                <span className="coding-title-prefix">through</span>
+                <span className="coding-title-software-stack">
+                  <span className="coding-title-mask">
+                    <motion.span
+                      className="coding-title-emphasis coding-title-emphasis--software"
+                      initial={shouldReduceMotion ? false : headingAnimations.softwareEngineering.initial}
+                      animate={
+                        shouldReduceMotion || hasHeadingActivated
+                          ? headingAnimations.softwareEngineering.whileInView
+                          : {}
+                      }
+                      transition={
+                        shouldReduceMotion ? { duration: 0 } : headingAnimations.softwareEngineering.transition
+                      }
+                    >
+                      software
+                    </motion.span>
+                  </span>
+                  <span className="coding-title-mask">
+                    <motion.span
+                      className="coding-title-emphasis coding-title-emphasis--software"
+                      initial={shouldReduceMotion ? false : headingAnimations.softwareEngineering.initial}
+                      animate={
+                        shouldReduceMotion || hasHeadingActivated
+                          ? headingAnimations.softwareEngineering.whileInView
+                          : {}
+                      }
+                      transition={
+                        shouldReduceMotion
+                          ? { duration: 0 }
+                          : {
+                              ...headingAnimations.softwareEngineering.transition,
+                              delay: headingAnimations.softwareEngineering.transition.delay + 0.06
+                            }
+                      }
+                    >
+                      engineering.
+                    </motion.span>
+                  </span>
                 </span>
-                .
               </span>
             </motion.h2>
             <p className="coding-intro-text">
