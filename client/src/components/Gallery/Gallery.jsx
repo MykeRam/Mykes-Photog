@@ -97,6 +97,8 @@ export default function Gallery({ onGridReadyChange }) {
   const [parentFilter, setParentFilter] = useState(() => getInitialParentFilter())
   const [childFilter, setChildFilter] = useState(null)
   const [activeIndex, setActiveIndex] = useState(null)
+  const [sharedElementId, setSharedElementId] = useState(null)
+  const [isFullImageLoaded, setIsFullImageLoaded] = useState(false)
   const [aspectRatios, setAspectRatios] = useState({})
   const [showBackToTop, setShowBackToTop] = useState(false)
   const touchStartRef = useRef({ x: 0, y: 0 })
@@ -152,6 +154,7 @@ export default function Gallery({ onGridReadyChange }) {
       const parent = pathParts[0] || 'root'
       const child = pathParts[1] || 'root'
       return {
+        id: item.sortPath.toLowerCase(),
         thumb: item.thumb || item.full,
         full: item.full || item.thumb,
         folder: item.folder,
@@ -262,6 +265,10 @@ export default function Gallery({ onGridReadyChange }) {
     return images.filter((i) => i.parent === parentFilter && i.child === childFilter)
   }, [images, parentFilter, childFilter])
 
+  const activeImage = activeIndex === null ? null : visible[activeIndex] || null
+  const hasMultipleVisibleImages = visible.length > 1
+  const activeLayoutId = activeImage && activeImage.id === sharedElementId ? `gallery-image-${activeImage.id}` : undefined
+
   useEffect(() => {
     if (activeIndex === null) return undefined
 
@@ -273,11 +280,13 @@ export default function Gallery({ onGridReadyChange }) {
       }
 
       if (event.key === 'ArrowRight' && visible.length > 1) {
+        setSharedElementId(null)
         setActiveIndex((current) => (current === null ? current : (current + 1) % visible.length))
         return
       }
 
       if (event.key === 'ArrowLeft' && visible.length > 1) {
+        setSharedElementId(null)
         setActiveIndex((current) =>
           current === null ? current : (current - 1 + visible.length) % visible.length
         )
@@ -292,6 +301,41 @@ export default function Gallery({ onGridReadyChange }) {
       window.removeEventListener('keydown', onKeyDown)
     }
   }, [activeIndex, visible.length])
+
+  useEffect(() => {
+    if (!activeImage) {
+      setIsFullImageLoaded(false)
+      return undefined
+    }
+
+    if (activeImage.full === activeImage.thumb) {
+      setIsFullImageLoaded(true)
+      return undefined
+    }
+
+    let cancelled = false
+    const probe = new window.Image()
+
+    setIsFullImageLoaded(false)
+
+    probe.onload = () => {
+      if (!cancelled) {
+        setIsFullImageLoaded(true)
+      }
+    }
+
+    probe.onerror = () => {
+      if (!cancelled) {
+        setIsFullImageLoaded(true)
+      }
+    }
+
+    probe.src = activeImage.full
+
+    return () => {
+      cancelled = true
+    }
+  }, [activeImage])
 
   const isGridReady = useMemo(
     () => images.length === 0 || images.every((image) => aspectRatios[image.thumb] !== undefined),
@@ -310,14 +354,13 @@ export default function Gallery({ onGridReadyChange }) {
     }
   }, [activeIndex, visible])
 
-  const activeImage = activeIndex === null ? null : visible[activeIndex] || null
-  const hasMultipleVisibleImages = visible.length > 1
-
   function showNextImage() {
+    setSharedElementId(null)
     setActiveIndex((current) => (current === null ? current : (current + 1) % visible.length))
   }
 
   function showPreviousImage() {
+    setSharedElementId(null)
     setActiveIndex((current) => (current === null ? current : (current - 1 + visible.length) % visible.length))
   }
 
@@ -424,14 +467,22 @@ export default function Gallery({ onGridReadyChange }) {
             : {})}
         >
           {visible.map((it, i) => (
-            <div key={i} className={`item ${getSpanClassWithIndex(aspectRatios[it.thumb], i)}`}>
+            <div key={it.id} className={`item ${getSpanClassWithIndex(aspectRatios[it.thumb], i)}`}>
               <button
                 type="button"
                 className="item-btn"
-                onClick={() => setActiveIndex(i)}
+                onClick={() => {
+                  setSharedElementId(it.id)
+                  setActiveIndex(i)
+                }}
                 aria-label={`Open ${it.folder} image ${i + 1}`}
               >
-                <img src={it.thumb} alt={`${it.folder}-${i}`} loading="lazy" decoding="async" />
+                <motion.span
+                  className="item-media"
+                  layoutId={sharedElementId === it.id ? `gallery-image-${it.id}` : undefined}
+                >
+                  <img src={it.thumb} alt={`${it.folder}-${i}`} loading="lazy" decoding="async" />
+                </motion.span>
               </button>
             </div>
           ))}
@@ -491,22 +542,35 @@ export default function Gallery({ onGridReadyChange }) {
             >
               Close
             </motion.button>
-            <motion.img
-              className="lightbox-image"
-              src={activeImage.full}
-              alt={`${activeImage.folder}-${activeIndex + 1}`}
+            <motion.div
+              className="lightbox-media"
+              layoutId={activeLayoutId}
               onClick={(event) => event.stopPropagation()}
               onTouchStart={handleLightboxTouchStart}
               onTouchEnd={handleLightboxTouchEnd}
               {...(!shouldReduceMotion
                 ? {
-                    initial: { opacity: 0, scale: 0.97, y: 12 },
+                    initial: activeLayoutId ? undefined : { opacity: 0, scale: 0.97, y: 12 },
                     animate: { opacity: 1, scale: 1, y: 0 },
-                    exit: { opacity: 0, scale: 0.98, y: 10 },
+                    exit: activeLayoutId ? undefined : { opacity: 0, scale: 0.98, y: 10 },
                     transition: { duration: 0.24, ease: [0.22, 1, 0.36, 1] }
                   }
                 : {})}
-            />
+            >
+              <img
+                className={`lightbox-image lightbox-image--thumb ${isFullImageLoaded ? 'is-loaded' : ''}`}
+                src={activeImage.thumb}
+                alt={`${activeImage.folder}-${activeIndex + 1}`}
+                draggable="false"
+              />
+              <img
+                className={`lightbox-image lightbox-image--full ${isFullImageLoaded ? 'is-loaded' : ''}`}
+                src={activeImage.full}
+                alt=""
+                aria-hidden="true"
+                draggable="false"
+              />
+            </motion.div>
             {hasMultipleVisibleImages ? (
               <motion.button
                 type="button"

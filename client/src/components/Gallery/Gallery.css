@@ -85,6 +85,13 @@
   cursor:zoom-in;
 }
 
+.item-media {
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+
 .item img {
   width:100%;
   height:100%;
@@ -123,8 +130,36 @@
   max-height:90vh;
   width:auto;
   height:auto;
+  display:block;
+}
+
+.lightbox-media {
+  position:relative;
   border-radius:8px;
+  overflow:hidden;
   box-shadow:0 14px 36px rgba(0,0,0,0.45);
+}
+
+.lightbox-image--thumb,
+.lightbox-image--full {
+  transition:opacity .22s ease;
+}
+
+.lightbox-image--full {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  opacity:0;
+}
+
+.lightbox-image--thumb.is-loaded {
+  opacity:0;
+}
+
+.lightbox-image--full.is-loaded {
+  opacity:1;
 }
 
 .lightbox-nav,
