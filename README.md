@@ -48,3 +48,10 @@ This project uses the following tools and technologies:
 
 - **GitHub Pages**  
   Hosts the finished static website after deployment.
+
+## Credits
+
+- The project logo was created using **Canva**.
+
+- The social media icons used in this project are sourced from the following **Figma Community** file:  
+  https://www.figma.com/design/0dOntceIxZIO0ur6yf4HNe/Social-Media-Icons---Logos--Community-?node-id=17-23
