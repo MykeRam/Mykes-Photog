@@ -208,7 +208,11 @@ export default function App() {
       <>
         <Home sectionId="home" />
         <About sectionId="about" navigate={navigate} />
-        <Coding sectionId="coding" />
+        <Coding
+          sectionId="coding"
+          isSectionActive={activeSection === 'coding'}
+          isSectionTargeted={currentSection === 'coding'}
+        />
       </>
     )
 

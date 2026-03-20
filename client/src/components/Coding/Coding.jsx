@@ -112,15 +112,26 @@ const headingAnimations = {
 
 const headingActivationDelayMs = 140
 
-export default function Coding({ sectionId = 'coding' }) {
+export default function Coding({
+  sectionId = 'coding',
+  isSectionActive = false,
+  isSectionTargeted = false
+}) {
   const shouldReduceMotion = useReducedMotion()
   const [isResponsiveHoverEnabled, setIsResponsiveHoverEnabled] = useState(false)
   const [isResponsiveHovered, setIsResponsiveHovered] = useState(false)
   const headingRef = useRef(null)
+  const projectCueRef = useRef(null)
   const isHeadingInView = useInView(headingRef, {
     amount: 0.6,
     margin: '0px 0px -18% 0px'
   })
+  const isProjectCueInView = useInView(projectCueRef, {
+    amount: 0.15,
+    margin: '0px 0px -8% 0px'
+  })
+  const isProjectCueVisible = shouldReduceMotion || isProjectCueInView
+  const projectCueRevealDelay = isSectionTargeted ? 0.24 : 0.08
 
   useEffect(() => {
     if (shouldReduceMotion) {
@@ -140,7 +151,6 @@ export default function Coding({ sectionId = 'coding' }) {
 
     return () => window.clearTimeout(timerId)
   }, [isHeadingInView, shouldReduceMotion])
-
   const scrollToProjects = () => {
     const projectsHeading = document.getElementById('coding-projects-title')
     if (!projectsHeading) return
@@ -341,22 +351,24 @@ export default function Coding({ sectionId = 'coding' }) {
               </p>
 
               <motion.button
+                ref={projectCueRef}
                 type="button"
                 className="coding-project-cue"
                 onClick={scrollToProjects}
-                initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 18, filter: 'blur(8px)' }}
                 animate={
                   shouldReduceMotion
-                    ? { opacity: 1, y: 0 }
-                    : { opacity: 1, y: 0 }
+                    ? { opacity: 1, y: 0, filter: 'blur(0px)' }
+                    : isProjectCueVisible
+                      ? { opacity: 1, y: 0, filter: 'blur(0px)' }
+                      : { opacity: 0, y: 18, filter: 'blur(8px)' }
                 }
-                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
                 transition={
                   shouldReduceMotion
                     ? { duration: 0 }
                     : {
-                        duration: 1.45,
+                        duration: 0.82,
+                        delay: isProjectCueVisible ? projectCueRevealDelay : 0,
                         ease: [0.22, 1, 0.36, 1]
                       }
                 }
@@ -367,7 +379,9 @@ export default function Coding({ sectionId = 'coding' }) {
                   animate={
                     shouldReduceMotion
                       ? {}
-                      : { y: [0, 6, 0], opacity: [0.65, 1, 0.65] }
+                      : isProjectCueVisible
+                        ? { y: [0, 6, 0], opacity: [0.65, 1, 0.65] }
+                        : { y: 0, opacity: 0.65 }
                   }
                   transition={
                     shouldReduceMotion

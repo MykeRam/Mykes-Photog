@@ -117,6 +117,7 @@
   color:#6f6254;
   cursor:pointer;
   text-align:center;
+  will-change:transform, opacity, filter;
 }
 
 .coding-project-cue p {
