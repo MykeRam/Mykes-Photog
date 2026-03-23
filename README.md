@@ -9,6 +9,10 @@ The site showcases:
 - A photography section that highlights selected image work in a dedicated gallery
 - Motion, layout, and responsive design choices that reflect both technical and creative focus
 
+## Live Demo
+
+View the deployed site here: [mykeram.github.io/Mykes-Photog](https://mykeram.github.io/Mykes-Photog/)
+
 ## Technologies and Tools
 
 <p align="left">
