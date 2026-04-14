@@ -67,7 +67,7 @@ const projectCards = [
       'HTML5 • CSS • Semantic HTML • Flexbox • Positioning • BEM • Custom Forms • CSS Animation • Transform',
     imageSrc: triplePeaksCoffeePreviewSrc,
     imageAlt: 'Screenshot of the Triple Peaks Coffee Shop webpage',
-    liveHref: 'https://mykeram.github.io/se_project_coffeeshop/#menu',
+    liveHref: 'https://mykeram.github.io/se_project_coffeeshop/',
     githubHref: 'https://github.com/MykeRam/se_project_coffeeshop'
   },
   {
