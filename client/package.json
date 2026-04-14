@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite --open",
+    "dev": "vite --host 127.0.0.1 --open",
     "build": "vite build",
     "preview": "vite preview",
     "convert-images": "node scripts/convert-images.js",

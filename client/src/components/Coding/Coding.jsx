@@ -4,11 +4,24 @@ import './Coding.css'
 
 const portfolioPreviewSrc = `${import.meta.env.BASE_URL}logo.png`
 const wtwrPreviewSrc = `${import.meta.env.BASE_URL}wtwr-home.png`
+const nycPhotoLabFinderPreviewSrc = `${import.meta.env.BASE_URL}nyc-photolab-sc.png`
 const triplePeaksPreviewSrc = `${import.meta.env.BASE_URL}TriplePeaksLibrary.png`
 const triplePeaksCoffeePreviewSrc = `${import.meta.env.BASE_URL}TriplePeaksCoffee.png`
 const aboutMePreviewSrc = `${import.meta.env.BASE_URL}1stSiteMR.png`
 
 const projectCards = [
+  {
+    id: 3,
+    name: 'NYC Photo Lab Finder',
+    description:
+      'A location-based app for comparing NYC photo labs on a live map, saving a shortlist, and reviewing nearby options by borough, neighborhood, ZIP, or current location.',
+    stack:
+      'React • Vite • TypeScript • React Router DOM • @react-google-maps/api • Google Maps JavaScript API • Google Places API (New) • Foursquare Places API • Node.js • Express • MongoDB • localStorage • concurrently',
+    imageSrc: nycPhotoLabFinderPreviewSrc,
+    imageAlt: 'Screenshot of the NYC Photo Lab Finder application',
+    imageLabel: 'NYC Photo Lab Finder',
+    githubHref: 'https://github.com/MykeRam/Photo-Lab-Finder'
+  },
   {
     id: 1,
     name: 'Personal Portfolio',
@@ -35,7 +48,7 @@ const projectCards = [
     githubHref: 'https://github.com/MykeRam/se_project_react'
   },
   {
-    id: 3,
+    id: 4,
     name: 'Triple Peaks Library',
     description:
       'A library landing page built from a design brief as part of the TripleTen software engineering program, focused on clean structure, layout accuracy, and foundational front-end styling techniques.',
@@ -46,7 +59,7 @@ const projectCards = [
     githubHref: 'https://github.com/MykeRam/TriplePeaksLibrary'
   },
   {
-    id: 4,
+    id: 5,
     name: 'Triple Peaks Coffee Shop',
     description:
       'A coffee shop site built from a TripleTen design brief with a structured multi-section layout, custom form work, and motion-focused touches using CSS animation and transforms.',
@@ -58,7 +71,7 @@ const projectCards = [
     githubHref: 'https://github.com/MykeRam/se_project_coffeeshop'
   },
   {
-    id: 0,
+    id: 6,
     name: 'About Me',
     description:
       'A simple landing page created as the first demo project in the TripleTen software engineering program, focused on core page structure and foundational front-end layout work.',
