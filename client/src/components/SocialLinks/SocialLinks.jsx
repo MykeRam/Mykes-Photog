@@ -1,9 +1,10 @@
 import React from 'react'
 import { motion, useReducedMotion } from 'motion/react'
-import instagramIcon from '../../assets/social/IG.svg.svg'
-import threadsIcon from '../../assets/social/Threads.svg.svg'
-import twitchIcon from '../../assets/social/Twitch.svg.svg'
-import youtubeIcon from '../../assets/social/YT.svg.svg'
+import instagramIcon from '../../assets/social/IG.svg'
+import threadsIcon from '../../assets/social/Threads.svg'
+import twitchIcon from '../../assets/social/Twitch.svg'
+import linkedinIcon from '../../assets/social/linkedin-icon.svg'
+import youtubeIcon from '../../assets/social/YT.svg'
 import { enterAnimation } from '../../lib/enterMotion'
 import './SocialLinks.css'
 
@@ -22,6 +23,11 @@ const socials = [
     name: 'Twitch',
     href: 'https://twitch.tv/q0dzz',
     icon: twitchIcon
+  },
+  {
+    name: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/michaelramirezz/',
+    icon: linkedinIcon
   },
   {
     name: 'YouTube',

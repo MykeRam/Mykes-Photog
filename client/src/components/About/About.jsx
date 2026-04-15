@@ -192,7 +192,7 @@ export default function About({ sectionId = 'about', followTrigger = 0, navigate
                   }
                   transition={{ duration: 0.45, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <SocialLinks />
+                  <SocialLinks animateOnEnter baseDelay={0.28} stagger={0.1} />
                 </motion.div>
               </motion.div>
             </figure>
