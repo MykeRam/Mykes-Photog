@@ -20,6 +20,7 @@ const projectCards = [
     imageSrc: nycPhotoLabFinderPreviewSrc,
     imageAlt: 'Screenshot of the NYC Photo Lab Finder application',
     imageLabel: 'NYC Photo Lab Finder',
+    liveHref: 'https://mykeram.github.io/Photo-Lab-Finder/',
     githubHref: 'https://github.com/MykeRam/Photo-Lab-Finder'
   },
   {
