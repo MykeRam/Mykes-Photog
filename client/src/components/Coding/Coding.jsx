@@ -12,7 +12,7 @@ const projectCards = [
     description:
       'A location-based app for comparing NYC photo labs on a live map, saving a shortlist, and reviewing nearby options by borough, neighborhood, ZIP, or current location.',
     stack:
-      'React • Vite • TypeScript • React Router DOM • @react-google-maps/api • Google Maps JavaScript API • Google Places API (New) • Foursquare Places API • Node.js • Express • MongoDB • localStorage • concurrently',
+      'React • Vite • TypeScript • React Router DOM • @react-google-maps/api • Google Maps JavaScript API • Google Places API (New) • Node.js • Express • MongoDB • localStorage • concurrently',
     images: [
       {
         src: projectAssetSrc('nyc-photo-lab-finder', 'nyc-photolab-sc.png'),
