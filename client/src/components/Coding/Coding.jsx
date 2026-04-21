@@ -1,13 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { motion, useInView, useReducedMotion } from 'motion/react'
+import { AnimatePresence, motion, useInView, useReducedMotion } from 'motion/react'
 import './Coding.css'
 
-const portfolioPreviewSrc = `${import.meta.env.BASE_URL}logo.png`
-const wtwrPreviewSrc = `${import.meta.env.BASE_URL}wtwr-home.png`
-const nycPhotoLabFinderPreviewSrc = `${import.meta.env.BASE_URL}nyc-photolab-sc.png`
-const triplePeaksPreviewSrc = `${import.meta.env.BASE_URL}TriplePeaksLibrary.png`
-const triplePeaksCoffeePreviewSrc = `${import.meta.env.BASE_URL}TriplePeaksCoffee.png`
-const aboutMePreviewSrc = `${import.meta.env.BASE_URL}1stSiteMR.png`
+const assetSrc = (path) => `${import.meta.env.BASE_URL}${path}`
+const projectAssetSrc = (projectFolder, fileName) => assetSrc(`projects/${projectFolder}/${fileName}`)
 
 const projectCards = [
   {
@@ -17,9 +13,12 @@ const projectCards = [
       'A location-based app for comparing NYC photo labs on a live map, saving a shortlist, and reviewing nearby options by borough, neighborhood, ZIP, or current location.',
     stack:
       'React • Vite • TypeScript • React Router DOM • @react-google-maps/api • Google Maps JavaScript API • Google Places API (New) • Foursquare Places API • Node.js • Express • MongoDB • localStorage • concurrently',
-    imageSrc: nycPhotoLabFinderPreviewSrc,
-    imageAlt: 'Screenshot of the NYC Photo Lab Finder application',
-    imageLabel: 'NYC Photo Lab Finder',
+    images: [
+      {
+        src: projectAssetSrc('nyc-photo-lab-finder', 'nyc-photolab-sc.png'),
+        alt: 'Screenshot of the NYC Photo Lab Finder application'
+      }
+    ],
     liveHref: 'https://mykeram.github.io/Photo-Lab-Finder/',
     githubHref: 'https://github.com/MykeRam/Photo-Lab-Finder'
   },
@@ -30,10 +29,29 @@ const projectCards = [
       'A responsive portfolio site that brings together my software engineering work and photography with custom motion, smooth section navigation, and a dedicated gallery experience.',
     stack:
       'React • React DOM • JavaScript • CSS • Motion • Vite • Vite Plugin React • Node.js • npm • GitHub Actions • Sharp',
-    imageSrc: portfolioPreviewSrc,
-    imageAlt: 'Preview of Myke portfolio project branding',
-    imageLabel: 'Portfolio Project',
-    imageClassName: 'coding-project-image--logo',
+    images: [
+      {
+        src: projectAssetSrc('personal-portfolio', 'logo.png'),
+        alt: 'Portfolio branding logo',
+        className: 'coding-project-image--contain'
+      },
+      {
+        src: projectAssetSrc('personal-portfolio', 'landing-portfolio.png'),
+        alt: 'Screenshot of the landing section of the portfolio site'
+      },
+      {
+        src: projectAssetSrc('personal-portfolio', 'about-portfolio.png'),
+        alt: 'Screenshot of the about section of the portfolio site'
+      },
+      {
+        src: projectAssetSrc('personal-portfolio', 'coding-portfolio.png'),
+        alt: 'Screenshot of the coding section of the portfolio site'
+      },
+      {
+        src: projectAssetSrc('personal-portfolio', 'photography-portfolio.png'),
+        alt: 'Screenshot of the photography section of the portfolio site'
+      }
+    ],
     liveHref: 'https://mykeram.github.io/Mykes-Photog/',
     githubHref: 'https://github.com/MykeRam/Mykes-Photog'
   },
@@ -44,8 +62,12 @@ const projectCards = [
       'A React weather app that helps users choose clothing based on current conditions, recommends items for the forecast, and supports item preview modals for a more interactive experience.',
     stack:
       'React • JavaScript (ES6+) • CSS • BEM • Vite • OpenWeatherMap API • Conditional Rendering',
-    imageSrc: wtwrPreviewSrc,
-    imageAlt: 'Screenshot of the WTWR clothing recommendation application',
+    images: [
+      {
+        src: projectAssetSrc('wtwr', 'wtwr-home.png'),
+        alt: 'Screenshot of the WTWR clothing recommendation application'
+      }
+    ],
     githubHref: 'https://github.com/MykeRam/se_project_react'
   },
   {
@@ -54,8 +76,28 @@ const projectCards = [
     description:
       'A library landing page built from a design brief as part of the TripleTen software engineering program, focused on clean structure, layout accuracy, and foundational front-end styling techniques.',
     stack: 'HTML5 • CSS • Semantic HTML • Flexbox • Positioning • Z-Index',
-    imageSrc: triplePeaksPreviewSrc,
-    imageAlt: 'Screenshot of the Triple Peaks Library webpage',
+    images: [
+      {
+        src: projectAssetSrc('triple-peaks-library', 'TriplePeaksLibrary.png'),
+        alt: 'Screenshot of the full Triple Peaks Library webpage'
+      },
+      {
+        src: projectAssetSrc('triple-peaks-library', 'events-triple_peaks.png'),
+        alt: 'Screenshot of the Triple Peaks Library events section'
+      },
+      {
+        src: projectAssetSrc('triple-peaks-library', 'staff-picks_triple_peaks.png'),
+        alt: 'Screenshot of the Triple Peaks Library staff picks section'
+      },
+      {
+        src: projectAssetSrc('triple-peaks-library', 'become-member_triple_peaks.png'),
+        alt: 'Screenshot of the Triple Peaks Library become member section'
+      },
+      {
+        src: projectAssetSrc('triple-peaks-library', 'about_triple_peaks.png'),
+        alt: 'Screenshot of the Triple Peaks Library about section'
+      }
+    ],
     liveHref: 'https://mykeram.github.io/TriplePeaksLibrary/',
     githubHref: 'https://github.com/MykeRam/TriplePeaksLibrary'
   },
@@ -66,8 +108,29 @@ const projectCards = [
       'A coffee shop site built from a TripleTen design brief with a structured multi-section layout, custom form work, and motion-focused touches using CSS animation and transforms.',
     stack:
       'HTML5 • CSS • Semantic HTML • Flexbox • Positioning • BEM • Custom Forms • CSS Animation • Transform',
-    imageSrc: triplePeaksCoffeePreviewSrc,
-    imageAlt: 'Screenshot of the Triple Peaks Coffee Shop webpage',
+    images: [
+      {
+        src: projectAssetSrc('triple-peaks-coffee-shop', 'TriplePeaksCoffee.png'),
+        alt: 'Screenshot of the full Triple Peaks Coffee Shop webpage'
+      },
+      {
+        src: projectAssetSrc('triple-peaks-coffee-shop', 'menu_coffee-shop.png'),
+        alt: 'Screenshot of the Triple Peaks Coffee Shop menu section'
+      },
+      {
+        src: projectAssetSrc('triple-peaks-coffee-shop', 'recipes_coffee-shop.png'),
+        alt: 'Screenshot of the Triple Peaks Coffee Shop recipes section'
+      },
+      {
+        src: projectAssetSrc('triple-peaks-coffee-shop', 'book-table_coffee-shop.png'),
+        alt: 'Screenshot of the Triple Peaks Coffee Shop booking section'
+      },
+      {
+        src: projectAssetSrc('triple-peaks-coffee-shop', 'contacts_coffee-shop.png'),
+        alt: 'Screenshot of the Triple Peaks Coffee Shop contacts section',
+        className: 'coding-project-image--contain-full'
+      }
+    ],
     liveHref: 'https://mykeram.github.io/se_project_coffeeshop/',
     githubHref: 'https://github.com/MykeRam/se_project_coffeeshop'
   },
@@ -77,8 +140,16 @@ const projectCards = [
     description:
       'A simple landing page created as the first demo project in the TripleTen software engineering program, focused on core page structure and foundational front-end layout work.',
     stack: 'HTML5 • CSS • Semantic HTML • Flexbox',
-    imageSrc: aboutMePreviewSrc,
-    imageAlt: 'Screenshot of the About Me landing page project',
+    images: [
+      {
+        src: projectAssetSrc('about-me', 'landing_about-me.png'),
+        alt: 'Screenshot of the About Me landing section'
+      },
+      {
+        src: projectAssetSrc('about-me', '1stSiteMR.png'),
+        alt: 'Screenshot of the About Me project landing page'
+      }
+    ],
     liveHref: 'https://mykeram.github.io/About-me-TT/',
     githubHref: 'https://github.com/MykeRam/About-me-TT'
   }
@@ -125,6 +196,190 @@ const headingAnimations = {
 }
 
 const headingActivationDelayMs = 140
+
+function ProjectCarousel({ project, shouldReduceMotion }) {
+  const [activeImageIndex, setActiveImageIndex] = useState(0)
+  const swipeStateRef = useRef(null)
+  const images = project.images ?? []
+  const activeImage = images[activeImageIndex] ?? images[0]
+  const hasMultipleImages = images.length > 1
+
+  const goToPreviousImage = () => {
+    setActiveImageIndex((currentIndex) => (currentIndex - 1 + images.length) % images.length)
+  }
+
+  const goToNextImage = () => {
+    setActiveImageIndex((currentIndex) => (currentIndex + 1) % images.length)
+  }
+
+  const handlePointerDown = (event) => {
+    if (shouldReduceMotion || !hasMultipleImages || event.pointerType === 'mouse') {
+      return
+    }
+
+    if (event.target instanceof Element && event.target.closest('button')) {
+      return
+    }
+
+    swipeStateRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      startTime: window.performance.now()
+    }
+
+    if (event.currentTarget.setPointerCapture) {
+      event.currentTarget.setPointerCapture(event.pointerId)
+    }
+  }
+
+  const handlePointerUp = (event) => {
+    const swipeState = swipeStateRef.current
+
+    if (!swipeState || swipeState.pointerId !== event.pointerId) {
+      return
+    }
+
+    swipeStateRef.current = null
+
+    if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+
+    const deltaX = event.clientX - swipeState.startX
+    const deltaY = event.clientY - swipeState.startY
+    const elapsed = window.performance.now() - swipeState.startTime
+    const isHorizontalSwipe = Math.abs(deltaX) > 48 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2
+    const isQuickEnough = elapsed <= 700
+
+    if (!isHorizontalSwipe || !isQuickEnough) {
+      return
+    }
+
+    if (deltaX < 0) {
+      goToNextImage()
+      return
+    }
+
+    goToPreviousImage()
+  }
+
+  const clearSwipeState = (event) => {
+    const swipeState = swipeStateRef.current
+
+    if (!swipeState || swipeState.pointerId !== event.pointerId) {
+      return
+    }
+
+    swipeStateRef.current = null
+  }
+
+  if (!activeImage) {
+    return null
+  }
+
+  const imageFrameClassName = ['coding-project-image', activeImage.className].filter(Boolean).join(' ')
+
+  return (
+    <div
+      className={imageFrameClassName}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={clearSwipeState}
+    >
+      <AnimatePresence initial={false} mode="wait">
+        <motion.img
+          key={activeImage.src}
+          className="coding-project-carousel-image"
+          src={activeImage.src}
+          alt={activeImage.alt}
+          initial={shouldReduceMotion ? false : { opacity: 0, scale: 1.02 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.985 }}
+          transition={
+            shouldReduceMotion
+              ? { duration: 0 }
+              : {
+                  duration: 0.32,
+                  ease: [0.22, 1, 0.36, 1]
+                }
+          }
+        />
+      </AnimatePresence>
+
+      {hasMultipleImages ? (
+        <>
+          <button
+            type="button"
+            className="coding-project-carousel-button coding-project-carousel-button--prev"
+            onClick={goToPreviousImage}
+            aria-label={`Show previous image for ${project.name}`}
+          >
+            <span aria-hidden="true">‹</span>
+          </button>
+          <button
+            type="button"
+            className="coding-project-carousel-button coding-project-carousel-button--next"
+            onClick={goToNextImage}
+            aria-label={`Show next image for ${project.name}`}
+          >
+            <span aria-hidden="true">›</span>
+          </button>
+          <div className="coding-project-carousel-counter" aria-hidden="true">
+            {activeImageIndex + 1} / {images.length}
+          </div>
+        </>
+      ) : null}
+    </div>
+  )
+}
+
+function ProjectCard({ project, index, shouldReduceMotion }) {
+  return (
+    <motion.article
+      className="coding-project-card"
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
+      whileInView={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={
+        shouldReduceMotion
+          ? { duration: 0 }
+          : {
+              duration: 0.65,
+              delay: 0.12 + index * 0.18,
+              ease: [0.22, 1, 0.36, 1]
+            }
+      }
+    >
+      <ProjectCarousel project={project} shouldReduceMotion={shouldReduceMotion} />
+
+      <div className="coding-project-body">
+        <h3>{project.name}</h3>
+        <p>{project.description}</p>
+        <p className="coding-project-stack">{project.stack}</p>
+
+        <div className="coding-project-links" aria-label={`${project.name} links`}>
+          {project.liveHref ? (
+            <a className="coding-project-link" href={project.liveHref} target="_blank" rel="noreferrer">
+              Live Demo
+            </a>
+          ) : null}
+          {project.githubHref ? (
+            <a className="coding-project-link" href={project.githubHref} target="_blank" rel="noreferrer">
+              GitHub
+            </a>
+          ) : null}
+          {!project.liveHref && !project.githubHref ? (
+            <>
+              <span className="coding-project-link">Live Demo</span>
+              <span className="coding-project-link">GitHub</span>
+            </>
+          ) : null}
+        </div>
+      </div>
+    </motion.article>
+  )
+}
 
 export default function Coding({
   sectionId = 'coding',
@@ -423,67 +678,12 @@ export default function Coding({
 
             <div className="coding-project-list">
               {projectCards.map((project, index) => (
-                <motion.article
+                <ProjectCard
                   key={project.id}
-                  className="coding-project-card"
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
-                  whileInView={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.25 }}
-                  transition={
-                    shouldReduceMotion
-                      ? { duration: 0 }
-                      : {
-                          duration: 0.65,
-                          delay: 0.12 + index * 0.18,
-                          ease: [0.22, 1, 0.36, 1]
-                        }
-                  }
-                >
-                  <div
-                    className={['coding-project-image', project.imageClassName].filter(Boolean).join(' ')}
-                  >
-                    {project.imageSrc ? (
-                      <img src={project.imageSrc} alt={project.imageAlt || `${project.name} preview`} />
-                    ) : (
-                      <span aria-hidden="true">{project.imageLabel || 'Project image / screenshot'}</span>
-                    )}
-                  </div>
-
-                  <div className="coding-project-body">
-                    <h3>{project.name}</h3>
-                    <p>{project.description}</p>
-                    <p className="coding-project-stack">{project.stack}</p>
-
-                    <div className="coding-project-links" aria-label={`${project.name} links`}>
-                      {project.liveHref ? (
-                        <a
-                          className="coding-project-link"
-                          href={project.liveHref}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Live Demo
-                        </a>
-                      ) : null}
-                      {project.githubHref ? (
-                        <a
-                          className="coding-project-link"
-                          href={project.githubHref}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          GitHub
-                        </a>
-                      ) : null}
-                      {!project.liveHref && !project.githubHref ? (
-                        <>
-                          <span className="coding-project-link">Live Demo</span>
-                          <span className="coding-project-link">GitHub</span>
-                        </>
-                      ) : null}
-                    </div>
-                  </div>
-                </motion.article>
+                  project={project}
+                  index={index}
+                  shouldReduceMotion={shouldReduceMotion}
+                />
               ))}
             </div>
           </section>
