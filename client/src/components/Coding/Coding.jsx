@@ -15,8 +15,16 @@ const projectCards = [
       'React • Vite • TypeScript • React Router DOM • @react-google-maps/api • Google Maps JavaScript API • Google Places API (New) • Node.js • Express • MongoDB • localStorage • concurrently',
     images: [
       {
-        src: projectAssetSrc('nyc-photo-lab-finder', 'nyc-photolab-sc.png'),
-        alt: 'Screenshot of the NYC Photo Lab Finder application'
+        src: projectAssetSrc('nyc-photo-lab-finder', 'landing-photo-lab.png'),
+        alt: 'Screenshot of the NYC Photo Lab Finder landing page'
+      },
+      {
+        src: projectAssetSrc('nyc-photo-lab-finder', 'map-photo-lab.png'),
+        alt: 'Screenshot of the NYC Photo Lab Finder map view'
+      },
+      {
+        src: projectAssetSrc('nyc-photo-lab-finder', 'saved-labs-photo-lab.png'),
+        alt: 'Screenshot of the NYC Photo Lab Finder saved labs view'
       }
     ],
     liveHref: 'https://mykeram.github.io/Photo-Lab-Finder/',
