@@ -36,12 +36,20 @@ const socials = [
   }
 ]
 
-export default function SocialLinks({ animateOnEnter = false, baseDelay = 0, stagger = 0.08 }) {
+export default function SocialLinks({
+  animateOnEnter = false,
+  baseDelay = 0,
+  stagger = 0.08,
+  showVideoLinks = true
+}) {
   const shouldReduceMotion = useReducedMotion()
+  const visibleSocials = showVideoLinks
+    ? socials
+    : socials.filter((social) => !['Twitch', 'YouTube'].includes(social.name))
 
   return (
     <div className="social-links" aria-label="Social links">
-      {socials.map((social, index) => (
+      {visibleSocials.map((social, index) => (
         <motion.a
           key={social.name}
           href={social.href}

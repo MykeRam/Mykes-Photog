@@ -44,6 +44,7 @@ export default function Header({ currentPath, currentSection, navigate }) {
   const codingHref = buildHash('/', new URLSearchParams({ section: 'coding' }))
   const photographyHref = buildHash('/photography')
   const activeKey = currentPath === '/photography' ? 'photography' : currentSection
+  const isPhotographyPage = currentPath === '/photography'
 
   useLayoutEffect(() => {
     if (shouldReduceMotion) {
@@ -133,7 +134,7 @@ export default function Header({ currentPath, currentSection, navigate }) {
           </motion.a>
         </div>
         <div className="header-actions">
-          <SocialLinks animateOnEnter baseDelay={0.24} stagger={0.1} />
+          <SocialLinks animateOnEnter baseDelay={0.24} stagger={0.1} showVideoLinks={isPhotographyPage} />
           <nav ref={navRef} className="header-nav" aria-label="Main">
             <NavLink
               href={homeHref}
