@@ -4,6 +4,7 @@ import instagramIcon from '../../assets/social/IG.svg'
 import threadsIcon from '../../assets/social/Threads.svg'
 import twitchIcon from '../../assets/social/Twitch.svg'
 import linkedinIcon from '../../assets/social/linkedin-icon.svg'
+import mailIcon from '../../assets/social/mail-icon.svg'
 import youtubeIcon from '../../assets/social/YT.svg'
 import { enterAnimation } from '../../lib/enterMotion'
 import './SocialLinks.css'
@@ -28,6 +29,11 @@ const socials = [
     name: 'LinkedIn',
     href: 'https://www.linkedin.com/in/michaelramirezz/',
     icon: linkedinIcon
+  },
+  {
+    name: 'Email',
+    href: 'mailto:me@myke.nyc',
+    icon: mailIcon
   },
   {
     name: 'YouTube',
