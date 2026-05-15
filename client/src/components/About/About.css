@@ -45,6 +45,9 @@
   max-width:350px;
   aspect-ratio:3 / 4.45;
   padding:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   background:rgba(255,255,255,0.34);
   border:1px solid rgba(136,116,91,0.18);
   box-shadow:0 20px 44px rgba(69,51,34,0.12);
@@ -55,6 +58,7 @@
   height:100%;
   display:block;
   object-fit:cover;
+  object-position:center center;
   border:1px solid rgba(136,116,91,0.16);
 }
 
