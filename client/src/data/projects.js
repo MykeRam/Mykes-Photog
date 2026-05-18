@@ -39,15 +39,18 @@ export const projectCards = [
     slug: 'nyc-photo-lab-finder',
     name: 'NYC Photo Lab Finder',
     description:
-      'A location-based app for comparing NYC photo labs on a live map, saving a shortlist, and reviewing nearby options by borough, neighborhood, ZIP, or current location.',
+      'A responsive photo lab search app with Google Maps and Places integration, service filters, map/list browsing, saved labs, and structured lab data.',
     detailDescription: [
-      'NYC Photo Lab Finder helps film photographers compare local lab options through an interactive map and location-aware search flow. Users can browse labs by borough, neighborhood, ZIP code, or current location, then save a shortlist for future reference.',
-      'The project combines front-end routing, map rendering, place data, persistence, and API-backed application structure into a practical tool built around a real photography workflow.'
+      'NYC Photo Lab Finder helps film photographers search for and compare local lab options through a responsive map/list interface. Users can search by area or current location, filter by services, browse synced map and list results, and save labs with notes for future reference.',
+      'The project emphasizes external API integration through Google Places, Google Maps, place photos, backend API calls, and MongoDB caching. It handles async state across debounced search, geolocation, map loading, API fetches, loading states, errors, and aborted requests.',
+      'It also demonstrates structured data handling by normalizing external place data into consistent lab objects, validating coordinates, inferring services, deduplicating results, and persisting favorites and notes. The interface is built with reusable components for filters, lab cards, map panels, favorite controls, loading states, and empty states.'
     ],
     highlights: [
-      'Search photo labs by borough, neighborhood, ZIP, or current location',
-      'Interactive Google Maps experience with nearby lab context',
-      'Saved labs view for building a personal shortlist'
+      'External API integration: Google Places, Google Maps, place photos, backend API calls, and MongoDB caching.',
+      'Search and filter UX: location search, current-location search, service filters, and synced map/list browsing.',
+      'Structured data handling: normalized lab objects, coordinate validation, service inference, deduped results, and persisted favorites/notes.',
+      'Async state: loading, errors, debounced search, geolocation, map loading, fetches, and aborted requests.',
+      'Polished responsive UX: mobile-friendly layouts, adaptive map/list views, visual states, saved labs, notes, and branded landing experience.'
     ],
     stack:
       'React • Vite • TypeScript • React Router DOM • @react-google-maps/api • Google Maps JavaScript API • Google Places API (New) • Node.js • Express • MongoDB • localStorage • concurrently',
