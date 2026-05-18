@@ -1,186 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'motion/react'
+import { projectCards } from '../../data/projects'
+import { buildHash } from '../../lib/hashRoute'
 import './Coding.css'
-
-const assetSrc = (path) => `${import.meta.env.BASE_URL}${path}`
-const projectAssetSrc = (projectFolder, fileName) => assetSrc(`projects/${projectFolder}/${fileName}`)
-
-const projectCards = [
-  {
-    id: 7,
-    name: 'Film Roll Tracker',
-    description:
-      'A full-stack film photography tracking app for logging rolls, cameras, lenses, film stocks, ISO, development status, notes, uploads, and activity history in a private authenticated dashboard.',
-    stack:
-      'React • TypeScript • CSS • Vite • Node.js • Express • PostgreSQL • JWT Auth • Zod • bcryptjs • REST API • Responsive Design',
-    images: [
-      {
-        src: projectAssetSrc('film-roll-tracker', 'landing-film-roll-tracker.png'),
-        alt: 'Screenshot of the Film Roll Tracker landing page'
-      },
-      {
-        src: projectAssetSrc('film-roll-tracker', 'bottom-landing-film-roll-tracker.png'),
-        alt: 'Screenshot of the Film Roll Tracker landing page lower section'
-      }
-    ],
-    githubHref: 'https://github.com/MykeRam/Film-Roll-Tracker'
-  },
-  {
-    id: 3,
-    name: 'NYC Photo Lab Finder',
-    description:
-      'A location-based app for comparing NYC photo labs on a live map, saving a shortlist, and reviewing nearby options by borough, neighborhood, ZIP, or current location.',
-    stack:
-      'React • Vite • TypeScript • React Router DOM • @react-google-maps/api • Google Maps JavaScript API • Google Places API (New) • Node.js • Express • MongoDB • localStorage • concurrently',
-    images: [
-      {
-        src: projectAssetSrc('nyc-photo-lab-finder', 'landing-photo-lab.png'),
-        alt: 'Screenshot of the NYC Photo Lab Finder landing page'
-      },
-      {
-        src: projectAssetSrc('nyc-photo-lab-finder', 'map-photo-lab.png'),
-        alt: 'Screenshot of the NYC Photo Lab Finder map view'
-      },
-      {
-        src: projectAssetSrc('nyc-photo-lab-finder', 'saved-labs-photo-lab.png'),
-        alt: 'Screenshot of the NYC Photo Lab Finder saved labs view'
-      }
-    ],
-    liveHref: 'https://mykeram.github.io/Photo-Lab-Finder/',
-    githubHref: 'https://github.com/MykeRam/Photo-Lab-Finder'
-  },
-  {
-    id: 1,
-    name: 'Personal Portfolio',
-    description:
-      'A responsive portfolio site that brings together my software engineering work and photography with custom motion, smooth section navigation, and a dedicated gallery experience.',
-    stack:
-      'React • React DOM • JavaScript • CSS • Motion • Vite • Vite Plugin React • Node.js • npm • GitHub Actions • Sharp',
-    images: [
-      {
-        src: projectAssetSrc('personal-portfolio', 'logo.png'),
-        alt: 'Portfolio branding logo',
-        className: 'coding-project-image--contain'
-      },
-      {
-        src: projectAssetSrc('personal-portfolio', 'landing-portfolio.png'),
-        alt: 'Screenshot of the landing section of the portfolio site'
-      },
-      {
-        src: projectAssetSrc('personal-portfolio', 'about-portfolio.png'),
-        alt: 'Screenshot of the about section of the portfolio site'
-      },
-      {
-        src: projectAssetSrc('personal-portfolio', 'coding-portfolio.png'),
-        alt: 'Screenshot of the coding section of the portfolio site'
-      },
-      {
-        src: projectAssetSrc('personal-portfolio', 'photography-portfolio.png'),
-        alt: 'Screenshot of the photography section of the portfolio site'
-      }
-    ],
-    liveHref: 'https://mykeram.github.io/Mykes-Photog/',
-    githubHref: 'https://github.com/MykeRam/Mykes-Photog'
-  },
-  {
-    id: 2,
-    name: 'WTWR (What to Wear?)',
-    description:
-      'A React weather app that helps users choose clothing based on current conditions, recommends items for the forecast, and supports item preview modals for a more interactive experience.',
-    stack:
-      'React • JavaScript (ES6+) • CSS • BEM • Vite • OpenWeatherMap API • Conditional Rendering',
-    images: [
-      {
-        src: projectAssetSrc('wtwr', 'wtwr-home.png'),
-        alt: 'Screenshot of the WTWR clothing recommendation application'
-      }
-    ],
-    githubHref: 'https://github.com/MykeRam/se_project_react'
-  },
-  {
-    id: 4,
-    name: 'Triple Peaks Library',
-    description:
-      'A library landing page built from a design brief as part of the TripleTen software engineering program, focused on clean structure, layout accuracy, and foundational front-end styling techniques.',
-    stack: 'HTML5 • CSS • Semantic HTML • Flexbox • Positioning • Z-Index',
-    images: [
-      {
-        src: projectAssetSrc('triple-peaks-library', 'TriplePeaksLibrary.png'),
-        alt: 'Screenshot of the full Triple Peaks Library webpage'
-      },
-      {
-        src: projectAssetSrc('triple-peaks-library', 'events-triple_peaks.png'),
-        alt: 'Screenshot of the Triple Peaks Library events section'
-      },
-      {
-        src: projectAssetSrc('triple-peaks-library', 'staff-picks_triple_peaks.png'),
-        alt: 'Screenshot of the Triple Peaks Library staff picks section'
-      },
-      {
-        src: projectAssetSrc('triple-peaks-library', 'become-member_triple_peaks.png'),
-        alt: 'Screenshot of the Triple Peaks Library become member section'
-      },
-      {
-        src: projectAssetSrc('triple-peaks-library', 'about_triple_peaks.png'),
-        alt: 'Screenshot of the Triple Peaks Library about section'
-      }
-    ],
-    liveHref: 'https://mykeram.github.io/TriplePeaksLibrary/',
-    githubHref: 'https://github.com/MykeRam/TriplePeaksLibrary'
-  },
-  {
-    id: 5,
-    name: 'Triple Peaks Coffee Shop',
-    description:
-      'A coffee shop site built from a TripleTen design brief with a structured multi-section layout, custom form work, and motion-focused touches using CSS animation and transforms.',
-    stack:
-      'HTML5 • CSS • Semantic HTML • Flexbox • Positioning • BEM • Custom Forms • CSS Animation • Transform',
-    images: [
-      {
-        src: projectAssetSrc('triple-peaks-coffee-shop', 'TriplePeaksCoffee.png'),
-        alt: 'Screenshot of the full Triple Peaks Coffee Shop webpage'
-      },
-      {
-        src: projectAssetSrc('triple-peaks-coffee-shop', 'menu_coffee-shop.png'),
-        alt: 'Screenshot of the Triple Peaks Coffee Shop menu section'
-      },
-      {
-        src: projectAssetSrc('triple-peaks-coffee-shop', 'recipes_coffee-shop.png'),
-        alt: 'Screenshot of the Triple Peaks Coffee Shop recipes section'
-      },
-      {
-        src: projectAssetSrc('triple-peaks-coffee-shop', 'book-table_coffee-shop.png'),
-        alt: 'Screenshot of the Triple Peaks Coffee Shop booking section'
-      },
-      {
-        src: projectAssetSrc('triple-peaks-coffee-shop', 'contacts_coffee-shop.png'),
-        alt: 'Screenshot of the Triple Peaks Coffee Shop contacts section',
-        className: 'coding-project-image--contain-full'
-      }
-    ],
-    liveHref: 'https://mykeram.github.io/se_project_coffeeshop/',
-    githubHref: 'https://github.com/MykeRam/se_project_coffeeshop'
-  },
-  {
-    id: 6,
-    name: 'About Me',
-    description:
-      'A simple landing page created as the first demo project in the TripleTen software engineering program, focused on core page structure and foundational front-end layout work.',
-    stack: 'HTML5 • CSS • Semantic HTML • Flexbox',
-    images: [
-      {
-        src: projectAssetSrc('about-me', 'landing_about-me.png'),
-        alt: 'Screenshot of the About Me landing section'
-      },
-      {
-        src: projectAssetSrc('about-me', '1stSiteMR.png'),
-        alt: 'Screenshot of the About Me project landing page'
-      }
-    ],
-    liveHref: 'https://mykeram.github.io/About-me-TT/',
-    githubHref: 'https://github.com/MykeRam/About-me-TT'
-  }
-]
 
 const headingAnimations = {
   thoughtful: {
@@ -361,7 +183,9 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
   )
 }
 
-function ProjectCard({ project, index, shouldReduceMotion }) {
+function ProjectCard({ project, index, shouldReduceMotion, navigate }) {
+  const projectHref = buildHash(`/coding/${project.slug}`)
+
   return (
     <motion.article
       className="coding-project-card"
@@ -381,7 +205,18 @@ function ProjectCard({ project, index, shouldReduceMotion }) {
       <ProjectCarousel project={project} shouldReduceMotion={shouldReduceMotion} />
 
       <div className="coding-project-body">
-        <h3>{project.name}</h3>
+        <h3>
+          <a
+            className="coding-project-title-link"
+            href={projectHref}
+            onClick={(event) => {
+              event.preventDefault()
+              navigate(projectHref)
+            }}
+          >
+            {project.name}
+          </a>
+        </h3>
         <p>{project.description}</p>
         <p className="coding-project-stack">{project.stack}</p>
 
@@ -411,7 +246,8 @@ function ProjectCard({ project, index, shouldReduceMotion }) {
 export default function Coding({
   sectionId = 'coding',
   isSectionActive = false,
-  isSectionTargeted = false
+  isSectionTargeted = false,
+  navigate
 }) {
   const shouldReduceMotion = useReducedMotion()
   const [isResponsiveHoverEnabled, setIsResponsiveHoverEnabled] = useState(false)
@@ -710,6 +546,7 @@ export default function Coding({
                   project={project}
                   index={index}
                   shouldReduceMotion={shouldReduceMotion}
+                  navigate={navigate}
                 />
               ))}
             </div>

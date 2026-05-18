@@ -5,6 +5,8 @@ import Coding from './components/Coding/Coding'
 import Footer from './components/Footer/Footer'
 import Home from './components/Home/Home'
 import Photography from './components/Photography/Photography'
+import ProjectDetail from './components/ProjectDetail/ProjectDetail'
+import { projectBySlug } from './data/projects'
 import { buildHash, getHashRoute, getHashSearchParams } from './lib/hashRoute'
 
 const mainPageRoutes = new Set(['/', '/about', '/coding'])
@@ -56,7 +58,7 @@ function scrollToSection(section, behavior = 'smooth') {
 
 function getCurrentSection(path = getHashRoute(), hash = window.location.hash) {
   if (path === '/about') return 'about'
-  if (path === '/coding') return 'coding'
+  if (path === '/coding' || path.startsWith('/coding/')) return 'coding'
 
   const section = getHashSearchParams(hash).get('section')
   return section === 'about' || section === 'coding' ? section : 'home'
@@ -182,6 +184,19 @@ export default function App() {
     }
   }, [currentPath])
 
+  useEffect(() => {
+    if (mainPageRoutes.has(currentPath)) return undefined
+
+    const frameId = window.requestAnimationFrame(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'auto'
+      })
+    })
+
+    return () => window.cancelAnimationFrame(frameId)
+  }, [currentPath])
+
   const navigate = (path) => {
     const nextHash = path.startsWith('#') ? path : buildHash(path)
     const nextPath = getHashRoute(nextHash)
@@ -201,24 +216,31 @@ export default function App() {
     window.location.hash = nextHash
   }
 
-  const page =
-    currentPath === '/photography' ? (
-      <Photography onGridReadyChange={setIsPhotographyGridReady} />
-    ) : (
-      <>
-        <Home sectionId="home" />
-        <About sectionId="about" navigate={navigate} />
-        <Coding
-          sectionId="coding"
-          isSectionActive={activeSection === 'coding'}
-          isSectionTargeted={currentSection === 'coding'}
-        />
-      </>
-    )
+  const projectSlug = currentPath.startsWith('/coding/') ? currentPath.replace('/coding/', '') : ''
+  const page = currentPath.startsWith('/coding/') ? (
+    <ProjectDetail project={projectBySlug.get(projectSlug)} navigate={navigate} />
+  ) : currentPath === '/photography' ? (
+    <Photography onGridReadyChange={setIsPhotographyGridReady} />
+  ) : (
+    <>
+      <Home sectionId="home" />
+      <About sectionId="about" navigate={navigate} />
+      <Coding
+        sectionId="coding"
+        isSectionActive={activeSection === 'coding'}
+        isSectionTargeted={currentSection === 'coding'}
+        navigate={navigate}
+      />
+    </>
+  )
 
   return (
     <div className="app-shell">
-      <Header currentPath={currentPath} currentSection={activeSection} navigate={navigate} />
+      <Header
+        currentPath={currentPath}
+        currentSection={mainPageRoutes.has(currentPath) ? activeSection : currentSection}
+        navigate={navigate}
+      />
       <main className="app-main">{page}</main>
       {isPageLoaded && (currentPath !== '/photography' || isPhotographyGridReady) ? <Footer /> : null}
     </div>

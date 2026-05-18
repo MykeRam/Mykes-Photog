@@ -291,6 +291,21 @@
   color:#111;
 }
 
+.coding-project-title-link {
+  color:inherit;
+  text-decoration:none;
+  transition:color .2s ease;
+}
+
+.coding-project-title-link:hover,
+.coding-project-title-link:focus-visible {
+  color:#b98755;
+}
+
+.coding-project-title-link:focus-visible {
+  outline:none;
+}
+
 .coding-project-body p {
   max-width:48ch;
 }
