@@ -7,6 +7,23 @@ const projectAssetSrc = (projectFolder, fileName) => assetSrc(`projects/${projec
 
 const projectCards = [
   {
+    id: 7,
+    name: 'Film Roll Tracker',
+    description:
+      'A film photography tracking app for organizing rolls, logging camera and film details, and keeping development notes in one place throughout the shooting workflow.',
+    stack: 'React • JavaScript • CSS • Vite • Responsive Design • Local Data Management',
+    images: [
+      {
+        src: projectAssetSrc('film-roll-tracker', 'landing-film-roll-tracker.png'),
+        alt: 'Screenshot of the Film Roll Tracker landing page'
+      },
+      {
+        src: projectAssetSrc('film-roll-tracker', 'bottom-landing-film-roll-tracker.png'),
+        alt: 'Screenshot of the Film Roll Tracker landing page lower section'
+      }
+    ]
+  },
+  {
     id: 3,
     name: 'NYC Photo Lab Finder',
     description:
