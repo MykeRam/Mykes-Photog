@@ -7,15 +7,18 @@ export const projectCards = [
     slug: 'film-roll-tracker',
     name: 'Film Roll Tracker',
     description:
-      'A full-stack film photography tracking app for logging rolls, cameras, lenses, film stocks, ISO, development status, notes, uploads, and activity history in a private authenticated dashboard.',
+      'A full-stack film photography dashboard with authentication, full CRUD roll management, analytics, uploads, and validation for a real film workflow.',
     detailDescription: [
-      'Film Roll Tracker is a private full-stack dashboard built for film photographers who want a structured place to document every roll from loading through development. The app keeps shooting details, camera and lens choices, film stock, ISO, notes, uploads, and activity history connected to each roll.',
-      'The project focuses on authenticated user workflows, typed front-end structure, API-backed data, and a responsive interface that makes film tracking usable on both desktop and smaller screens.'
+      'Film Roll Tracker is a private full-stack dashboard built around a specific film photography workflow: tracking rolls from loading through shooting, development, scanning, and archiving. Users can create, read, update, and delete roll entries while keeping camera, lens, film stock, ISO, status, notes, uploads, and related activity connected in one place.',
+      'The app demonstrates authenticated product thinking through register/login flows, JWT sessions, protected API routes, user-owned roll data, and dashboard analytics. It turns a custom domain problem into software by modeling the data film photographers actually care about and presenting it through stats, status counts, camera and film-stock insights, tables, forms, and detail views.',
+      'It also emphasizes user-centered design: the interface is shaped around real photographer needs like roll progress, equipment logging, film stock suggestions, notes, uploads, and private account-based tracking. Form validation, required fields, ISO validation, and server-side Zod validation keep the workflow structured and reliable.'
     ],
     highlights: [
-      'Private authenticated dashboard for personal roll tracking',
-      'Structured logging for cameras, lenses, film stocks, ISO, notes, and development status',
-      'Activity history and uploads to keep project context in one place'
+      'Full CRUD: users can create, read, update, and delete film roll entries.',
+      'Authentication: register/login, JWT sessions, protected API routes, and user-owned roll data.',
+      'Dashboard analytics: roll stats, status counts, camera and film-stock insights, uploads, activity, and overview panels.',
+      'Data modeling: structured entities for users, rolls, uploads, activity, statuses, analytics buckets, and ownership.',
+      'Forms and validation: roll creation/edit forms, required fields, ISO validation, auth forms, and server-side Zod validation.'
     ],
     stack:
       'React • TypeScript • CSS • Vite • Node.js • Express • PostgreSQL • JWT Auth • Zod • bcryptjs • REST API • Responsive Design',
