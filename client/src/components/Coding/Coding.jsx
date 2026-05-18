@@ -10,8 +10,9 @@ const projectCards = [
     id: 7,
     name: 'Film Roll Tracker',
     description:
-      'A film photography tracking app for organizing rolls, logging camera and film details, and keeping development notes in one place throughout the shooting workflow.',
-    stack: 'React • JavaScript • CSS • Vite • Responsive Design • Local Data Management',
+      'A full-stack film photography tracking app for logging rolls, cameras, lenses, film stocks, ISO, development status, notes, uploads, and activity history in a private authenticated dashboard.',
+    stack:
+      'React • TypeScript • CSS • Vite • Node.js • Express • PostgreSQL • JWT Auth • Zod • bcryptjs • REST API • Responsive Design',
     images: [
       {
         src: projectAssetSrc('film-roll-tracker', 'landing-film-roll-tracker.png'),
