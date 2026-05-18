@@ -21,7 +21,8 @@ const projectCards = [
         src: projectAssetSrc('film-roll-tracker', 'bottom-landing-film-roll-tracker.png'),
         alt: 'Screenshot of the Film Roll Tracker landing page lower section'
       }
-    ]
+    ],
+    githubHref: 'https://github.com/MykeRam/Film-Roll-Tracker'
   },
   {
     id: 3,
