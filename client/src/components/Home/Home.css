@@ -68,7 +68,7 @@
 
 .home-role-note {
   margin: 0;
-  text-align: left;
+  text-align: center;
   color: #2c2c2c;
   font-size: clamp(0.95rem, 1.5vw, 1.1rem);
   font-weight: 500;
