@@ -87,7 +87,7 @@ const projectSections = [
   {
     title: 'Projects',
     intro:
-      'This section features projects I&apos;ve built while studying software engineering and developing my skills in modern web development. Each project reflects a different stage of my growth and shows how I&apos;m applying TypeScript, SQL, PostgreSQL, and other tools to real products.',
+      "This section features projects I've built while studying software engineering and developing my skills in modern web development. Each project reflects a different stage of my growth and shows how I'm applying TypeScript, SQL, PostgreSQL, and other tools to real products.",
     projects: projectCards.filter((project) => project.group !== 'Foundational Projects')
   },
   {
@@ -478,12 +478,12 @@ export default function Coding({
               </span>
             </motion.h2>
             <p className="coding-intro-text">
-              I&apos;m currently studying software engineering with TripleTen, where I&apos;m building a strong
+              I'm currently studying software engineering with TripleTen, where I'm building a strong
               foundation in front-end and full-stack development. I enjoy creating clean, responsive, and
               user-focused digital experiences, and I&apos;m especially drawn to the balance between design,
-              structure, and problem-solving. I&apos;m especially focused on TypeScript, SQL, and PostgreSQL as I
+              structure, and problem-solving. I'm especially focused on TypeScript, SQL, and PostgreSQL as I
               keep expanding into full-stack work. This section highlights my technical skills, the tools I work
-              with, and the projects I&apos;ve built throughout my learning journey.
+              with, and the projects I've built throughout my learning journey.
             </p>
           </header>
 
@@ -509,7 +509,7 @@ export default function Coding({
               <h2 id="coding-approach-title">Approach</h2>
               <p>
                 I enjoy building interfaces that are both functional and visually polished. As I continue growing
-                as a developer, I&apos;m focused on writing clean code, improving the way I structure projects, and
+                as a developer, I'm focused on writing clean code, improving the way I structure projects, and
                 building applications that feel intuitive and purposeful. My goal is not only to strengthen my
                 technical knowledge, but also to create work that reflects both precision and creativity.
               </p>
