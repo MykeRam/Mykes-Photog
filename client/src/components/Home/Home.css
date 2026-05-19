@@ -54,7 +54,7 @@
 .home-role-note-card {
   width: fit-content;
   max-width: 100%;
-  margin: 0 auto 16px;
+  margin: 12px auto 16px;
   padding: 10px 0;
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.82);
@@ -155,7 +155,7 @@
   }
 
   .home-role-note-card {
-    margin-bottom: 14px;
+    margin: 10px auto 14px;
     padding: 8px 0;
     border-radius: 18px;
   }
