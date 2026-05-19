@@ -53,12 +53,13 @@
 
 .home-role-note {
   margin: 0 0 18px;
-  color: #6f6254;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  line-height: 1.6;
-  text-transform: uppercase;
+  color: #2c2c2c;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.65;
+  text-transform: none;
+  text-wrap: balance;
 }
 
 .home-title {
@@ -143,7 +144,7 @@
 
   .home-role-note {
     margin-bottom: 14px;
-    font-size: 0.74rem;
+    font-size: 0.92rem;
   }
 
   .home-title {
