@@ -103,6 +103,10 @@
   scroll-margin-top:118px;
 }
 
+#coding-projects-title {
+  scroll-margin-top:104px;
+}
+
 .coding-project-cue {
   margin-top:28px;
   display:flex;
@@ -429,6 +433,10 @@
   .coding-project-carousel-counter {
     right:8px;
     bottom:8px;
+  }
+
+  #coding-projects-title {
+    scroll-margin-top:88px;
   }
 }
 
