@@ -241,6 +241,12 @@
   box-shadow:0 24px 42px rgba(17,17,17,0.18);
 }
 
+.coding-project-card:hover .coding-project-body,
+.coding-project-card:focus-within .coding-project-body {
+  border-bottom-left-radius:24px;
+  border-bottom-right-radius:24px;
+}
+
 .coding-project-card:hover .coding-project-image,
 .coding-project-card:focus-within .coding-project-image {
   border-color:rgba(17,17,17,0.16);
@@ -369,6 +375,7 @@
 
 .coding-project-body {
   padding:0 8px 8px;
+  overflow:hidden;
 }
 
 .coding-project-title-link {
