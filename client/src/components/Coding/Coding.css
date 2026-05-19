@@ -315,6 +315,10 @@
   color:#111;
 }
 
+.coding-project-body {
+  padding-inline:8px;
+}
+
 .coding-project-title-link {
   color:inherit;
   text-decoration:none;
