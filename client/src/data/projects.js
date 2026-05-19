@@ -40,6 +40,10 @@ export const projectCards = [
         alt: 'Screenshot of the Film Roll Tracker roll library view'
       },
       {
+        src: projectAssetSrc('film-roll-tracker', 'delete-confirm_film-roll-tracker.jpg'),
+        alt: 'Screenshot of the Film Roll Tracker delete confirmation dialog'
+      },
+      {
         src: projectAssetSrc('film-roll-tracker', 'scans-film-roll-tracker.jpg'),
         alt: 'Screenshot of the Film Roll Tracker scans view'
       }
