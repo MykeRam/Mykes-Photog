@@ -30,6 +30,18 @@ export const projectCards = [
       {
         src: projectAssetSrc('film-roll-tracker', 'bottom-landing-film-roll-tracker.png'),
         alt: 'Screenshot of the Film Roll Tracker landing page lower section'
+      },
+      {
+        src: projectAssetSrc('film-roll-tracker', 'logged_in_dashboard-film-roll-tracker.jpg'),
+        alt: 'Screenshot of the Film Roll Tracker authenticated dashboard'
+      },
+      {
+        src: projectAssetSrc('film-roll-tracker', 'roll_library-film-roll-tracker.jpg'),
+        alt: 'Screenshot of the Film Roll Tracker roll library view'
+      },
+      {
+        src: projectAssetSrc('film-roll-tracker', 'scans-film-roll-tracker.jpg'),
+        alt: 'Screenshot of the Film Roll Tracker scans view'
       }
     ],
     githubHref: 'https://github.com/MykeRam/Film-Roll-Tracker'
