@@ -46,6 +46,43 @@ const headingAnimations = {
 
 const headingActivationDelayMs = 140
 
+const skillCategories = [
+  {
+    title: 'Frontend',
+    items: [
+      'HTML5',
+      'CSS3',
+      'JavaScript (ES6+)',
+      'TypeScript',
+      'React',
+      'Responsive Design',
+      'Flexbox',
+      'CSS Grid',
+      'BEM',
+      'DOM Manipulation',
+      'React Hooks',
+      'Component-Based Development',
+      'Form Validation'
+    ]
+  },
+  {
+    title: 'Backend',
+    items: ['Node.js', 'Express.js', 'JSON', 'Server Routing', 'Basic Backend Development', 'Authentication & Authorization']
+  },
+  {
+    title: 'Databases',
+    items: ['SQL', 'PostgreSQL', 'MongoDB', 'Database Fundamentals']
+  },
+  {
+    title: 'APIs',
+    items: ['REST API Integration', 'API-Driven Development', 'OpenWeatherMap API', 'Google Maps API', 'Google Places API']
+  },
+  {
+    title: 'Tools / Deployment',
+    items: ['Git', 'GitHub', 'VS Code', 'Vite', 'npm', 'GitHub Pages', 'GitHub Actions', 'Command Line', 'Chrome DevTools', 'Figma', 'Deployment Practices']
+  }
+]
+
 function ProjectCarousel({ project, shouldReduceMotion }) {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const swipeStateRef = useRef(null)
@@ -439,50 +476,17 @@ export default function Coding({
             <section className="coding-section coding-section--skills" aria-labelledby="coding-skills-title">
               <h2 id="coding-skills-title">Technical Skills</h2>
 
-              <div className="coding-skill-group">
-                <h3>Frontend</h3>
-                <p>
-                  HTML5, CSS3, JavaScript (ES6+), React, Responsive Design, Flexbox, CSS Grid, BEM,
-                  DOM Manipulation, React Hooks, Component-Based Development, Form Validation
-                </p>
-              </div>
-
-              <div className="coding-skill-group">
-                <h3>Backend</h3>
-                <p>
-                  Node.js, Express.js, REST API Integration, JSON, Server Routing, Basic Backend
-                  Development
-                </p>
-              </div>
-
-              <div className="coding-skill-group">
-                <h3>Tools &amp; Workflow</h3>
-                <p>
-                  Git, GitHub, VS Code, Vite, npm, GitHub Pages, Command Line, Chrome DevTools,
-                  Figma
-                </p>
-              </div>
-
-              <div className="coding-skill-group">
-                <h3>Programming Concepts</h3>
-                <p>
-                  Object-Oriented Programming (OOP), Asynchronous JavaScript, Modular Code Structure,
-                  State Management Basics, Debugging, API-Driven Development
-                </p>
-              </div>
-
-              <div className="coding-skill-group">
-                <h3>Building Through TripleTen</h3>
-                <p>
-                  Advanced React Patterns, Full-Stack Development, Database Fundamentals,
-                  Authentication &amp; Authorization, Backend Architecture, Deployment Practices,
-                  Software Engineering Best Practices
-                </p>
-              </div>
-
-              <div className="coding-skill-group">
-                <h3>Learning Independently</h3>
-                <p>TypeScript</p>
+              <div className="coding-skill-grid">
+                {skillCategories.map((category) => (
+                  <div key={category.title} className="coding-skill-group">
+                    <h3>{category.title}</h3>
+                    <ul className="coding-skill-list">
+                      {category.items.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
               </div>
             </section>
 
