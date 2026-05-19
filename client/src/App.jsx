@@ -23,7 +23,7 @@ function getSectionTarget(section) {
   return section === 'about'
     ? document.querySelector('#about .about-sheet')
     : section === 'coding'
-      ? document.querySelector('#coding .page-copy')
+      ? document.querySelector('#coding-title')
       : document.getElementById(section)
 }
 
