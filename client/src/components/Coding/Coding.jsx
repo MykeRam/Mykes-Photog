@@ -183,21 +183,28 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
   )
 }
 
-function ProjectCard({ project, index, shouldReduceMotion, navigate }) {
+function ProjectCard({ project, index, shouldReduceMotion, shouldRevealImmediately, navigate }) {
   const projectHref = buildHash(`/coding/${project.slug}`)
 
   return (
     <motion.article
       className="coding-project-card"
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
-      whileInView={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
+      initial={shouldReduceMotion || shouldRevealImmediately ? false : { opacity: 0, y: 24 }}
+      animate={
+        shouldReduceMotion || shouldRevealImmediately
+          ? { opacity: 1, y: 0 }
+          : undefined
+      }
+      whileInView={
+        shouldReduceMotion || shouldRevealImmediately ? undefined : { opacity: 1, y: 0 }
+      }
+      viewport={shouldReduceMotion || shouldRevealImmediately ? undefined : { once: true, amount: 0.25 }}
       transition={
         shouldReduceMotion
           ? { duration: 0 }
           : {
               duration: 0.65,
-              delay: 0.12 + index * 0.18,
+              delay: shouldRevealImmediately ? 0.05 + index * 0.06 : 0.12 + index * 0.18,
               ease: [0.22, 1, 0.36, 1]
             }
       }
@@ -287,14 +294,9 @@ export default function Coding({
     const projectsHeading = document.getElementById('coding-projects-title')
     if (!projectsHeading) return
 
-    const header = document.querySelector('.site-header')
-    const headerHeight = header ? header.getBoundingClientRect().height : 0
-    const landingOffset = Math.min(180, Math.round(window.innerHeight * 0.18))
-    const targetTop = window.scrollY + projectsHeading.getBoundingClientRect().top - headerHeight - 8
-
-    window.scrollTo({
-      top: Math.max(0, targetTop + landingOffset),
-      behavior: shouldReduceMotion ? 'auto' : 'smooth'
+    projectsHeading.scrollIntoView({
+      behavior: shouldReduceMotion ? 'auto' : 'smooth',
+      block: 'start'
     })
   }
 
@@ -552,6 +554,7 @@ export default function Coding({
                   project={project}
                   index={index}
                   shouldReduceMotion={shouldReduceMotion}
+                  shouldRevealImmediately={isSectionTargeted}
                   navigate={navigate}
                 />
               ))}
