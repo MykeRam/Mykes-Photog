@@ -83,6 +83,21 @@ const skillCategories = [
   }
 ]
 
+const projectSections = [
+  {
+    title: 'Projects',
+    intro:
+      'This section features projects I&apos;ve built while studying software engineering and developing my skills in modern web development. Each project reflects a different stage of my growth and shows how I&apos;m applying TypeScript, SQL, PostgreSQL, and other tools to real products.',
+    projects: projectCards.filter((project) => project.group !== 'Foundational Projects')
+  },
+  {
+    title: 'Foundational Projects',
+    intro:
+      'These earlier TripleTen projects established the core habits behind the rest of my work: clean structure, responsive layout, semantic HTML, and maintainable CSS. They show the foundation I kept building on as I moved into more advanced full-stack projects.',
+    projects: projectCards.filter((project) => project.group === 'Foundational Projects')
+  }
+]
+
 function ProjectCarousel({ project, shouldReduceMotion }) {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const swipeStateRef = useRef(null)
@@ -548,27 +563,34 @@ export default function Coding({
             </section>
           </div>
 
-          <section className="coding-section coding-projects" aria-labelledby="coding-projects-title">
-            <h2 id="coding-projects-title" ref={projectsHeadingRef}>Projects</h2>
-            <p className="coding-projects-intro">
-              This section features projects I&apos;ve built while studying software engineering and developing my
-              skills in modern web development. Each project reflects a different stage of my growth and shows
-              how I&apos;m applying TypeScript, SQL, PostgreSQL, and other tools to real products.
-            </p>
+          {projectSections.map((section, sectionIndex) => (
+            <section
+              key={section.title}
+              className={`coding-section coding-projects${sectionIndex === 1 ? ' coding-projects--foundational' : ''}`}
+              aria-labelledby={sectionIndex === 0 ? 'coding-projects-title' : 'coding-foundational-projects-title'}
+            >
+              <h2
+                id={sectionIndex === 0 ? 'coding-projects-title' : 'coding-foundational-projects-title'}
+                ref={sectionIndex === 0 ? projectsHeadingRef : undefined}
+              >
+                {section.title}
+              </h2>
+              <p className="coding-projects-intro">{section.intro}</p>
 
-            <div className="coding-project-list">
-              {projectCards.map((project, index) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  index={index}
-                  shouldReduceMotion={shouldReduceMotion}
-                  shouldRevealOnEnter={isProjectsHeadingInView}
-                  navigate={navigate}
-                />
-              ))}
-            </div>
-          </section>
+              <div className="coding-project-list">
+                {section.projects.map((project, index) => (
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    index={index}
+                    shouldReduceMotion={shouldReduceMotion}
+                    shouldRevealOnEnter={sectionIndex === 0 ? isProjectsHeadingInView : false}
+                    navigate={navigate}
+                  />
+                ))}
+              </div>
+            </section>
+          ))}
         </div>
       </div>
     </section>

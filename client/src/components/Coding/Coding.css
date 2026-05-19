@@ -103,6 +103,12 @@
   scroll-margin-top:118px;
 }
 
+.coding-projects--foundational {
+  margin-top:50px;
+  padding-top:28px;
+  border-top:1px solid rgba(17,17,17,0.12);
+}
+
 #coding-projects-title {
   scroll-margin-top:104px;
 }

@@ -137,6 +137,7 @@ export const projectCards = [
     id: 2,
     slug: 'wtwr',
     name: 'WTWR (What to Wear?)',
+    group: 'Foundational Projects',
     description:
       'A weather-driven React app that recommends clothing from live conditions and supports interactive item previews in a fast, responsive UI.',
     detailDescription: [
@@ -163,6 +164,7 @@ export const projectCards = [
     id: 4,
     slug: 'triple-peaks-library',
     name: 'Triple Peaks Library',
+    group: 'Foundational Projects',
     description:
       'A clean multi-section landing page built from a design brief, focused on semantic structure, layout precision, and maintainable CSS.',
     detailDescription: [
@@ -205,6 +207,7 @@ export const projectCards = [
     id: 5,
     slug: 'triple-peaks-coffee-shop',
     name: 'Triple Peaks Coffee Shop',
+    group: 'Foundational Projects',
     description:
       'A polished cafe site built from a design brief with custom forms, structured sections, and subtle CSS animation and transforms.',
     detailDescription: [
@@ -249,6 +252,7 @@ export const projectCards = [
     id: 6,
     slug: 'about-me',
     name: 'About Me',
+    group: 'Foundational Projects',
     description:
       'A foundational landing page built from a design brief, focused on semantic structure, clean layout, and responsive presentation.',
     detailDescription: [
