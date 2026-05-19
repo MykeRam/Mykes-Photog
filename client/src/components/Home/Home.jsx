@@ -96,12 +96,6 @@ export default function Home({ sectionId = 'home' }) {
           </div>
 
           <div className="home-copy">
-            <div className="home-role-note-card">
-              <p className="home-role-note">
-                Software engineering student building full-stack web applications with React, TypeScript, Node.js,
-                and PostgreSQL - currently seeking junior frontend or full-stack software engineering opportunities.
-              </p>
-            </div>
             <h1 id="home-title" className="home-title">
               <span className="home-title-primary">
                 <span className="home-title-role">Software Engineer |</span>
@@ -109,6 +103,12 @@ export default function Home({ sectionId = 'home' }) {
               </span>
               <span className="home-title-secondary">Photographer</span>
             </h1>
+            <div className="home-role-note-card">
+              <p className="home-role-note">
+                Software engineering student building full-stack web applications with React, TypeScript, Node.js,
+                and PostgreSQL - currently seeking junior frontend or full-stack software engineering opportunities.
+              </p>
+            </div>
           </div>
         </div>
       </div>
