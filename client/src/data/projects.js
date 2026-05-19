@@ -109,11 +109,6 @@ export const projectCards = [
     cardStack: 'React • Motion • Vite',
     images: [
       {
-        src: projectAssetSrc('personal-portfolio', 'logo.png'),
-        alt: 'Portfolio branding logo',
-        className: 'coding-project-image--contain'
-      },
-      {
         src: projectAssetSrc('personal-portfolio', 'landing-portfolio.png'),
         alt: 'Screenshot of the landing section of the portfolio site'
       },
@@ -128,6 +123,11 @@ export const projectCards = [
       {
         src: projectAssetSrc('personal-portfolio', 'photography-portfolio.png'),
         alt: 'Screenshot of the photography section of the portfolio site'
+      },
+      {
+        src: projectAssetSrc('personal-portfolio', 'logo.png'),
+        alt: 'Portfolio branding logo',
+        className: 'coding-project-image--contain'
       }
     ],
     liveHref: 'https://mykeram.github.io/Mykes-Photog/',
