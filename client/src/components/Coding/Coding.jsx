@@ -261,8 +261,13 @@ export default function Coding({
   const [isResponsiveHovered, setIsResponsiveHovered] = useState(false)
   const headingRef = useRef(null)
   const projectCueRef = useRef(null)
+  const projectsHeadingRef = useRef(null)
   const isHeadingInView = useInView(headingRef, {
     amount: 0.6,
+    margin: '0px 0px -18% 0px'
+  })
+  const isProjectsHeadingInView = useInView(projectsHeadingRef, {
+    amount: 0.45,
     margin: '0px 0px -18% 0px'
   })
   const isProjectCueInView = useInView(projectCueRef, {
@@ -540,7 +545,7 @@ export default function Coding({
           </div>
 
           <section className="coding-section coding-projects" aria-labelledby="coding-projects-title">
-            <h2 id="coding-projects-title">Projects</h2>
+            <h2 id="coding-projects-title" ref={projectsHeadingRef}>Projects</h2>
             <p className="coding-projects-intro">
               This section features projects I&apos;ve built while studying software engineering and developing my
               skills in modern web development. Each project reflects a different stage of my growth and shows
@@ -554,7 +559,7 @@ export default function Coding({
                   project={project}
                   index={index}
                   shouldReduceMotion={shouldReduceMotion}
-                  shouldRevealOnEnter={isSectionActive}
+                  shouldRevealOnEnter={isProjectsHeadingInView}
                   navigate={navigate}
                 />
               ))}
