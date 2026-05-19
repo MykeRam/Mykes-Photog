@@ -316,7 +316,7 @@
 }
 
 .coding-project-body {
-  padding-inline:8px;
+  padding:0 8px 8px;
 }
 
 .coding-project-title-link {
@@ -347,6 +347,7 @@
 
 .coding-project-links {
   margin-top:18px;
+  margin-bottom:4px;
   display:flex;
   flex-wrap:wrap;
   gap:12px;
