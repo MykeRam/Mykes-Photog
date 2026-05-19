@@ -51,6 +51,16 @@
   min-width: 0;
 }
 
+.home-role-note {
+  margin: 0 0 18px;
+  color: #6f6254;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
 .home-title {
   margin: 0;
   display: flex;
@@ -129,6 +139,11 @@
 
   .home-copy {
     padding-top: 45px;
+  }
+
+  .home-role-note {
+    margin-bottom: 14px;
+    font-size: 0.74rem;
   }
 
   .home-title {

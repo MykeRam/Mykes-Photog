@@ -218,7 +218,7 @@ function ProjectCard({ project, index, shouldReduceMotion, navigate }) {
           </a>
         </h3>
         <p>{project.description}</p>
-        <p className="coding-project-stack">{project.stack}</p>
+        <p className="coding-project-stack">{project.cardStack ?? project.stack}</p>
 
         <div className="coding-project-links" aria-label={`${project.name} links`}>
           {project.liveHref ? (
@@ -417,8 +417,9 @@ export default function Coding({
               I&apos;m currently studying software engineering with TripleTen, where I&apos;m building a strong
               foundation in front-end and full-stack development. I enjoy creating clean, responsive, and
               user-focused digital experiences, and I&apos;m especially drawn to the balance between design,
-              structure, and problem-solving. This section highlights my technical skills, the tools I work with,
-              and the projects I&apos;ve built throughout my learning journey.
+              structure, and problem-solving. I&apos;m especially focused on TypeScript, SQL, and PostgreSQL as I
+              keep expanding into full-stack work. This section highlights my technical skills, the tools I work
+              with, and the projects I&apos;ve built throughout my learning journey.
             </p>
           </header>
 
@@ -535,8 +536,8 @@ export default function Coding({
             <h2 id="coding-projects-title">Projects</h2>
             <p className="coding-projects-intro">
               This section features projects I&apos;ve built while studying software engineering and developing my
-              skills in modern web development. Each project reflects a different stage of my growth and
-              highlights the tools, concepts, and problem-solving approaches used throughout the process.
+              skills in modern web development. Each project reflects a different stage of my growth and shows
+              how I&apos;m applying TypeScript, SQL, PostgreSQL, and other tools to real products.
             </p>
 
             <div className="coding-project-list">

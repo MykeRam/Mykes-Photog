@@ -7,11 +7,11 @@ export const projectCards = [
     slug: 'film-roll-tracker',
     name: 'Film Roll Tracker',
     description:
-      'A full-stack film photography dashboard with authentication, full CRUD roll management, analytics, uploads, and validation for a real film workflow.',
+      'A full-stack film photography dashboard built with TypeScript and PostgreSQL to track rolls, status, uploads, and analytics in one workflow.',
     detailDescription: [
-      'Film Roll Tracker is a private full-stack dashboard built around a specific film photography workflow: tracking rolls from loading through shooting, development, scanning, and archiving. Users can create, read, update, and delete roll entries while keeping camera, lens, film stock, ISO, status, notes, uploads, and related activity connected in one place.',
-      'The app demonstrates authenticated product thinking through register/login flows, JWT sessions, protected API routes, user-owned roll data, and dashboard analytics. It turns a custom domain problem into software by modeling the data film photographers actually care about and presenting it through stats, status counts, camera and film-stock insights, tables, forms, and detail views.',
-      'It also emphasizes user-centered design: the interface is shaped around real photographer needs like roll progress, equipment logging, film stock suggestions, notes, uploads, and private account-based tracking. Form validation, required fields, ISO validation, and server-side Zod validation keep the workflow structured and reliable.'
+      'Film Roll Tracker turns a niche film-photography workflow into a private dashboard that follows rolls from loading through shooting, development, scanning, and archiving. Users can create, read, update, and delete roll entries while keeping camera, lens, film stock, ISO, status, notes, uploads, and related activity connected in one place.',
+      'The app demonstrates authenticated product thinking through register/login flows, JWT sessions, protected API routes, user-owned roll data, and dashboard analytics. It models the information photographers actually care about and presents it through stats, status counts, camera and film-stock insights, tables, forms, and detail views.',
+      'It also emphasizes user-centered design: the interface is shaped around roll progress, equipment logging, film stock suggestions, notes, uploads, and private account-based tracking. Form validation, required fields, ISO validation, and server-side Zod validation keep the workflow structured and reliable.'
     ],
     highlights: [
       'Full CRUD: users can create, read, update, and delete film roll entries.',
@@ -22,6 +22,7 @@ export const projectCards = [
     ],
     stack:
       'React • TypeScript • CSS • Vite • Node.js • Express • PostgreSQL • JWT Auth • Zod • bcryptjs • REST API • Responsive Design',
+    cardStack: 'TypeScript • PostgreSQL • SQL • Node.js',
     images: [
       {
         src: projectAssetSrc('film-roll-tracker', 'landing-film-roll-tracker.png'),
@@ -55,7 +56,7 @@ export const projectCards = [
     slug: 'nyc-photo-lab-finder',
     name: 'NYC Photo Lab Finder',
     description:
-      'A responsive photo lab search app with Google Maps and Places integration, service filters, map/list browsing, saved labs, and structured lab data.',
+      'A responsive map-and-list app for film photographers, built to surface lab options fast through search, filters, saved favorites, and Google Maps data.',
     detailDescription: [
       'NYC Photo Lab Finder helps film photographers search for and compare local lab options through a responsive map/list interface. Users can search by area or current location, filter by services, browse synced map and list results, and save labs with notes for future reference.',
       'The project emphasizes external API integration through Google Places, Google Maps, place photos, backend API calls, and MongoDB caching. It handles async state across debounced search, geolocation, map loading, API fetches, loading states, errors, and aborted requests.',
@@ -70,6 +71,7 @@ export const projectCards = [
     ],
     stack:
       'React • Vite • TypeScript • React Router DOM • @react-google-maps/api • Google Maps JavaScript API • Google Places API (New) • Node.js • Express • MongoDB • localStorage • concurrently',
+    cardStack: 'TypeScript • React • Google Maps',
     images: [
       {
         src: projectAssetSrc('nyc-photo-lab-finder', 'landing-photo-lab.png'),
@@ -92,7 +94,7 @@ export const projectCards = [
     slug: 'personal-portfolio',
     name: 'Personal Portfolio',
     description:
-      'A responsive portfolio site that brings together my software engineering work and photography with custom motion, smooth section navigation, and a dedicated gallery experience.',
+      'A responsive portfolio that unifies software engineering and photography with custom motion, section-based navigation, and a polished gallery experience.',
     detailDescription: [
       'This portfolio brings together software engineering projects and photography in a single responsive site. It uses custom section navigation, motion-driven transitions, and dedicated visual treatments for project work, personal background, and image galleries.',
       'The project is designed as both a public portfolio and a live playground for refining front-end structure, animation timing, responsive layout, asset handling, and deployment workflow.'
@@ -104,6 +106,7 @@ export const projectCards = [
     ],
     stack:
       'React • React DOM • JavaScript • CSS • Motion • Vite • Vite Plugin React • Node.js • npm • GitHub Actions • Sharp',
+    cardStack: 'React • Motion • Vite',
     images: [
       {
         src: projectAssetSrc('personal-portfolio', 'logo.png'),
@@ -135,7 +138,7 @@ export const projectCards = [
     slug: 'wtwr',
     name: 'WTWR (What to Wear?)',
     description:
-      'A React weather app that helps users choose clothing based on current conditions, recommends items for the forecast, and supports item preview modals for a more interactive experience.',
+      'A weather-driven React app that recommends clothing from live conditions and supports interactive item previews in a fast, responsive UI.',
     detailDescription: [
       'WTWR is a weather-based React app that recommends clothing items based on current conditions. The interface centers on a practical daily-use flow: check the weather, review suggested items, and preview clothing details through modal interactions.',
       'The project strengthened component-based React structure, state-driven UI, API integration, conditional rendering, and responsive styling using BEM-oriented CSS.'
@@ -147,6 +150,7 @@ export const projectCards = [
     ],
     stack:
       'React • JavaScript (ES6+) • CSS • BEM • Vite • OpenWeatherMap API • Conditional Rendering',
+    cardStack: 'React • JavaScript • API',
     images: [
       {
         src: projectAssetSrc('wtwr', 'wtwr-home.png'),
@@ -160,7 +164,7 @@ export const projectCards = [
     slug: 'triple-peaks-library',
     name: 'Triple Peaks Library',
     description:
-      'A library landing page built from a design brief as part of the TripleTen software engineering program, focused on clean structure, layout accuracy, and foundational front-end styling techniques.',
+      'A clean multi-section landing page built from a design brief, focused on semantic structure, layout precision, and maintainable CSS.',
     detailDescription: [
       'Triple Peaks Library is a multi-section landing page built from a design brief during the TripleTen software engineering program. The page focuses on semantic HTML structure, layout accuracy, and careful CSS positioning across a complete marketing-style page.',
       'The project helped establish core front-end habits: reading a brief, matching visual requirements, organizing sections, and writing maintainable foundational styles.'
@@ -171,6 +175,7 @@ export const projectCards = [
       'Focused practice with Flexbox, positioning, and layering'
     ],
     stack: 'HTML5 • CSS • Semantic HTML • Flexbox • Positioning • Z-Index',
+    cardStack: 'HTML • CSS • Flexbox',
     images: [
       {
         src: projectAssetSrc('triple-peaks-library', 'TriplePeaksLibrary.png'),
@@ -201,7 +206,7 @@ export const projectCards = [
     slug: 'triple-peaks-coffee-shop',
     name: 'Triple Peaks Coffee Shop',
     description:
-      'A coffee shop site built from a TripleTen design brief with a structured multi-section layout, custom form work, and motion-focused touches using CSS animation and transforms.',
+      'A polished cafe site built from a design brief with custom forms, structured sections, and subtle CSS animation and transforms.',
     detailDescription: [
       'Triple Peaks Coffee Shop is a structured cafe website built from a TripleTen design brief. It includes menu, recipes, booking, and contact sections, with custom form styling and subtle motion-focused CSS work.',
       'The project expands on foundational layout practice by combining semantic structure, BEM naming, forms, embedded media, animation, and transform-based visual details in a polished static site.'
@@ -213,6 +218,7 @@ export const projectCards = [
     ],
     stack:
       'HTML5 • CSS • Semantic HTML • Flexbox • Positioning • BEM • Custom Forms • CSS Animation • Transform',
+    cardStack: 'HTML • CSS • Forms',
     images: [
       {
         src: projectAssetSrc('triple-peaks-coffee-shop', 'TriplePeaksCoffee.png'),
@@ -244,7 +250,7 @@ export const projectCards = [
     slug: 'about-me',
     name: 'About Me',
     description:
-      'A simple landing page created as the first demo project in the TripleTen software engineering program, focused on core page structure and foundational front-end layout work.',
+      'A foundational landing page built from a design brief, focused on semantic structure, clean layout, and responsive presentation.',
     detailDescription: [
       'About Me is an early landing page project from the TripleTen software engineering program. It focuses on the core building blocks of a webpage: semantic structure, simple layout, readable content, and clean presentation.',
       'As a first demo project, it marks the starting point of the portfolio and shows the foundation that later projects build on.'
@@ -255,6 +261,7 @@ export const projectCards = [
       'Foundation for later front-end project work'
     ],
     stack: 'HTML5 • CSS • Semantic HTML • Flexbox',
+    cardStack: 'HTML • CSS • Flexbox',
     images: [
       {
         src: projectAssetSrc('about-me', 'landing_about-me.png'),

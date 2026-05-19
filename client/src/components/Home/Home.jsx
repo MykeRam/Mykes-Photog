@@ -96,6 +96,7 @@ export default function Home({ sectionId = 'home' }) {
           </div>
 
           <div className="home-copy">
+            <p className="home-role-note">Seeking software engineering roles building with TypeScript, SQL, and PostgreSQL.</p>
             <h1 id="home-title" className="home-title">
               <span className="home-title-primary">
                 <span className="home-title-role">Software Engineer |</span>
