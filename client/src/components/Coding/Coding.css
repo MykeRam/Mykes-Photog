@@ -242,12 +242,7 @@
 
 .coding-project-card:hover .coding-project-image,
 .coding-project-card:focus-within .coding-project-image {
-  border-bottom-left-radius:24px;
-  border-bottom-right-radius:24px;
-}
-
-.coding-project-card:hover .coding-project-image,
-.coding-project-card:focus-within .coding-project-image {
+  border-radius:24px;
   border-color:rgba(17,17,17,0.16);
 }
 
