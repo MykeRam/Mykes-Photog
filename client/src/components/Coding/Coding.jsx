@@ -183,28 +183,28 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
   )
 }
 
-function ProjectCard({ project, index, shouldReduceMotion, shouldRevealImmediately, navigate }) {
+function ProjectCard({ project, index, shouldReduceMotion, shouldRevealOnEnter, navigate }) {
   const projectHref = buildHash(`/coding/${project.slug}`)
 
   return (
     <motion.article
       className="coding-project-card"
-      initial={shouldReduceMotion || shouldRevealImmediately ? false : { opacity: 0, y: 24 }}
+      initial={shouldReduceMotion || shouldRevealOnEnter ? false : { opacity: 0, y: 24 }}
       animate={
-        shouldReduceMotion || shouldRevealImmediately
+        shouldReduceMotion || shouldRevealOnEnter
           ? { opacity: 1, y: 0 }
           : undefined
       }
       whileInView={
-        shouldReduceMotion || shouldRevealImmediately ? undefined : { opacity: 1, y: 0 }
+        shouldReduceMotion || shouldRevealOnEnter ? undefined : { opacity: 1, y: 0 }
       }
-      viewport={shouldReduceMotion || shouldRevealImmediately ? undefined : { once: true, amount: 0.25 }}
+      viewport={shouldReduceMotion || shouldRevealOnEnter ? undefined : { once: true, amount: 0.25 }}
       transition={
         shouldReduceMotion
           ? { duration: 0 }
           : {
               duration: 0.65,
-              delay: shouldRevealImmediately ? 0.05 + index * 0.06 : 0.12 + index * 0.18,
+              delay: shouldRevealOnEnter ? 0.05 + index * 0.06 : 0.12 + index * 0.18,
               ease: [0.22, 1, 0.36, 1]
             }
       }
@@ -554,7 +554,7 @@ export default function Coding({
                   project={project}
                   index={index}
                   shouldReduceMotion={shouldReduceMotion}
-                  shouldRevealImmediately={isSectionTargeted}
+                  shouldRevealOnEnter={isSectionActive}
                   navigate={navigate}
                 />
               ))}
