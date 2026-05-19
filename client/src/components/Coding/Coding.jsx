@@ -287,9 +287,14 @@ export default function Coding({
     const projectsHeading = document.getElementById('coding-projects-title')
     if (!projectsHeading) return
 
-    projectsHeading.scrollIntoView({
-      behavior: shouldReduceMotion ? 'auto' : 'smooth',
-      block: 'start'
+    const header = document.querySelector('.site-header')
+    const headerHeight = header ? header.getBoundingClientRect().height : 0
+    const landingOffset = Math.min(180, Math.round(window.innerHeight * 0.18))
+    const targetTop = window.scrollY + projectsHeading.getBoundingClientRect().top - headerHeight - 8
+
+    window.scrollTo({
+      top: Math.max(0, targetTop + landingOffset),
+      behavior: shouldReduceMotion ? 'auto' : 'smooth'
     })
   }
 
