@@ -255,6 +255,9 @@
   touch-action:pan-y;
   user-select:none;
   -webkit-user-select:none;
+  transition:
+    border-radius .24s ease,
+    border-color .24s ease;
 }
 
 .coding-project-carousel-image {
