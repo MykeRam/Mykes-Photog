@@ -8,6 +8,7 @@ The site showcases:
 - A coding section featuring projects built throughout my learning journey
 - A photography section that highlights selected image work in a dedicated gallery
 - Motion, layout, and responsive design choices that reflect both technical and creative focus
+- Accessibility features supporting keyboard navigation, screen readers, reduced motion, and high-contrast viewing
 
 ## Live Demo
 
@@ -40,7 +41,7 @@ This project uses the following technologies and tools:
 | **CSS3** | Controls layout, spacing, typography, responsive breakpoints, the home hero grid, the gallery layout, and the coding section styling. | `client/src/index.css`, `client/src/components/Home/Home.css`, `client/src/components/Gallery/Gallery.css`, `client/src/components/Coding/Coding.css` |
 | **JavaScript (ES6+)** | Powers hash-based navigation, scroll syncing, gallery filtering, animation state, and image processing logic. | `client/src/App.jsx`, `client/src/lib/hashRoute.js`, `client/src/components/Gallery/Gallery.jsx`, `client/scripts/convert-images.js` |
 | **React** | Builds the UI with reusable components and stateful behavior across the portfolio sections. | `client/src/main.jsx`, `client/src/App.jsx`, `client/src/components/` |
-| **React DOM** | Renders the app into the DOM with `createRoot` and mounts the gallery lightbox with `createPortal`. | `client/src/main.jsx`, `client/src/components/Gallery/Gallery.jsx` |
+| **React DOM** | Renders the app into the DOM with `createRoot` and mounts gallery and project-preview modals with `createPortal`. | `client/src/main.jsx`, `client/src/components/Gallery/Gallery.jsx`, `client/src/components/Coding/Coding.jsx` |
 | **Vite** | Runs the local development server and production build pipeline through the project's `dev`, `build`, and `preview` scripts. | `client/package.json`, `client/vite.config.js` |
 | **@vitejs/plugin-react** | Adds React and JSX support to the Vite build configuration. | `client/package.json`, `client/vite.config.js` |
 | **Motion** | Animates hero images, section headings, gallery transitions, and modal behavior while respecting reduced-motion preferences. | `client/src/components/Home/Home.jsx`, `client/src/components/Coding/Coding.jsx`, `client/src/components/Gallery/Gallery.jsx` |
@@ -51,6 +52,34 @@ This project uses the following technologies and tools:
 | **GitHub Actions** | Automates checkout, dependency installation, the Vite build, artifact upload, and deployment. | `.github/workflows/deploy-pages.yml` |
 | **GitHub Pages** | Hosts the built static site, with the Vite base path configured for the repository deployment URL. | `.github/workflows/deploy-pages.yml`, `client/vite.config.js` |
 
+## Accessibility
+
+The portfolio includes an accessibility-focused implementation for its main navigation, Home, About, Coding, project cards, project previews, and project-detail pages.
+
+Implemented accessibility features include:
+
+- A keyboard-accessible **Skip to main content** link
+- Semantic landmarks, sections, headings, navigation labels, and current-page indicators
+- Consistent, visible keyboard focus indicators for links, buttons, social icons, navigation items, and project controls
+- Larger header navigation targets and responsive control sizing
+- Native buttons for interactive project images instead of simulated button roles
+- Full keyboard support for project carousels and image previews
+- Project-preview modal focus trapping with `Tab` and `Shift+Tab`
+- `Escape` support for closing project-preview modals
+- Focus restoration to the image that opened a preview
+- Inert and screen-reader-hidden background content while a project-preview modal is open
+- Screen-reader announcements for carousel position, project image changes, route changes, and section navigation
+- Dynamic document titles and focus movement when navigating through the React single-page interface
+- Descriptive project-image alternative text and a more descriptive About portrait alternative
+- Decorative homepage photography marked so screen readers can skip it
+- Full About text exposed immediately to screen readers without requiring users to wait for the visual typing animation
+- Accessible labels indicating when project links open in a new tab
+- Reduced-motion support for animated content and the skip link
+- Forced-colors/high-contrast focus support
+- Improved contrast for muted About text
+
+Detailed, photo-by-photo alternative descriptions for the Photography gallery are planned as a future accessibility phase.
+
 ## What This Repository Demonstrates
 
 This repository is primarily a **frontend portfolio application**. It demonstrates:
@@ -60,6 +89,7 @@ This repository is primarily a **frontend portfolio application**. It demonstrat
 - CSS-based layout, responsive design, and gallery presentation
 - JavaScript-driven navigation, scroll behavior, filtering, and animation state
 - Motion-based transitions and interactive effects
+- Accessible keyboard, focus, modal, carousel, and screen-reader interaction patterns
 - Vite-based local development and production builds
 - Automated deployment to GitHub Pages with GitHub Actions
 - Image optimization workflows using Sharp, with ImageMagick as an optional fallback
