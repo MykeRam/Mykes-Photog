@@ -385,6 +385,10 @@
   background:rgba(0,0,0,0.9);
 }
 
+.coding-project-preview:focus {
+  outline:none;
+}
+
 .coding-project-preview-stage {
   position:relative;
   width:min(88vw, 1440px);

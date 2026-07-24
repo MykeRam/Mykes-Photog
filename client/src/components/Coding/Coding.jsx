@@ -105,7 +105,6 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
   const swipeStateRef = useRef(null)
   const previewTriggerRef = useRef(null)
   const previewModalRef = useRef(null)
-  const previewCloseButtonRef = useRef(null)
   const images = project.images ?? []
   const activeImage = images[activeImageIndex] ?? images[0]
   const hasMultipleImages = images.length > 1
@@ -135,7 +134,7 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
     const previousAppShellAriaHidden = appShell?.getAttribute('aria-hidden')
     const wasAppShellInert = appShell?.inert ?? false
 
-    previewCloseButtonRef.current?.focus({ preventScroll: true })
+    previewModalRef.current?.focus({ preventScroll: true })
 
     if (appShell) {
       appShell.inert = true
@@ -161,7 +160,12 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
 
         if (!firstElement || !lastElement) return
 
-        if (event.shiftKey && (document.activeElement === firstElement || !previewModalRef.current?.contains(document.activeElement))) {
+        if (
+          event.shiftKey &&
+          (document.activeElement === firstElement ||
+            document.activeElement === previewModalRef.current ||
+            !previewModalRef.current?.contains(document.activeElement))
+        ) {
           event.preventDefault()
           lastElement.focus()
           return
@@ -304,6 +308,7 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
       role="dialog"
       aria-modal="true"
       aria-label={`${project.name} image preview`}
+      tabIndex={-1}
       initial={shouldReduceMotion ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -315,7 +320,6 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
       }}
     >
       <button
-        ref={previewCloseButtonRef}
         type="button"
         className="coding-project-preview-close"
         onClick={() => setIsPreviewOpen(false)}
