@@ -302,9 +302,9 @@
   width:42px;
   height:42px;
   padding:0;
-  border:0;
-  border-radius:999px;
-  background:rgba(17,17,17,0.7);
+  border:1px solid rgba(255,255,255,0.6);
+  border-radius:6px;
+  background:rgba(0,0,0,0.45);
   color:#fff;
   box-shadow:0 10px 22px rgba(0,0,0,0.18);
   backdrop-filter:blur(8px);
@@ -318,28 +318,17 @@
 }
 
 .coding-project-carousel-button span {
-  display:block;
-  width:11px;
-  height:11px;
-  border-top:3px solid currentColor;
-  border-right:3px solid currentColor;
-  font-size:0;
+  font-size:1.45rem;
+  font-weight:400;
+  line-height:1;
 }
 
 .coding-project-carousel-button--prev {
   left:12px;
 }
 
-.coding-project-carousel-button--prev span {
-  transform:rotate(-135deg);
-}
-
 .coding-project-carousel-button--next {
   right:12px;
-}
-
-.coding-project-carousel-button--next span {
-  transform:rotate(45deg);
 }
 
 .coding-project-carousel-button:hover,
@@ -460,33 +449,22 @@
   top:50%;
   width:52px;
   height:52px;
-  border-radius:999px;
+  border-radius:6px;
   transform:translateY(-50%);
 }
 
 .coding-project-preview-button span {
-  display:block;
-  width:14px;
-  height:14px;
-  border-top:4px solid currentColor;
-  border-right:4px solid currentColor;
-  font-size:0;
+  font-size:1.8rem;
+  font-weight:400;
+  line-height:1;
 }
 
 .coding-project-preview-button--prev {
   left:20px;
 }
 
-.coding-project-preview-button--prev span {
-  transform:rotate(-135deg);
-}
-
 .coding-project-preview-button--next {
   right:20px;
-}
-
-.coding-project-preview-button--next span {
-  transform:rotate(45deg);
 }
 
 .coding-project-preview-counter {

@@ -303,7 +303,7 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
             onClick={goToPreviousImage}
             aria-label={`Show previous image for ${project.name}`}
           >
-            <span aria-hidden="true">‹</span>
+            <span aria-hidden="true">←</span>
           </button>
           <button
             type="button"
@@ -311,7 +311,7 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
             onClick={goToNextImage}
             aria-label={`Show next image for ${project.name}`}
           >
-            <span aria-hidden="true">›</span>
+            <span aria-hidden="true">→</span>
           </button>
           <div className="coding-project-preview-counter" aria-live="polite">
             {activeImageIndex + 1} / {images.length}
@@ -367,7 +367,7 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
               onClick={goToPreviousImage}
               aria-label={`Show previous image for ${project.name}`}
             >
-              <span aria-hidden="true">‹</span>
+              <span aria-hidden="true">←</span>
             </button>
             <button
               type="button"
@@ -375,7 +375,7 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
               onClick={goToNextImage}
               aria-label={`Show next image for ${project.name}`}
             >
-              <span aria-hidden="true">›</span>
+              <span aria-hidden="true">→</span>
             </button>
             <div className="coding-project-carousel-counter" aria-hidden="true">
               {activeImageIndex + 1} / {images.length}
