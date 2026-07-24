@@ -44,7 +44,6 @@ export default function Header({ currentPath, currentSection, navigate }) {
   const codingHref = buildHash('/', new URLSearchParams({ section: 'coding' }))
   const photographyHref = buildHash('/photography')
   const activeKey = currentPath === '/photography' ? 'photography' : currentSection
-  const isPhotographyPage = currentPath === '/photography'
 
   useLayoutEffect(() => {
     if (shouldReduceMotion) {
@@ -138,7 +137,7 @@ export default function Header({ currentPath, currentSection, navigate }) {
             animateOnEnter
             baseDelay={0.24}
             stagger={0.1}
-            showVideoLinks={isPhotographyPage}
+            showVideoLinks={false}
             hiddenSocials={['Instagram', 'Threads']}
           />
           <nav ref={navRef} className="header-nav" aria-label="Main">
