@@ -423,7 +423,20 @@
   right:20px;
   width:44px;
   height:44px;
-  border-radius:999px;
+  border:0;
+  background:transparent;
+}
+
+.coding-project-preview-close:hover,
+.coding-project-preview-close:focus-visible {
+  border-color:transparent;
+  background:transparent;
+  color:rgba(255,255,255,0.72);
+  transform:scale(1.08);
+}
+
+.coding-project-preview-close:focus-visible {
+  outline:none;
 }
 
 .coding-project-preview-close span {

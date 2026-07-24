@@ -126,13 +126,25 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
   useEffect(() => {
     if (!isPreviewOpen) return undefined
 
-    const previousBodyOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    previewCloseButtonRef.current?.focus()
+    const scrollPosition = {
+      x: window.scrollX,
+      y: window.scrollY
+    }
+
+    previewCloseButtonRef.current?.focus({ preventScroll: true })
+
+    const preventBackgroundScroll = (event) => {
+      event.preventDefault()
+    }
 
     const handlePreviewKeyDown = (event) => {
       if (event.key === 'Escape') {
         setIsPreviewOpen(false)
+        return
+      }
+
+      if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End'].includes(event.key)) {
+        event.preventDefault()
         return
       }
 
@@ -150,11 +162,15 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
     }
 
     window.addEventListener('keydown', handlePreviewKeyDown)
+    window.addEventListener('wheel', preventBackgroundScroll, { passive: false })
+    window.addEventListener('touchmove', preventBackgroundScroll, { passive: false })
 
     return () => {
-      document.body.style.overflow = previousBodyOverflow
+      window.scrollTo(scrollPosition.x, scrollPosition.y)
       window.removeEventListener('keydown', handlePreviewKeyDown)
-      previewTriggerRef.current?.focus()
+      window.removeEventListener('wheel', preventBackgroundScroll)
+      window.removeEventListener('touchmove', preventBackgroundScroll)
+      previewTriggerRef.current?.focus({ preventScroll: true })
     }
   }, [hasMultipleImages, images.length, isPreviewOpen])
 
