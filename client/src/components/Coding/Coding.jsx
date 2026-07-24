@@ -104,6 +104,7 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const swipeStateRef = useRef(null)
   const previewTriggerRef = useRef(null)
+  const previewModalRef = useRef(null)
   const previewCloseButtonRef = useRef(null)
   const images = project.images ?? []
   const activeImage = images[activeImageIndex] ?? images[0]
@@ -130,8 +131,16 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
       x: window.scrollX,
       y: window.scrollY
     }
+    const appShell = document.querySelector('.app-shell')
+    const previousAppShellAriaHidden = appShell?.getAttribute('aria-hidden')
+    const wasAppShellInert = appShell?.inert ?? false
 
     previewCloseButtonRef.current?.focus({ preventScroll: true })
+
+    if (appShell) {
+      appShell.inert = true
+      appShell.setAttribute('aria-hidden', 'true')
+    }
 
     const preventBackgroundScroll = (event) => {
       event.preventDefault()
@@ -140,6 +149,29 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
     const handlePreviewKeyDown = (event) => {
       if (event.key === 'Escape') {
         setIsPreviewOpen(false)
+        return
+      }
+
+      if (event.key === 'Tab') {
+        const focusableElements = Array.from(
+          previewModalRef.current?.querySelectorAll('button:not([disabled])') ?? []
+        )
+        const firstElement = focusableElements[0]
+        const lastElement = focusableElements.at(-1)
+
+        if (!firstElement || !lastElement) return
+
+        if (event.shiftKey && (document.activeElement === firstElement || !previewModalRef.current?.contains(document.activeElement))) {
+          event.preventDefault()
+          lastElement.focus()
+          return
+        }
+
+        if (!event.shiftKey && document.activeElement === lastElement) {
+          event.preventDefault()
+          firstElement.focus()
+        }
+
         return
       }
 
@@ -170,6 +202,17 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
       window.removeEventListener('keydown', handlePreviewKeyDown)
       window.removeEventListener('wheel', preventBackgroundScroll)
       window.removeEventListener('touchmove', preventBackgroundScroll)
+
+      if (appShell) {
+        appShell.inert = wasAppShellInert
+
+        if (previousAppShellAriaHidden === null) {
+          appShell.removeAttribute('aria-hidden')
+        } else {
+          appShell.setAttribute('aria-hidden', previousAppShellAriaHidden)
+        }
+      }
+
       previewTriggerRef.current?.focus({ preventScroll: true })
     }
   }, [hasMultipleImages, images.length, isPreviewOpen])
@@ -256,6 +299,7 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
 
   const previewModal = isPreviewOpen ? (
     <motion.div
+      ref={previewModalRef}
       className="coding-project-preview"
       role="dialog"
       aria-modal="true"
@@ -313,7 +357,7 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
           >
             <span aria-hidden="true">→</span>
           </button>
-          <div className="coding-project-preview-counter" aria-live="polite">
+          <div className="coding-project-preview-counter" aria-hidden="true">
             {activeImageIndex + 1} / {images.length}
           </div>
         </>
@@ -330,21 +374,12 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
         onPointerCancel={clearSwipeState}
       >
         <AnimatePresence initial={false} mode="popLayout">
-          <motion.img
+          <motion.button
             key={activeImage.src}
-            className="coding-project-carousel-image"
-            src={activeImage.src}
-            alt={activeImage.alt}
-            role="button"
-            tabIndex={0}
+            type="button"
+            className="coding-project-image-trigger"
             aria-label={`Open larger preview of ${activeImage.alt}`}
             onClick={openPreview}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault()
-                openPreview(event)
-              }
-            }}
             initial={shouldReduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
@@ -356,7 +391,13 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
                     ease: 'easeInOut'
                   }
             }
-          />
+          >
+            <img
+              className="coding-project-carousel-image"
+              src={activeImage.src}
+              alt={activeImage.alt}
+            />
+          </motion.button>
         </AnimatePresence>
 
         {hasMultipleImages ? (
@@ -382,6 +423,9 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
             </div>
           </>
         ) : null}
+        <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+          {project.name}: Image {activeImageIndex + 1} of {images.length}. {activeImage.alt}
+        </div>
       </div>
 
       {createPortal(<AnimatePresence>{previewModal}</AnimatePresence>, document.body)}
@@ -435,12 +479,24 @@ function ProjectCard({ project, index, shouldReduceMotion, shouldRevealOnEnter, 
 
         <div className="coding-project-links" aria-label={`${project.name} links`}>
           {project.liveHref ? (
-            <a className="coding-project-link" href={project.liveHref} target="_blank" rel="noreferrer">
+            <a
+              className="coding-project-link"
+              href={project.liveHref}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`${project.name} live demo (opens in a new tab)`}
+            >
               Live Demo
             </a>
           ) : null}
           {project.githubHref ? (
-            <a className="coding-project-link" href={project.githubHref} target="_blank" rel="noreferrer">
+            <a
+              className="coding-project-link"
+              href={project.githubHref}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`${project.name} GitHub repository (opens in a new tab)`}
+            >
               GitHub
             </a>
           ) : null}
@@ -518,6 +574,7 @@ export default function Coding({
           <header className="coding-intro">
             <motion.h2
               ref={headingRef}
+              tabIndex={-1}
               id="coding-title"
               className="coding-intro-title"
               initial={false}

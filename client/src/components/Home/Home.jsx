@@ -87,7 +87,7 @@ export default function Home({ sectionId = 'home' }) {
               >
                 <img
                   src={image.src}
-                  alt={`Selected photography preview ${index + 1}`}
+                  alt=""
                   loading={index < 3 ? 'eager' : 'lazy'}
                   decoding="async"
                 />
@@ -96,7 +96,7 @@ export default function Home({ sectionId = 'home' }) {
           </div>
 
           <div className="home-copy">
-            <h1 id="home-title" className="home-title">
+            <h1 id="home-title" className="home-title" tabIndex={-1}>
               <span className="home-title-primary">
                 <span className="home-title-role">Software Engineer |</span>
                 <span className="home-subtitle">Student @ TripleTen</span>

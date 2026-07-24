@@ -123,16 +123,17 @@ export default function About({ sectionId = 'about', followTrigger = 0, navigate
 
   const renderTypedParagraph = (paragraph, visibleText, className = '') => (
     <p className={className ? `${className} about-typed-line` : 'about-typed-line'}>
+      <span className="sr-only">{paragraph}</span>
       <span className="about-typed-measure" aria-hidden="true">
         {paragraph}
       </span>
-      <span className="about-typed-overlay">{visibleText}</span>
+      <span className="about-typed-overlay" aria-hidden="true">{visibleText}</span>
     </p>
   )
 
   return (
     <section id={sectionId} ref={aboutRef} className="about-page" aria-labelledby="about-title">
-      <h2 id="about-title" className="about-title-sr-only">
+      <h2 id="about-title" className="about-title-sr-only" tabIndex={-1}>
         About
       </h2>
       <div className="container">
@@ -157,7 +158,7 @@ export default function About({ sectionId = 'about', followTrigger = 0, navigate
                 <img
                   className="about-portrait-image"
                   src={aboutPortrait}
-                  alt="Portrait"
+                  alt="Portrait of Michael Ramirez"
                   loading="lazy"
                   decoding="async"
                 />

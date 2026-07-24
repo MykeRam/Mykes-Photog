@@ -67,8 +67,6 @@
   animation:social-icon-breathe 1.8s ease-in-out infinite;
 }
 
-.social-link:focus-visible { outline:none; }
-
 @keyframes social-breathe {
   0%,
   100% {

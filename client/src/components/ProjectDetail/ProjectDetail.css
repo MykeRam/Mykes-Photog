@@ -35,12 +35,6 @@
   transform:translateX(2px);
 }
 
-.project-detail-back:focus-visible,
-.project-detail-link:focus-visible,
-.project-detail-carousel-button:focus-visible {
-  outline:none;
-}
-
 .project-detail-hero {
   max-width:920px;
 }

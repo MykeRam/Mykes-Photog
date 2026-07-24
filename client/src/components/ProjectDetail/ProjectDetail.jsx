@@ -9,12 +9,24 @@ function ProjectLinks({ project }) {
   return (
     <div className="project-detail-links" aria-label={`${project.name} links`}>
       {project.liveHref ? (
-        <a className="project-detail-link" href={project.liveHref} target="_blank" rel="noreferrer">
+        <a
+          className="project-detail-link"
+          href={project.liveHref}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`${project.name} live demo (opens in a new tab)`}
+        >
           Live Demo
         </a>
       ) : null}
       {project.githubHref ? (
-        <a className="project-detail-link" href={project.githubHref} target="_blank" rel="noreferrer">
+        <a
+          className="project-detail-link"
+          href={project.githubHref}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`${project.name} GitHub repository (opens in a new tab)`}
+        >
           GitHub
         </a>
       ) : null}
@@ -82,6 +94,9 @@ function ProjectImageCarousel({ project, shouldReduceMotion }) {
           </div>
         </>
       ) : null}
+      <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+        {project.name}: Image {activeImageIndex + 1} of {images.length}. {activeImage.alt}
+      </div>
     </div>
   )
 }
@@ -104,7 +119,7 @@ export default function ProjectDetail({ project, navigate }) {
           >
             Back to projects
           </a>
-          <h1 id="project-detail-title">Project not found</h1>
+          <h1 id="project-detail-title" tabIndex={-1}>Project not found</h1>
         </div>
       </section>
     )
@@ -131,7 +146,7 @@ export default function ProjectDetail({ project, navigate }) {
           transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
         >
           <p className="project-detail-kicker">Project</p>
-          <h1 id="project-detail-title">{project.name}</h1>
+          <h1 id="project-detail-title" tabIndex={-1}>{project.name}</h1>
         </motion.header>
 
         <section className="project-detail-showcase" aria-label={`${project.name} project details`}>

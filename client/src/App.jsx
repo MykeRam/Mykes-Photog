@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Header from './components/Header/Header'
 import About from './components/About/About'
 import Coding from './components/Coding/Coding'
@@ -71,6 +71,8 @@ export default function App() {
   const [isPageLoaded, setIsPageLoaded] = useState(() => document.readyState === 'complete')
   const [hasHandledInitialScroll, setHasHandledInitialScroll] = useState(false)
   const [isPhotographyGridReady, setIsPhotographyGridReady] = useState(false)
+  const [navigationAnnouncement, setNavigationAnnouncement] = useState('')
+  const hasMountedRef = useRef(false)
 
   useLayoutEffect(() => {
     const hasManualScrollRestoration = 'scrollRestoration' in window.history
@@ -185,6 +187,39 @@ export default function App() {
   }, [currentPath])
 
   useEffect(() => {
+    const shouldMoveFocus = hasMountedRef.current
+    hasMountedRef.current = true
+
+    if (currentPath === '/photography') return undefined
+
+    const project = currentPath.startsWith('/coding/') ? projectBySlug.get(currentPath.replace('/coding/', '')) : null
+    const pageName = project?.name
+      ? `${project.name} project`
+      : currentSection === 'about'
+        ? 'About'
+        : currentSection === 'coding'
+          ? 'Coding and projects'
+          : 'Home'
+    const headingSelector = project
+      ? '#project-detail-title'
+      : currentSection === 'about'
+        ? '#about-title'
+        : currentSection === 'coding'
+          ? '#coding-title'
+          : '#home-title'
+
+    document.title = `${pageName} | Myke NYC`
+    if (!shouldMoveFocus) return undefined
+
+    setNavigationAnnouncement(`${pageName} section`)
+    const frameId = window.requestAnimationFrame(() => {
+      document.querySelector(headingSelector)?.focus({ preventScroll: true })
+    })
+
+    return () => window.cancelAnimationFrame(frameId)
+  }, [currentPath, currentSection])
+
+  useEffect(() => {
     if (mainPageRoutes.has(currentPath)) return undefined
 
     const frameId = window.requestAnimationFrame(() => {
@@ -236,12 +271,20 @@ export default function App() {
 
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
+      <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+        {navigationAnnouncement}
+      </div>
       <Header
         currentPath={currentPath}
         currentSection={mainPageRoutes.has(currentPath) ? activeSection : currentSection}
         navigate={navigate}
       />
-      <main className="app-main">{page}</main>
+      <main id="main-content" className="app-main" tabIndex={-1}>
+        {page}
+      </main>
       {isPageLoaded && (currentPath !== '/photography' || isPhotographyGridReady) ? <Footer /> : null}
     </div>
   )
