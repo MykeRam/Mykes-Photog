@@ -190,7 +190,10 @@ export default function App() {
     const shouldMoveFocus = hasMountedRef.current
     hasMountedRef.current = true
 
-    if (currentPath === '/photography') return undefined
+    if (currentPath === '/photography') {
+      document.title = 'Photography | Myke NYC'
+      return undefined
+    }
 
     const project = currentPath.startsWith('/coding/') ? projectBySlug.get(currentPath.replace('/coding/', '')) : null
     const pageName = project?.name
