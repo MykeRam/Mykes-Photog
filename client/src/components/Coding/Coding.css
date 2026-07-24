@@ -257,7 +257,6 @@
   height:100%;
   object-fit:cover;
   display:block;
-  cursor:zoom-in;
 }
 
 .coding-project-carousel-image:focus-visible {
@@ -319,16 +318,28 @@
 }
 
 .coding-project-carousel-button span {
-  font-size:1.55rem;
-  line-height:1;
+  display:block;
+  width:11px;
+  height:11px;
+  border-top:3px solid currentColor;
+  border-right:3px solid currentColor;
+  font-size:0;
 }
 
 .coding-project-carousel-button--prev {
   left:12px;
 }
 
+.coding-project-carousel-button--prev span {
+  transform:rotate(-135deg);
+}
+
 .coding-project-carousel-button--next {
   right:12px;
+}
+
+.coding-project-carousel-button--next span {
+  transform:rotate(45deg);
 }
 
 .coding-project-carousel-button:hover,
@@ -454,16 +465,28 @@
 }
 
 .coding-project-preview-button span {
-  font-size:2rem;
-  line-height:1;
+  display:block;
+  width:14px;
+  height:14px;
+  border-top:4px solid currentColor;
+  border-right:4px solid currentColor;
+  font-size:0;
 }
 
 .coding-project-preview-button--prev {
   left:20px;
 }
 
+.coding-project-preview-button--prev span {
+  transform:rotate(-135deg);
+}
+
 .coding-project-preview-button--next {
   right:20px;
+}
+
+.coding-project-preview-button--next span {
+  transform:rotate(45deg);
 }
 
 .coding-project-preview-counter {
