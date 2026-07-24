@@ -31,6 +31,11 @@
   overflow: hidden;
   border-radius: 24px;
   background: #f3eee8;
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home-hero-card:hover {
+  transform: translateY(-15px);
 }
 
 .home-hero-card--lead {
@@ -109,6 +114,16 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #6f6254;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero-card {
+    transition: none;
+  }
+
+  .home-hero-card:hover {
+    transform: none;
+  }
 }
 
 @media (max-width: 960px) {
