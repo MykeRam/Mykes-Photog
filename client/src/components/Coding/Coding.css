@@ -228,16 +228,6 @@
   align-content:start;
   overflow:hidden;
   border-radius:0;
-  transition:
-    transform .24s ease,
-    box-shadow .24s ease,
-    border-radius .24s ease;
-}
-
-.coding-project-card:hover,
-.coding-project-card:focus-within {
-  transform:translateY(-4px);
-  box-shadow:0 24px 42px rgba(17,17,17,0.18);
 }
 
 .coding-project-card:hover .coding-project-image,
