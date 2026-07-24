@@ -233,7 +233,8 @@
 .coding-project-card:hover .coding-project-image,
 .coding-project-card:focus-within .coding-project-image {
   border-radius:24px;
-  border-color:rgba(17,17,17,0.16);
+  border-width:3px;
+  border-color:#000;
 }
 
 .coding-project-image {
@@ -247,6 +248,7 @@
   -webkit-user-select:none;
   transition:
     border-radius .24s ease,
+    border-width .24s ease,
     border-color .24s ease;
 }
 
