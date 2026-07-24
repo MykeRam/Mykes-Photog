@@ -241,7 +241,7 @@
   overflow:hidden;
   aspect-ratio:16 / 10;
   border:1px solid rgba(17,17,17,0.1);
-  background:linear-gradient(180deg, #f6f3ee 0%, #ece4d8 100%);
+  background:#fff;
   touch-action:pan-y;
   user-select:none;
   -webkit-user-select:none;

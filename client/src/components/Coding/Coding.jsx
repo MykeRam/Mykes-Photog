@@ -105,6 +105,20 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
   const activeImage = images[activeImageIndex] ?? images[0]
   const hasMultipleImages = images.length > 1
 
+  useEffect(() => {
+    if (!hasMultipleImages) return
+
+    const adjacentImageIndexes = [
+      (activeImageIndex - 1 + images.length) % images.length,
+      (activeImageIndex + 1) % images.length
+    ]
+
+    adjacentImageIndexes.forEach((imageIndex) => {
+      const image = new Image()
+      image.src = images[imageIndex].src
+    })
+  }, [activeImageIndex, hasMultipleImages, images])
+
   const goToPreviousImage = () => {
     setActiveImageIndex((currentIndex) => (currentIndex - 1 + images.length) % images.length)
   }
@@ -188,21 +202,21 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
       onPointerUp={handlePointerUp}
       onPointerCancel={clearSwipeState}
     >
-      <AnimatePresence initial={false} mode="wait">
+      <AnimatePresence initial={false} mode="popLayout">
         <motion.img
           key={activeImage.src}
           className="coding-project-carousel-image"
           src={activeImage.src}
           alt={activeImage.alt}
-          initial={shouldReduceMotion ? false : { opacity: 0, scale: 1.02 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.985 }}
+          initial={shouldReduceMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
           transition={
             shouldReduceMotion
               ? { duration: 0 }
               : {
-                  duration: 0.32,
-                  ease: [0.22, 1, 0.36, 1]
+                  duration: 0.42,
+                  ease: 'easeInOut'
                 }
           }
         />
