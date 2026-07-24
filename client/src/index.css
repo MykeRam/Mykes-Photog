@@ -33,9 +33,13 @@
   transform:translateY(0);
 }
 
-:where(a, button, [tabindex]):focus-visible {
+:where(a, button, [tabindex="0"]):focus-visible {
   outline:3px solid #2563eb;
   outline-offset:3px;
+}
+
+:where(main, h1, h2)[tabindex="-1"]:focus {
+  outline:none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -45,7 +49,7 @@
 }
 
 @media (forced-colors: active) {
-  :where(a, button, [tabindex]):focus-visible {
+  :where(a, button, [tabindex="0"]):focus-visible {
     outline-color:Highlight;
   }
 }
