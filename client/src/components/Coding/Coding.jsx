@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'motion/react'
 import { projectCards } from '../../data/projects'
 import { buildHash } from '../../lib/hashRoute'
@@ -100,7 +101,10 @@ const projectSections = [
 
 function ProjectCarousel({ project, shouldReduceMotion }) {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const swipeStateRef = useRef(null)
+  const previewTriggerRef = useRef(null)
+  const previewCloseButtonRef = useRef(null)
   const images = project.images ?? []
   const activeImage = images[activeImageIndex] ?? images[0]
   const hasMultipleImages = images.length > 1
@@ -118,6 +122,41 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
       image.src = images[imageIndex].src
     })
   }, [activeImageIndex, hasMultipleImages, images])
+
+  useEffect(() => {
+    if (!isPreviewOpen) return undefined
+
+    const previousBodyOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    previewCloseButtonRef.current?.focus()
+
+    const handlePreviewKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsPreviewOpen(false)
+        return
+      }
+
+      if (!hasMultipleImages) return
+
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault()
+        setActiveImageIndex((currentIndex) => (currentIndex - 1 + images.length) % images.length)
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault()
+        setActiveImageIndex((currentIndex) => (currentIndex + 1) % images.length)
+      }
+    }
+
+    window.addEventListener('keydown', handlePreviewKeyDown)
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow
+      window.removeEventListener('keydown', handlePreviewKeyDown)
+      previewTriggerRef.current?.focus()
+    }
+  }, [hasMultipleImages, images.length, isPreviewOpen])
 
   const goToPreviousImage = () => {
     setActiveImageIndex((currentIndex) => (currentIndex - 1 + images.length) % images.length)
@@ -194,39 +233,57 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
   }
 
   const imageFrameClassName = ['coding-project-image', activeImage.className].filter(Boolean).join(' ')
+  const openPreview = (event) => {
+    previewTriggerRef.current = event.currentTarget
+    setIsPreviewOpen(true)
+  }
 
-  return (
-    <div
-      className={imageFrameClassName}
-      onPointerDown={handlePointerDown}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={clearSwipeState}
+  const previewModal = isPreviewOpen ? (
+    <motion.div
+      className="coding-project-preview"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${project.name} image preview`}
+      initial={shouldReduceMotion ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: shouldReduceMotion ? 0 : 0.24 }}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) {
+          setIsPreviewOpen(false)
+        }
+      }}
     >
-      <AnimatePresence initial={false} mode="popLayout">
-        <motion.img
-          key={activeImage.src}
-          className="coding-project-carousel-image"
-          src={activeImage.src}
-          alt={activeImage.alt}
-          initial={shouldReduceMotion ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
-          transition={
-            shouldReduceMotion
-              ? { duration: 0 }
-              : {
-                  duration: 0.42,
-                  ease: 'easeInOut'
-                }
-          }
-        />
-      </AnimatePresence>
+      <button
+        ref={previewCloseButtonRef}
+        type="button"
+        className="coding-project-preview-close"
+        onClick={() => setIsPreviewOpen(false)}
+        aria-label={`Close ${project.name} image preview`}
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+
+      <div className="coding-project-preview-stage">
+        <AnimatePresence initial={false}>
+          <motion.img
+            key={activeImage.src}
+            className="coding-project-preview-image"
+            src={activeImage.src}
+            alt={activeImage.alt}
+            initial={shouldReduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.32, ease: 'easeInOut' }}
+          />
+        </AnimatePresence>
+      </div>
 
       {hasMultipleImages ? (
         <>
           <button
             type="button"
-            className="coding-project-carousel-button coding-project-carousel-button--prev"
+            className="coding-project-preview-button coding-project-preview-button--prev"
             onClick={goToPreviousImage}
             aria-label={`Show previous image for ${project.name}`}
           >
@@ -234,18 +291,85 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
           </button>
           <button
             type="button"
-            className="coding-project-carousel-button coding-project-carousel-button--next"
+            className="coding-project-preview-button coding-project-preview-button--next"
             onClick={goToNextImage}
             aria-label={`Show next image for ${project.name}`}
           >
             <span aria-hidden="true">›</span>
           </button>
-          <div className="coding-project-carousel-counter" aria-hidden="true">
+          <div className="coding-project-preview-counter" aria-live="polite">
             {activeImageIndex + 1} / {images.length}
           </div>
         </>
       ) : null}
-    </div>
+    </motion.div>
+  ) : null
+
+  return (
+    <>
+      <div
+        className={imageFrameClassName}
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={clearSwipeState}
+      >
+        <AnimatePresence initial={false} mode="popLayout">
+          <motion.img
+            key={activeImage.src}
+            className="coding-project-carousel-image"
+            src={activeImage.src}
+            alt={activeImage.alt}
+            role="button"
+            tabIndex={0}
+            aria-label={`Open larger preview of ${activeImage.alt}`}
+            onClick={openPreview}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault()
+                openPreview(event)
+              }
+            }}
+            initial={shouldReduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+            transition={
+              shouldReduceMotion
+                ? { duration: 0 }
+                : {
+                    duration: 0.42,
+                    ease: 'easeInOut'
+                  }
+            }
+          />
+        </AnimatePresence>
+
+        {hasMultipleImages ? (
+          <>
+            <button
+              type="button"
+              className="coding-project-carousel-button coding-project-carousel-button--prev"
+              onClick={goToPreviousImage}
+              aria-label={`Show previous image for ${project.name}`}
+            >
+              <span aria-hidden="true">‹</span>
+            </button>
+            <button
+              type="button"
+              className="coding-project-carousel-button coding-project-carousel-button--next"
+              onClick={goToNextImage}
+              aria-label={`Show next image for ${project.name}`}
+            >
+              <span aria-hidden="true">›</span>
+            </button>
+            <div className="coding-project-carousel-counter" aria-hidden="true">
+              {activeImageIndex + 1} / {images.length}
+            </div>
+          </>
+        ) : null}
+      </div>
+
+      {createPortal(<AnimatePresence>{previewModal}</AnimatePresence>, document.body)}
+    </>
   )
 }
 
