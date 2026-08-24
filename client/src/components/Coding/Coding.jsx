@@ -63,16 +63,36 @@ const skillCategories = [
       'DOM Manipulation',
       'React Hooks',
       'Component-Based Development',
-      'Form Validation'
+      'Form Validation',
+      'Browser Storage',
+      'CSS Animation',
+      'Reduced-Motion Accessibility'
     ]
   },
   {
     title: 'Backend',
-    items: ['Node.js', 'Express.js', 'JSON', 'Server Routing', 'Basic Backend Development', 'Authentication & Authorization']
+    items: [
+      'Node.js',
+      'Express.js',
+      'JSON',
+      'Server Routing',
+      'Basic Backend Development',
+      'Authentication & Authorization',
+      'Supabase Auth',
+      'Passwordless Authentication'
+    ]
   },
   {
     title: 'Databases',
-    items: ['SQL', 'PostgreSQL', 'MongoDB', 'Database Fundamentals']
+    items: [
+      'SQL',
+      'PostgreSQL',
+      'MongoDB',
+      'Database Fundamentals',
+      'Supabase',
+      'Row-Level Security',
+      'Database Migrations'
+    ]
   },
   {
     title: 'APIs',
@@ -81,6 +101,10 @@ const skillCategories = [
   {
     title: 'Tools / Deployment',
     items: ['Git', 'GitHub', 'VS Code', 'Vite', 'npm', 'GitHub Pages', 'GitHub Actions', 'Command Line', 'Chrome DevTools', 'Figma', 'Deployment Practices']
+  },
+  {
+    title: 'Testing / Quality',
+    items: ['Vitest', 'React Testing Library', 'Component Testing', 'Unit Testing', 'jsdom', 'Prettier']
   }
 ]
 

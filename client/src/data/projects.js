@@ -3,6 +3,49 @@ const projectAssetSrc = (projectFolder, fileName) => assetSrc(`projects/${projec
 
 export const projectCards = [
   {
+    id: 8,
+    slug: 'nextstep',
+    name: 'NextStep',
+    description:
+      'A cloud-synced job application command center with passwordless authentication, pipeline insights, follow-up planning, and responsive list and board workflows.',
+    detailDescription: [
+      'NextStep is a job application command center designed to replace scattered spreadsheets with a focused, responsive workflow. Users can track companies, roles, locations, links, notes, application stages, important dates, and follow-up actions while moving between searchable list and board views.',
+      'The application combines passwordless email authentication with secure Supabase cloud storage. Each user’s records are protected through PostgreSQL row-level security, while status changes are retained as a timeline. A local-storage workflow and realistic starter data provide a useful experience before and during cloud synchronization.',
+      'NextStep also turns application data into actionable guidance through pipeline insights, response-rate tracking, monthly submission metrics, stage counts, reminders, and prioritized next actions. Follow-ups can be viewed as a list or calendar, completed, edited, or snoozed directly from the dashboard.'
+    ],
+    highlights: [
+      'Full application CRUD with searchable, filterable, and sortable list and responsive board views.',
+      'Passwordless email authentication and cloud synchronization through Supabase.',
+      'Secure per-user PostgreSQL records protected by row-level security policies.',
+      'Follow-up planning with reminders, calendar and list views, completion, and one-, three-, or seven-day snoozing.',
+      'Dashboard insights for pipeline health, response rate, monthly submissions, offers, status counts, and recommended next actions.',
+      'Persisted status timelines, detail views, reduced-motion support, and automated component and utility tests.'
+    ],
+    stack:
+      'React • TypeScript • Vite • CSS • Supabase Auth • PostgreSQL • Row-Level Security • localStorage • Vitest • React Testing Library • GitHub Pages',
+    cardStack: 'TypeScript • React • Supabase • PostgreSQL',
+    images: [
+      {
+        src: projectAssetSrc('nextstep', 'landing-nextstep.jpg'),
+        alt: 'Screenshot of the NextStep passwordless sign-in landing page'
+      },
+      {
+        src: projectAssetSrc('nextstep', 'dashboard-nextstep.jpg'),
+        alt: 'Screenshot of the NextStep dashboard with pipeline insights and follow-up planning'
+      },
+      {
+        src: projectAssetSrc('nextstep', 'applications-nextstep.jpg'),
+        alt: 'Screenshot of the NextStep application form and searchable application list'
+      },
+      {
+        src: projectAssetSrc('nextstep', 'application-detail-nextstep.jpg'),
+        alt: 'Screenshot of the NextStep application detail dialog and status timeline'
+      }
+    ],
+    liveHref: 'https://mykeram.github.io/nextstep/',
+    githubHref: 'https://github.com/MykeRam/nextstep'
+  },
+  {
     id: 7,
     slug: 'film-roll-tracker',
     name: 'Film Roll Tracker',
