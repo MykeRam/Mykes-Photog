@@ -49,82 +49,46 @@ const headingActivationDelayMs = 140
 
 const skillCategories = [
   {
+    title: 'Languages',
+    items: ['TypeScript', 'JavaScript (ES6+)', 'SQL', 'HTML5', 'CSS3']
+  },
+  {
     title: 'Frontend',
-    items: [
-      'HTML5',
-      'CSS3',
-      'JavaScript (ES6+)',
-      'TypeScript',
-      'React',
-      'Responsive Design',
-      'Flexbox',
-      'CSS Grid',
-      'BEM',
-      'DOM Manipulation',
-      'React Hooks',
-      'Component-Based Development',
-      'Form Validation',
-      'Browser Storage',
-      'CSS Animation',
-      'Reduced-Motion Accessibility'
-    ]
+    items: ['React', 'React Hooks', 'Responsive Design', 'Accessibility', 'Component Architecture']
   },
   {
-    title: 'Backend',
-    items: [
-      'Node.js',
-      'Express.js',
-      'JSON',
-      'Server Routing',
-      'Basic Backend Development',
-      'Authentication & Authorization',
-      'Supabase Auth',
-      'Passwordless Authentication'
-    ]
+    title: 'Backend & APIs',
+    items: ['Node.js', 'Express.js', 'REST APIs', 'Authentication', 'Authorization']
   },
   {
-    title: 'Databases',
-    items: [
-      'SQL',
-      'PostgreSQL',
-      'MongoDB',
-      'Database Fundamentals',
-      'Supabase',
-      'Row-Level Security',
-      'Database Migrations'
-    ]
+    title: 'Data',
+    items: ['PostgreSQL', 'Supabase', 'MongoDB', 'Row-Level Security', 'Database Migrations']
   },
   {
-    title: 'APIs',
-    items: ['REST API Integration', 'API-Driven Development', 'OpenWeatherMap API', 'Google Maps API', 'Google Places API']
-  },
-  {
-    title: 'Tools / Deployment',
-    items: ['Git', 'GitHub', 'VS Code', 'Vite', 'npm', 'GitHub Pages', 'GitHub Actions', 'Command Line', 'Chrome DevTools', 'Figma', 'Deployment Practices']
-  },
-  {
-    title: 'Testing / Quality',
-    items: ['Vitest', 'React Testing Library', 'Component Testing', 'Unit Testing', 'jsdom', 'Prettier']
+    title: 'Quality & Delivery',
+    items: ['Vitest', 'React Testing Library', 'Git', 'GitHub Actions', 'Vite', 'Figma']
   }
 ]
 
 const projectSections = [
   {
-    title: 'Projects',
+    id: 'coding-projects-title',
+    title: 'Featured Projects',
     intro:
-      "This section features projects I've built while studying software engineering and developing my skills in modern web development. Each project reflects a different stage of my growth and shows how I'm applying TypeScript, SQL, PostgreSQL, and other tools to real products.",
-    projects: projectCards.filter((project) => project.group !== 'Foundational Projects')
+      'These projects show my strongest current work across product design, front-end architecture, authentication, databases, testing, and deployment.',
+    projects: projectCards.filter((project) => project.group === 'Featured Projects')
   },
   {
-    title: 'Foundational Projects',
+    id: 'coding-additional-projects-title',
+    title: 'Additional Work',
     intro:
-      'These earlier TripleTen projects established the core habits behind the rest of my work: clean structure, responsive layout, semantic HTML, and maintainable CSS. They show the foundation I kept building on as I moved into more advanced full-stack projects.',
-    projects: projectCards.filter((project) => project.group === 'Foundational Projects')
+      'Selected earlier work that demonstrates the React, API integration, responsive design, and front-end foundations behind my newer full-stack projects.',
+    projects: projectCards.filter((project) => project.group === 'Additional Work')
   }
 ]
 
 function ProjectCarousel({ project, shouldReduceMotion }) {
-  const [activeImageIndex, setActiveImageIndex] = useState(0)
+  const [activeImageIndex, setActiveImageIndex] = useState(project.featuredImageIndex ?? 0)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const swipeStateRef = useRef(null)
   const previewTriggerRef = useRef(null)
@@ -132,6 +96,7 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
   const images = project.images ?? []
   const activeImage = images[activeImageIndex] ?? images[0]
   const hasMultipleImages = images.length > 1
+  const isMobileTriptych = project.presentation === 'mobile-triptych'
 
   useEffect(() => {
     if (!hasMultipleImages) return
@@ -319,7 +284,11 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
     return null
   }
 
-  const imageFrameClassName = ['coding-project-image', activeImage.className].filter(Boolean).join(' ')
+  const imageFrameClassName = [
+    'coding-project-image',
+    activeImage.className,
+    isMobileTriptych ? 'coding-project-image--mobile-triptych' : ''
+  ].filter(Boolean).join(' ')
   const openPreview = (event) => {
     previewTriggerRef.current = event.currentTarget
     setIsPreviewOpen(true)
@@ -359,6 +328,7 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
             className="coding-project-preview-image"
             src={activeImage.src}
             alt={activeImage.alt}
+            decoding="async"
             initial={shouldReduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -397,38 +367,61 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
     <>
       <div
         className={imageFrameClassName}
-        onPointerDown={handlePointerDown}
-        onPointerUp={handlePointerUp}
-        onPointerCancel={clearSwipeState}
+        onPointerDown={isMobileTriptych ? undefined : handlePointerDown}
+        onPointerUp={isMobileTriptych ? undefined : handlePointerUp}
+        onPointerCancel={isMobileTriptych ? undefined : clearSwipeState}
       >
-        <AnimatePresence initial={false} mode="popLayout">
-          <motion.button
-            key={activeImage.src}
+        {isMobileTriptych ? (
+          <button
             type="button"
-            className="coding-project-image-trigger"
-            aria-label={`Open larger preview of ${activeImage.alt}`}
+            className="coding-project-mobile-showcase"
+            aria-label={`Open larger preview of ${project.name} mobile screens`}
             onClick={openPreview}
-            initial={shouldReduceMotion ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
-            transition={
-              shouldReduceMotion
-                ? { duration: 0 }
-                : {
-                    duration: 0.42,
-                    ease: 'easeInOut'
-                  }
-            }
           >
-            <img
-              className="coding-project-carousel-image"
-              src={activeImage.src}
-              alt={activeImage.alt}
-            />
-          </motion.button>
-        </AnimatePresence>
+            {images.map((image, imageIndex) => (
+              <img
+                key={image.src}
+                className={`coding-project-mobile-screen${imageIndex === project.featuredImageIndex ? ' coding-project-mobile-screen--featured' : ''}`}
+                src={image.src}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                aria-hidden="true"
+              />
+            ))}
+          </button>
+        ) : (
+          <AnimatePresence initial={false} mode="popLayout">
+            <motion.button
+              key={activeImage.src}
+              type="button"
+              className="coding-project-image-trigger"
+              aria-label={`Open larger preview of ${activeImage.alt}`}
+              onClick={openPreview}
+              initial={shouldReduceMotion ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : {
+                      duration: 0.42,
+                      ease: 'easeInOut'
+                    }
+              }
+            >
+              <img
+                className="coding-project-carousel-image"
+                src={activeImage.src}
+                alt={activeImage.alt}
+                loading="lazy"
+                decoding="async"
+              />
+            </motion.button>
+          </AnimatePresence>
+        )}
 
-        {hasMultipleImages ? (
+        {hasMultipleImages && !isMobileTriptych ? (
           <>
             <button
               type="button"
@@ -504,6 +497,7 @@ function ProjectCard({ project, index, shouldReduceMotion, shouldRevealOnEnter, 
         </h3>
         <p>{project.description}</p>
         <p className="coding-project-stack">{project.cardStack ?? project.stack}</p>
+        {project.demoNote ? <p className="coding-project-status">{project.demoNote}</p> : null}
 
         <div className="coding-project-links" aria-label={`${project.name} links`}>
           {project.liveHref ? (
@@ -566,7 +560,6 @@ export default function Coding({
   })
   const isProjectCueVisible = shouldReduceMotion || isProjectCueInView
   const projectCueRevealDelay = isSectionTargeted ? 0.24 : 0.08
-
   useEffect(() => {
     if (shouldReduceMotion) {
       setIsResponsiveHoverEnabled(true)
@@ -585,6 +578,7 @@ export default function Coding({
 
     return () => window.clearTimeout(timerId)
   }, [isHeadingInView, shouldReduceMotion])
+
   const scrollToProjects = () => {
     const projectsHeading = document.getElementById('coding-projects-title')
     if (!projectsHeading) return
@@ -717,12 +711,9 @@ export default function Coding({
               </span>
             </motion.h2>
             <p className="coding-intro-text">
-              I'm currently studying software engineering with TripleTen, where I'm building a strong
-              foundation in front-end and full-stack development. I enjoy creating clean, responsive, and
-              user-focused digital experiences, and I&apos;m especially drawn to the balance between design,
-              structure, and problem-solving. I'm especially focused on TypeScript, SQL, and PostgreSQL as I
-              keep expanding into full-stack work. This section highlights my technical skills, the tools I work
-              with, and the projects I've built throughout my learning journey.
+              I&apos;m completing TripleTen&apos;s Software Engineering program and building production-minded React
+              and full-stack applications. My recent work combines TypeScript, authentication, PostgreSQL,
+              testing, and automated deployment with a strong focus on responsive, accessible user experiences.
             </p>
           </header>
 
@@ -747,10 +738,10 @@ export default function Coding({
             <section className="coding-section coding-section--approach" aria-labelledby="coding-approach-title">
               <h2 id="coding-approach-title">Approach</h2>
               <p>
-                I enjoy building interfaces that are both functional and visually polished. As I continue growing
-                as a developer, I'm focused on writing clean code, improving the way I structure projects, and
-                building applications that feel intuitive and purposeful. My goal is not only to strengthen my
-                technical knowledge, but also to create work that reflects both precision and creativity.
+                I start with the user&apos;s workflow, then shape the components, data model, and edge cases around
+                it. I value readable code, useful tests, clear loading and error states, and interfaces that work
+                well across devices. I&apos;m especially interested in junior frontend and full-stack roles where I
+                can keep learning while contributing to real products.
               </p>
 
               <motion.button
@@ -805,11 +796,11 @@ export default function Coding({
           {projectSections.map((section, sectionIndex) => (
             <section
               key={section.title}
-              className={`coding-section coding-projects${sectionIndex === 1 ? ' coding-projects--foundational' : ''}`}
-              aria-labelledby={sectionIndex === 0 ? 'coding-projects-title' : 'coding-foundational-projects-title'}
+              className={`coding-section coding-projects${sectionIndex === 1 ? ' coding-projects--secondary' : ''}`}
+              aria-labelledby={section.id}
             >
               <h2
-                id={sectionIndex === 0 ? 'coding-projects-title' : 'coding-foundational-projects-title'}
+                id={section.id}
                 ref={sectionIndex === 0 ? projectsHeadingRef : undefined}
               >
                 {section.title}

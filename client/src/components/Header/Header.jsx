@@ -6,7 +6,7 @@ import { buildHash, getHashRoute, getHashSearchParams } from '../../lib/hashRout
 import './Header.css'
 
 const headerLogoSrc = `${import.meta.env.BASE_URL}myke_logo_vector_header.svg`
-const underlineRevealDelayMs = 1600
+const underlineRevealDelayMs = 5000
 
 function NavLink({ href, label, currentPath, currentSection, navigate, motionProps, linkRef }) {
   const routeHref = getHashRoute(href)

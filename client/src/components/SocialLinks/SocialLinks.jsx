@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'motion/react'
 import instagramIcon from '../../assets/social/IG.svg'
 import threadsIcon from '../../assets/social/Threads.svg'
 import twitchIcon from '../../assets/social/Twitch.svg'
+import githubIcon from '../../assets/social/github-icon.svg'
 import linkedinIcon from '../../assets/social/linkedin-icon.svg'
 import mailIcon from '../../assets/social/mail-icon.svg'
 import youtubeIcon from '../../assets/social/YT.svg'
@@ -24,6 +25,11 @@ const socials = [
     name: 'Twitch',
     href: 'https://twitch.tv/q0dzz',
     icon: twitchIcon
+  },
+  {
+    name: 'GitHub',
+    href: 'https://github.com/MykeRam',
+    icon: githubIcon
   },
   {
     name: 'LinkedIn',

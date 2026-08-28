@@ -21,7 +21,7 @@ function getSectionTarget(section) {
   if (section === 'home') return null
 
   return section === 'about'
-    ? document.querySelector('#about .about-sheet')
+    ? document.getElementById('about')
     : section === 'coding'
       ? document.querySelector('#coding-title')
       : document.getElementById(section)
@@ -36,9 +36,10 @@ function getSectionScrollTop(section) {
   const headerHeight = getHeaderHeight()
   const targetTop = window.scrollY + target.getBoundingClientRect().top
 
-  return section === 'about' || section === 'coding'
-    ? Math.max(0, targetTop - headerHeight - 8)
-    : Math.max(0, targetTop)
+  if (section === 'about') return Math.max(0, targetTop - headerHeight)
+  if (section === 'coding') return Math.max(0, targetTop - headerHeight - 8)
+
+  return Math.max(0, targetTop)
 }
 
 function scrollToSection(section, behavior = 'smooth') {
@@ -191,7 +192,7 @@ export default function App() {
     hasMountedRef.current = true
 
     if (currentPath === '/photography') {
-      document.title = 'Photography | Myke NYC'
+      document.title = 'Photography | Michael Ramirez'
       return undefined
     }
 
@@ -211,7 +212,10 @@ export default function App() {
           ? '#coding-title'
           : '#home-title'
 
-    document.title = `${pageName} | Myke NYC`
+    document.title =
+      pageName === 'Home'
+        ? 'Michael Ramirez | Junior Software Engineer'
+        : `${pageName} | Michael Ramirez`
     if (!shouldMoveFocus) return undefined
 
     setNavigationAnnouncement(`${pageName} section`)
@@ -261,7 +265,7 @@ export default function App() {
     <Photography onGridReadyChange={setIsPhotographyGridReady} />
   ) : (
     <>
-      <Home sectionId="home" />
+      <Home sectionId="home" navigate={navigate} />
       <About sectionId="about" navigate={navigate} />
       <Coding
         sectionId="coding"

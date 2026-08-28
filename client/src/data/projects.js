@@ -6,6 +6,7 @@ export const projectCards = [
     id: 8,
     slug: 'nextstep',
     name: 'NextStep',
+    group: 'Featured Projects',
     description:
       'A cloud-synced job application command center with passwordless authentication, pipeline insights, follow-up planning, and responsive list and board workflows.',
     detailDescription: [
@@ -46,9 +47,51 @@ export const projectCards = [
     githubHref: 'https://github.com/MykeRam/nextstep'
   },
   {
+    id: 9,
+    slug: 'color-dash',
+    name: 'Color Dash',
+    group: 'Featured Projects',
+    description:
+      'A fast, mobile-first color-matching game with anonymous player identity, a shared PostgreSQL leaderboard, and automated production checks.',
+    detailDescription: [
+      'Color Dash turns a simple color-matching challenge into a polished, replayable browser game. Players race a shrinking timer, build streaks, earn speed bonuses, and adapt as the difficulty increases across desktop and touch-first mobile layouts.',
+      'The game combines local responsiveness with shared cloud state. Each browser receives an anonymous player identity, personal bests are saved locally, and Supabase Postgres powers a global top-20 leaderboard with atomic best-score updates and row-level security.',
+      'The delivery workflow includes TypeScript throughout, production-render verification with the Node.js test runner, and automated builds and deployment through GitHub Actions.'
+    ],
+    highlights: [
+      'Touch-friendly game loop with lives, streaks, speed bonuses, and increasing difficulty.',
+      'Anonymous Supabase authentication and one leaderboard identity per browser player.',
+      'Shared PostgreSQL leaderboard with atomic personal-best updates and row-level security.',
+      'Responsive mobile and desktop layouts with persistent device-local best scores.',
+      'Automated production builds, rendered-output tests, and GitHub Pages deployment.'
+    ],
+    stack:
+      'React 19 • TypeScript • Next.js 16 • Supabase Auth • PostgreSQL • Row-Level Security • Web Storage API • Node.js Test Runner • GitHub Actions • GitHub Pages',
+    cardStack: 'TypeScript • React • Supabase • PostgreSQL',
+    presentation: 'mobile-triptych',
+    featuredImageIndex: 1,
+    images: [
+      {
+        src: projectAssetSrc('color-dash', 'colodash-home.png'),
+        alt: 'Color Dash mobile landing screen with the start control and global leaderboard'
+      },
+      {
+        src: projectAssetSrc('color-dash', 'colordash-play.png'),
+        alt: 'Color Dash mobile gameplay screen with the target color, timer, score, and four choices'
+      },
+      {
+        src: projectAssetSrc('color-dash', 'colordash-results.png'),
+        alt: 'Color Dash mobile results screen with score, replay control, and leaderboard form'
+      }
+    ],
+    liveHref: 'https://mykeram.github.io/color-dash/',
+    githubHref: 'https://github.com/MykeRam/color-dash'
+  },
+  {
     id: 7,
     slug: 'film-roll-tracker',
     name: 'Film Roll Tracker',
+    group: 'Featured Projects',
     description:
       'A full-stack film photography dashboard built with TypeScript and PostgreSQL to track rolls, status, uploads, and analytics in one workflow.',
     detailDescription: [
@@ -98,6 +141,7 @@ export const projectCards = [
     id: 3,
     slug: 'nyc-photo-lab-finder',
     name: 'NYC Photo Lab Finder',
+    group: 'Featured Projects',
     description:
       'A responsive map-and-list app for film photographers, built to surface lab options fast through search, filters, saved favorites, and Google Maps data.',
     detailDescription: [
@@ -136,15 +180,16 @@ export const projectCards = [
     id: 1,
     slug: 'personal-portfolio',
     name: 'Personal Portfolio',
+    group: 'Additional Work',
     description:
-      'A responsive portfolio that unifies software engineering and photography with custom motion, section-based navigation, and a polished gallery experience.',
+      'A responsive React portfolio with hash routing, custom motion, accessible navigation states, and an optimized asset workflow.',
     detailDescription: [
-      'This portfolio brings together software engineering projects and photography in a single responsive site. It uses custom section navigation, motion-driven transitions, and dedicated visual treatments for project work, personal background, and image galleries.',
-      'The project is designed as both a public portfolio and a live playground for refining front-end structure, animation timing, responsive layout, asset handling, and deployment workflow.'
+      'This portfolio presents software engineering work through responsive sections, dedicated project case studies, custom hash-based routing, and motion-driven transitions. Photography remains available as a separate routed experience with its own visual treatment.',
+      'The project is also a live playground for refining front-end structure, animation timing, accessibility, responsive layout, image handling, metadata, and deployment workflow.'
     ],
     highlights: [
       'Single-page section navigation with hash route support',
-      'Responsive coding and photography sections with custom motion',
+      'Separate software and photography experiences with custom motion',
       'Optimized image workflow for gallery and portfolio assets'
     ],
     stack:
@@ -180,7 +225,7 @@ export const projectCards = [
     id: 2,
     slug: 'wtwr',
     name: 'WTWR (What to Wear?)',
-    group: 'Foundational Projects',
+    group: 'Additional Work',
     description:
       'A weather-driven React app that recommends clothing from live conditions and supports interactive item previews in a fast, responsive UI.',
     detailDescription: [
@@ -207,7 +252,7 @@ export const projectCards = [
     id: 4,
     slug: 'triple-peaks-library',
     name: 'Triple Peaks Library',
-    group: 'Foundational Projects',
+    group: 'Additional Work',
     description:
       'A clean multi-section landing page built from a design brief, focused on semantic structure, layout precision, and maintainable CSS.',
     detailDescription: [
@@ -250,7 +295,7 @@ export const projectCards = [
     id: 5,
     slug: 'triple-peaks-coffee-shop',
     name: 'Triple Peaks Coffee Shop',
-    group: 'Foundational Projects',
+    group: 'Additional Work',
     description:
       'A polished cafe site built from a design brief with custom forms, structured sections, and subtle CSS animation and transforms.',
     detailDescription: [
@@ -295,7 +340,7 @@ export const projectCards = [
     id: 6,
     slug: 'about-me',
     name: 'About Me',
-    group: 'Foundational Projects',
+    group: 'Additional Work',
     description:
       'A foundational landing page built from a design brief, focused on semantic structure, clean layout, and responsive presentation.',
     detailDescription: [

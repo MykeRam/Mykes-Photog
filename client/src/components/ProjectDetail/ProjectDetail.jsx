@@ -35,12 +35,30 @@ function ProjectLinks({ project }) {
 }
 
 function ProjectImageCarousel({ project, shouldReduceMotion }) {
-  const [activeImageIndex, setActiveImageIndex] = useState(0)
+  const [activeImageIndex, setActiveImageIndex] = useState(project.featuredImageIndex ?? 0)
   const images = project.images ?? []
   const activeImage = images[activeImageIndex] ?? images[0]
   const hasMultipleImages = images.length > 1
+  const isMobileTriptych = project.presentation === 'mobile-triptych'
 
   if (!activeImage) return null
+
+  if (isMobileTriptych) {
+    return (
+      <div className="project-detail-mobile-showcase" aria-label={`${project.name} mobile screens`}>
+        {images.map((image, imageIndex) => (
+          <img
+            key={image.src}
+            className={`project-detail-mobile-screen${imageIndex === project.featuredImageIndex ? ' project-detail-mobile-screen--featured' : ''}`}
+            src={image.src}
+            alt={image.alt}
+            loading={imageIndex === project.featuredImageIndex ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        ))}
+      </div>
+    )
+  }
 
   const goToPreviousImage = () => {
     setActiveImageIndex((currentIndex) => (currentIndex - 1 + images.length) % images.length)
@@ -145,7 +163,6 @@ export default function ProjectDetail({ project, navigate }) {
           animate={{ opacity: 1, y: 0 }}
           transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
         >
-          <p className="project-detail-kicker">Project</p>
           <h1 id="project-detail-title" tabIndex={-1}>{project.name}</h1>
         </motion.header>
 

@@ -1,115 +1,132 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { motion, useReducedMotion } from 'motion/react'
+import { buildHash } from '../../lib/hashRoute'
 import './Home.css'
 
-const thumbModules = import.meta.glob(
-  ['../../images/thumbs/**/*.{webp,jpg,jpeg,png,svg,gif}', '!../../images/thumbs/about-portrait/**/*'],
+const selectedWork = [
   {
-    eager: true,
-    query: '?url',
-    import: 'default'
+    name: 'NextStep',
+    label: 'Full-stack job application tracker',
+    slug: 'nextstep'
+  },
+  {
+    name: 'Color Dash',
+    label: 'Shared leaderboard game',
+    slug: 'color-dash'
+  },
+  {
+    name: 'Film Roll Tracker',
+    label: 'Authenticated PostgreSQL dashboard',
+    slug: 'film-roll-tracker'
   }
-)
+]
 
-const homeHeroPortraitPaths = new Set([
-  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760008-thumb.webp',
-  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760023-thumb.webp',
-  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760005-thumb.webp',
-  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760011-thumb.webp',
-  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760030-thumb.webp',
-  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760007-thumb.webp',
-  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760035-thumb.webp',
-  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760024-thumb.webp',
-  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760013-thumb.webp',
-  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760038-thumb.webp',
-  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760001-thumb.webp',
-  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760010-thumb.webp',
-  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760009-thumb.webp',
-  '../../images/thumbs/Olympus Trip AF 50/FujiFilm 400/88760015-thumb.webp',
-  '../../images/thumbs/FujiFilm Disposable/FujiFilm 400/000003060023-thumb.webp',
-  '../../images/thumbs/FujiFilm Disposable/FujiFilm 400/000003060014-thumb.webp',
-  '../../images/thumbs/FujiFilm Disposable/FujiFilm 400/000003060008-thumb.webp',
-  '../../images/thumbs/FujiFilm Disposable/FujiFilm 400/000003060005-thumb.webp',
-  '../../images/thumbs/FujiFilm Disposable/FujiFilm 400/000003060011-thumb.webp',
-  '../../images/thumbs/FujiFilm Disposable/FujiFilm 400/000003060026-thumb.webp'
-])
+const homeEntryDelay = 1.35
+const homeCopyDuration = 1.25
+const homeWorkDelay = homeEntryDelay + homeCopyDuration
 
-const heroImagePool = Object.entries(thumbModules)
-  .filter(([path]) => homeHeroPortraitPaths.has(path))
-  .map(([, src]) => src)
-
-function buildHeroImages() {
-  return shuffle(heroImagePool)
-    .slice(0, 5)
-    .map((src, index) => ({
-      src,
-      className: index === 0 ? 'home-hero-card home-hero-card--lead' : 'home-hero-card'
-    }))
-}
-
-function shuffle(items) {
-  const next = [...items]
-
-  for (let index = next.length - 1; index > 0; index -= 1) {
-    const swapIndex = Math.floor(Math.random() * (index + 1))
-    const temp = next[index]
-    next[index] = next[swapIndex]
-    next[swapIndex] = temp
-  }
-
-  return next
-}
-
-export default function Home({ sectionId = 'home' }) {
+export default function Home({ sectionId = 'home', navigate }) {
   const shouldReduceMotion = useReducedMotion()
-  const [heroImages] = useState(() => buildHeroImages())
+  const projectsHref = buildHash('/', new URLSearchParams({ section: 'coding' }))
+
+  const handleInternalNavigation = (href) => (event) => {
+    if (!navigate) return
+
+    event.preventDefault()
+    navigate(href)
+  }
 
   return (
     <section id={sectionId} className="home-page" aria-labelledby="home-title">
       <div className="container">
-        <div className="home-showcase">
-          <div className="home-hero-grid">
-            {heroImages.map((image, index) => (
-              <motion.figure
-                key={image.src}
-                className={image.className}
-                initial={shouldReduceMotion ? false : { opacity: 0 }}
-                animate={shouldReduceMotion ? undefined : { opacity: 1 }}
-                transition={
-                  shouldReduceMotion
-                    ? undefined
-                    : {
-                        duration: 0.75,
-                        delay: 0.14 + index * 0.16,
-                        ease: [0.22, 1, 0.36, 1]
-                      }
-                }
-              >
-                <img
-                  src={image.src}
-                  alt=""
-                  loading={index < 3 ? 'eager' : 'lazy'}
-                  decoding="async"
-                />
-              </motion.figure>
-            ))}
-          </div>
-
-          <div className="home-copy">
+        <div className="home-hero">
+          <motion.header
+            className="home-copy"
+            initial={shouldReduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={
+              shouldReduceMotion
+                ? { duration: 0 }
+                : { duration: homeCopyDuration, delay: homeEntryDelay, ease: 'easeOut' }
+            }
+          >
+            <p className="home-eyebrow">Michael Ramirez <span aria-hidden="true">•</span> New York City</p>
             <h1 id="home-title" className="home-title" tabIndex={-1}>
-              <span className="home-title-primary">
-                <span className="home-title-role">Software Engineer |</span>
-                <span className="home-subtitle">Student @ TripleTen</span>
-              </span>
-              <span className="home-title-secondary">Photographer</span>
+              Junior software engineer building polished products.
             </h1>
-            <div className="home-role-note-card">
-              <p className="home-role-note">
-                Software engineering student building full-stack web applications with React, TypeScript, Node.js,
-                and PostgreSQL - currently seeking junior frontend or full-stack software engineering opportunities.
-              </p>
+            <p className="home-summary">
+              I build responsive front-end and full-stack applications with React, TypeScript, Node.js, and
+              PostgreSQL, combining reliable engineering with an eye for intuitive product design.
+            </p>
+
+            <div className="home-availability">
+              Completing TripleTen&apos;s Software Engineering program and seeking junior opportunities
             </div>
-          </div>
+
+            <div className="home-actions" aria-label="Portfolio actions">
+              <a
+                className="home-action home-action--primary"
+                href={projectsHref}
+                onClick={handleInternalNavigation(projectsHref)}
+              >
+                View projects
+              </a>
+              <a
+                className="home-action home-action--secondary"
+                href="https://github.com/MykeRam"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub
+              </a>
+              <a className="home-action home-action--text" href="mailto:me@myke.nyc">
+                Email me <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </motion.header>
+
+          <motion.aside
+            className="home-work-panel"
+            aria-labelledby="home-work-title"
+            initial={shouldReduceMotion ? false : { opacity: 0, x: 72 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={
+              shouldReduceMotion
+                ? { duration: 0 }
+                : { duration: 1.35, delay: homeWorkDelay, ease: [0.22, 1, 0.36, 1] }
+            }
+          >
+            <div className="home-work-heading">
+              <p id="home-work-title">Selected work</p>
+              <span>Frontend + full stack</span>
+            </div>
+
+            <ol className="home-work-list">
+              {selectedWork.map((project, index) => {
+                const projectHref = buildHash(`/coding/${project.slug}`)
+
+                return (
+                  <li key={project.slug}>
+                    <a href={projectHref} onClick={handleInternalNavigation(projectHref)}>
+                      <span className="home-work-number">0{index + 1}</span>
+                      <span className="home-work-copy">
+                        <strong>{project.name}</strong>
+                        <span>{project.label}</span>
+                      </span>
+                      <span className="home-work-arrow" aria-hidden="true">↗</span>
+                    </a>
+                  </li>
+                )
+              })}
+            </ol>
+
+            <div className="home-work-footer">
+              <span>React</span>
+              <span>TypeScript</span>
+              <span>PostgreSQL</span>
+              <span>Testing</span>
+            </div>
+          </motion.aside>
         </div>
       </div>
     </section>

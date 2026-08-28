@@ -6,10 +6,10 @@ import { buildHash } from '../../lib/hashRoute'
 import './About.css'
 
 const aboutParagraphs = [
-  "Hi, I'm Myke - a Software Engineering student @ TripleTen learning fullstack development, photographer, and Philadelphia based flight attendant living in New York City",
-  'My interests live at the intersection of creativity and discipline, where visual storytelling and technical problem-solving come together. Photography allows me to capture mood, emotion, and perspective, while software engineering gives me the tools to build thoughtful, engaging digital experiences.',
-  "Working as a flight attendant has also shaped the way I move through the world. It's taught me adaptability, attention to detail, and how to connect with people from all walks of life. Those experiences continue to influence both the way I create and the future I'm building in tech.",
-  "This space brings those worlds together - a place to share my photography, my projects, and the path I'm creating for myself."
+  "Hi, I'm Michael Ramirez, a New York City-based junior software engineer completing TripleTen's Software Engineering program.",
+  'I build responsive front-end and full-stack products with React, TypeScript, Node.js, and PostgreSQL. I care about the details behind a good experience: clear information, reliable data flows, accessible interfaces, and code that another developer can understand.',
+  "My work as a flight attendant shaped how I approach engineering. It taught me to stay calm under pressure, adapt quickly, communicate with people from every background, and take responsibility for the small details that keep a larger system running.",
+  'Photography remains part of how I see and design, but this portfolio is focused on the software products I am building and the engineering career I am working toward.'
 ]
 
 const typingSpeedMs = 9
@@ -175,7 +175,7 @@ export default function About({ sectionId = 'about', followTrigger = 0, navigate
                 transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
               >
                 <div className="about-follow-prompt">
-                  <p>Keep up with me here</p>
+                  <p>Connect with me</p>
                   <div className="about-follow-arrows" aria-hidden="true">
                     <span>&darr;</span>
                     <span>&darr;</span>
@@ -197,7 +197,7 @@ export default function About({ sectionId = 'about', followTrigger = 0, navigate
                     animateOnEnter
                     baseDelay={0.28}
                     stagger={0.1}
-                    hiddenSocials={['Twitch', 'YouTube']}
+                    hiddenSocials={['Instagram', 'Threads', 'Twitch', 'YouTube']}
                   />
                 </motion.div>
               </motion.div>
@@ -231,7 +231,7 @@ export default function About({ sectionId = 'about', followTrigger = 0, navigate
                 }
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               >
-                Browse photos I took with my favorite camera
+                Visit my separate photography work
               </motion.a>
             </div>
           </div>
