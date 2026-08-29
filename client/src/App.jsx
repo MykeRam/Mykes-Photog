@@ -214,7 +214,7 @@ export default function App() {
 
     document.title =
       pageName === 'Home'
-        ? 'Michael Ramirez | Junior Software Engineer'
+        ? 'Michael Ramirez | Software Engineer'
         : `${pageName} | Michael Ramirez`
     if (!shouldMoveFocus) return undefined
 
