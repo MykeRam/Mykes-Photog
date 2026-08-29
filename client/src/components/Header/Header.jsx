@@ -6,7 +6,12 @@ import { buildHash, getHashRoute, getHashSearchParams } from '../../lib/hashRout
 import './Header.css'
 
 const headerLogoSrc = `${import.meta.env.BASE_URL}myke_logo_vector_header.svg`
-const underlineRevealDelayMs = 5000
+const underlineAnimationDuration = 0.35
+const underlineFinishTime = 3.9
+const underlineRevealDelayMs =
+  (underlineFinishTime - underlineAnimationDuration) * 1000
+const headerNavAnimationDuration = 0.6
+const finalHeaderNavAnimationDelay = 0.92
 
 function NavLink({ href, label, currentPath, currentSection, navigate, motionProps, linkRef }) {
   const routeHref = getHashRoute(href)
@@ -153,7 +158,7 @@ export default function Header({ currentPath, currentSection, navigate }) {
                   ? {
                       initial: { opacity: 0, y: -14 },
                       animate: { opacity: 1, y: 0 },
-                      transition: { duration: 0.6, delay: 0.56, ease: [0.22, 1, 0.36, 1] }
+                      transition: { duration: headerNavAnimationDuration, delay: 0.56, ease: [0.22, 1, 0.36, 1] }
                     }
                   : undefined
               }
@@ -170,7 +175,7 @@ export default function Header({ currentPath, currentSection, navigate }) {
                   ? {
                       initial: { opacity: 0, y: 14 },
                       animate: { opacity: 1, y: 0 },
-                      transition: { duration: 0.6, delay: 0.68, ease: [0.22, 1, 0.36, 1] }
+                      transition: { duration: headerNavAnimationDuration, delay: 0.68, ease: [0.22, 1, 0.36, 1] }
                     }
                   : undefined
               }
@@ -187,7 +192,7 @@ export default function Header({ currentPath, currentSection, navigate }) {
                   ? {
                       initial: { opacity: 0, y: -14 },
                       animate: { opacity: 1, y: 0 },
-                      transition: { duration: 0.6, delay: 0.8, ease: [0.22, 1, 0.36, 1] }
+                      transition: { duration: headerNavAnimationDuration, delay: 0.8, ease: [0.22, 1, 0.36, 1] }
                     }
                   : undefined
               }
@@ -204,7 +209,11 @@ export default function Header({ currentPath, currentSection, navigate }) {
                   ? {
                       initial: { opacity: 0, y: 14 },
                       animate: { opacity: 1, y: 0 },
-                      transition: { duration: 0.6, delay: 0.92, ease: [0.22, 1, 0.36, 1] }
+                      transition: {
+                        duration: headerNavAnimationDuration,
+                        delay: finalHeaderNavAnimationDelay,
+                        ease: [0.22, 1, 0.36, 1]
+                      }
                     }
                   : undefined
               }
@@ -217,7 +226,7 @@ export default function Header({ currentPath, currentSection, navigate }) {
               transition={
                 shouldReduceMotion
                   ? { duration: 0 }
-                  : { duration: 0.35, ease: [0.22, 1, 0.36, 1] }
+                  : { duration: underlineAnimationDuration, ease: [0.22, 1, 0.36, 1] }
               }
             />
           </nav>
