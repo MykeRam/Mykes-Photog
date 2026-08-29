@@ -75,8 +75,7 @@ export default function Home({ sectionId = 'home', navigate }) {
               <a
                 className="home-action home-action--secondary"
                 href={`${import.meta.env.BASE_URL}latest_michael_ramirez_resume.pdf`}
-                target="_blank"
-                rel="noreferrer"
+                download="Michael-Ramirez-Resume.pdf"
               >
                 Resume
               </a>
