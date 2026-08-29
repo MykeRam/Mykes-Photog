@@ -52,16 +52,17 @@ export default function Home({ sectionId = 'home', navigate }) {
           >
             <p className="home-eyebrow">Michael Ramirez <span aria-hidden="true">•</span> New York City</p>
             <h1 id="home-title" className="home-title" tabIndex={-1}>
-              Junior software engineer building polished products.
+              Software engineer building polished, accessible products.
             </h1>
             <p className="home-summary">
               I build responsive front-end and full-stack applications with React, TypeScript, Node.js, and
               PostgreSQL, combining reliable engineering with an eye for intuitive product design.
             </p>
 
-            <div className="home-availability">
-              Completing TripleTen&apos;s Software Engineering program and seeking junior opportunities
-            </div>
+              <div className="home-availability">
+                Software Engineering student completing TripleTen&apos;s program · Open to junior frontend and
+                full-stack roles
+              </div>
 
             <div className="home-actions" aria-label="Portfolio actions">
               <a
@@ -70,6 +71,14 @@ export default function Home({ sectionId = 'home', navigate }) {
                 onClick={handleInternalNavigation(projectsHref)}
               >
                 View projects
+              </a>
+              <a
+                className="home-action home-action--secondary"
+                href={`${import.meta.env.BASE_URL}latest_michael_ramirez_resume.pdf`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Resume
               </a>
               <a
                 className="home-action home-action--secondary"
