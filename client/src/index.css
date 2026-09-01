@@ -1,101 +1,110 @@
 @import './vendor/font/normalize.css';
 
-* { box-sizing:border-box; }
+* {
+  box-sizing: border-box;
+}
 
 .sr-only {
-  position:absolute;
-  width:1px;
-  height:1px;
-  padding:0;
-  margin:-1px;
-  overflow:hidden;
-  clip:rect(0, 0, 0, 0);
-  white-space:nowrap;
-  border:0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .skip-link {
-  position:fixed;
-  top:12px;
-  left:12px;
-  z-index:2000;
-  padding:12px 16px;
-  border-radius:6px;
-  background:#111;
-  color:#fff;
-  font-weight:700;
-  text-decoration:none;
-  transform:translateY(calc(-100% - 24px));
-  transition:transform .2s ease;
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 2000;
+  padding: 12px 16px;
+  border-radius: 6px;
+  background: #111;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(calc(-100% - 24px));
+  transition: transform 0.2s ease;
 }
 
 .skip-link:focus {
-  transform:translateY(0);
+  transform: translateY(0);
 }
 
-:where(a, button, [tabindex="0"]):focus-visible {
-  outline:3px solid #2563eb;
-  outline-offset:3px;
+:where(a, button, [tabindex='0']):focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
 }
 
-:where(main, h1, h2)[tabindex="-1"]:focus {
-  outline:none;
+:where(main, h1, h2)[tabindex='-1']:focus {
+  outline: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .skip-link {
-    transition:none;
+    transition: none;
   }
 }
 
 @media (forced-colors: active) {
-  :where(a, button, [tabindex="0"]):focus-visible {
-    outline-color:Highlight;
+  :where(a, button, [tabindex='0']):focus-visible {
+    outline-color: Highlight;
   }
 }
 
 html,
 body {
-  height:100%;
-  margin:0;
-  padding:0;
-  font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-  color:#111;
-  width:100%;
-  max-width:100%;
-  overflow-x:clip;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial;
+  color: #111;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 body {
-  padding:0 20px;
-  background:#fff;
-  overflow-x:clip;
+  padding: 0 20px;
+  background: #fff;
+  overflow-x: clip;
 }
 
 #root {
-  min-height:100%;
-  width:100%;
+  min-height: 100%;
+  width: 100%;
 }
 
 .app-shell {
-  min-height:100%;
-  display:flex;
-  flex-direction:column;
-  width:100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .app-main {
-  flex:1;
-  min-width:0;
+  flex: 1;
+  min-width: 0;
 }
 
 .container {
-  max-width:1040px;
-  margin:0 auto;
+  max-width: 1040px;
+  margin: 0 auto;
 }
 
 @media (max-width: 640px) {
   body {
-    padding:0 12px;
+    padding: 0 12px;
   }
 }

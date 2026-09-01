@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'motion/react'
 import { projectCards } from '../../data/projects'
@@ -87,13 +87,15 @@ const projectSections = [
   }
 ]
 
+const emptyProjectImages = []
+
 function ProjectCarousel({ project, shouldReduceMotion }) {
   const [activeImageIndex, setActiveImageIndex] = useState(project.featuredImageIndex ?? 0)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const swipeStateRef = useRef(null)
   const previewTriggerRef = useRef(null)
   const previewModalRef = useRef(null)
-  const images = project.images ?? []
+  const images = project.images ?? emptyProjectImages
   const activeImage = images[activeImageIndex] ?? images[0]
   const hasMultipleImages = images.length > 1
   const isMobileTriptych = project.presentation === 'mobile-triptych'
@@ -288,7 +290,9 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
     'coding-project-image',
     activeImage.className,
     isMobileTriptych ? 'coding-project-image--mobile-triptych' : ''
-  ].filter(Boolean).join(' ')
+  ]
+    .filter(Boolean)
+    .join(' ')
   const openPreview = (event) => {
     previewTriggerRef.current = event.currentTarget
     setIsPreviewOpen(true)
@@ -461,15 +465,11 @@ function ProjectCard({ project, index, shouldReduceMotion, shouldRevealOnEnter, 
     <motion.article
       className="coding-project-card"
       initial={shouldReduceMotion || shouldRevealOnEnter ? false : { opacity: 0, y: 24 }}
-      animate={
-        shouldReduceMotion || shouldRevealOnEnter
-          ? { opacity: 1, y: 0 }
-          : undefined
+      animate={shouldReduceMotion || shouldRevealOnEnter ? { opacity: 1, y: 0 } : undefined}
+      whileInView={shouldReduceMotion || shouldRevealOnEnter ? undefined : { opacity: 1, y: 0 }}
+      viewport={
+        shouldReduceMotion || shouldRevealOnEnter ? undefined : { once: true, amount: 0.25 }
       }
-      whileInView={
-        shouldReduceMotion || shouldRevealOnEnter ? undefined : { opacity: 1, y: 0 }
-      }
-      viewport={shouldReduceMotion || shouldRevealOnEnter ? undefined : { once: true, amount: 0.25 }}
       transition={
         shouldReduceMotion
           ? { duration: 0 }
@@ -534,12 +534,7 @@ function ProjectCard({ project, index, shouldReduceMotion, shouldRevealOnEnter, 
   )
 }
 
-export default function Coding({
-  sectionId = 'coding',
-  isSectionActive = false,
-  isSectionTargeted = false,
-  navigate
-}) {
+export default function Coding({ sectionId = 'coding', isSectionTargeted = false, navigate }) {
   const shouldReduceMotion = useReducedMotion()
   const [isResponsiveHoverEnabled, setIsResponsiveHoverEnabled] = useState(false)
   const [isResponsiveHovered, setIsResponsiveHovered] = useState(false)
@@ -610,11 +605,12 @@ export default function Coding({
                     ? headingAnimations.thoughtful.whileInView
                     : headingAnimations.thoughtful.initial
                 }
-                transition={shouldReduceMotion ? { duration: 0 } : headingAnimations.thoughtful.transition}
+                transition={
+                  shouldReduceMotion ? { duration: 0 } : headingAnimations.thoughtful.transition
+                }
               >
                 thoughtful,
-              </motion.span>
-              {' '}
+              </motion.span>{' '}
               <motion.span
                 className="coding-title-emphasis coding-title-emphasis--responsive"
                 initial={shouldReduceMotion ? false : headingAnimations.responsive.initial}
@@ -673,14 +669,18 @@ export default function Coding({
                   <span className="coding-title-mask">
                     <motion.span
                       className="coding-title-emphasis coding-title-emphasis--software"
-                      initial={shouldReduceMotion ? false : headingAnimations.softwareEngineering.initial}
+                      initial={
+                        shouldReduceMotion ? false : headingAnimations.softwareEngineering.initial
+                      }
                       animate={
                         shouldReduceMotion || isHeadingInView
                           ? headingAnimations.softwareEngineering.whileInView
                           : headingAnimations.softwareEngineering.initial
                       }
                       transition={
-                        shouldReduceMotion ? { duration: 0 } : headingAnimations.softwareEngineering.transition
+                        shouldReduceMotion
+                          ? { duration: 0 }
+                          : headingAnimations.softwareEngineering.transition
                       }
                     >
                       software
@@ -689,7 +689,9 @@ export default function Coding({
                   <span className="coding-title-mask">
                     <motion.span
                       className="coding-title-emphasis coding-title-emphasis--software"
-                      initial={shouldReduceMotion ? false : headingAnimations.softwareEngineering.initial}
+                      initial={
+                        shouldReduceMotion ? false : headingAnimations.softwareEngineering.initial
+                      }
                       animate={
                         shouldReduceMotion || isHeadingInView
                           ? headingAnimations.softwareEngineering.whileInView
@@ -711,14 +713,18 @@ export default function Coding({
               </span>
             </motion.h2>
             <p className="coding-intro-text">
-              I&apos;m completing TripleTen&apos;s Software Engineering program and building production-minded React
-              and full-stack applications. My recent work combines TypeScript, authentication, PostgreSQL,
-              testing, and automated deployment with a strong focus on responsive, accessible user experiences.
+              I&apos;m completing TripleTen&apos;s Software Engineering program and building
+              production-minded React and full-stack applications. My recent work combines
+              TypeScript, authentication, PostgreSQL, testing, and automated deployment with a
+              strong focus on responsive, accessible user experiences.
             </p>
           </header>
 
           <div className="coding-overview">
-            <section className="coding-section coding-section--skills" aria-labelledby="coding-skills-title">
+            <section
+              className="coding-section coding-section--skills"
+              aria-labelledby="coding-skills-title"
+            >
               <h2 id="coding-skills-title">Technical Skills</h2>
 
               <div className="coding-skill-grid">
@@ -735,13 +741,17 @@ export default function Coding({
               </div>
             </section>
 
-            <section className="coding-section coding-section--approach" aria-labelledby="coding-approach-title">
+            <section
+              className="coding-section coding-section--approach"
+              aria-labelledby="coding-approach-title"
+            >
               <h2 id="coding-approach-title">Approach</h2>
               <p>
-                I start with the user&apos;s workflow, then shape the components, data model, and edge cases around
-                it. I value readable code, useful tests, clear loading and error states, and interfaces that work
-                well across devices. I&apos;m especially interested in junior frontend and full-stack roles where I
-                can keep learning while contributing to real products.
+                I start with the user&apos;s workflow, then shape the components, data model, and
+                edge cases around it. I value readable code, useful tests, clear loading and error
+                states, and interfaces that work well across devices. I&apos;m especially interested
+                in junior frontend and full-stack roles where I can keep learning while contributing
+                to real products.
               </p>
 
               <motion.button
@@ -799,10 +809,7 @@ export default function Coding({
               className={`coding-section coding-projects${sectionIndex === 1 ? ' coding-projects--secondary' : ''}`}
               aria-labelledby={section.id}
             >
-              <h2
-                id={section.id}
-                ref={sectionIndex === 0 ? projectsHeadingRef : undefined}
-              >
+              <h2 id={section.id} ref={sectionIndex === 0 ? projectsHeadingRef : undefined}>
                 {section.title}
               </h2>
               <p className="coding-projects-intro">{section.intro}</p>

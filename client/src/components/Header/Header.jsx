@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import SocialLinks from '../SocialLinks/SocialLinks'
 import { enterAnimation } from '../../lib/enterMotion'
@@ -8,8 +8,7 @@ import './Header.css'
 const headerLogoSrc = `${import.meta.env.BASE_URL}myke_logo_vector_header.svg`
 const underlineAnimationDuration = 0.35
 const underlineFinishTime = 3.9
-const underlineRevealDelayMs =
-  (underlineFinishTime - underlineAnimationDuration) * 1000
+const underlineRevealDelayMs = (underlineFinishTime - underlineAnimationDuration) * 1000
 const headerNavAnimationDuration = 0.6
 const finalHeaderNavAnimationDelay = 0.92
 
@@ -158,7 +157,11 @@ export default function Header({ currentPath, currentSection, navigate }) {
                   ? {
                       initial: { opacity: 0, y: -14 },
                       animate: { opacity: 1, y: 0 },
-                      transition: { duration: headerNavAnimationDuration, delay: 0.56, ease: [0.22, 1, 0.36, 1] }
+                      transition: {
+                        duration: headerNavAnimationDuration,
+                        delay: 0.56,
+                        ease: [0.22, 1, 0.36, 1]
+                      }
                     }
                   : undefined
               }
@@ -175,7 +178,11 @@ export default function Header({ currentPath, currentSection, navigate }) {
                   ? {
                       initial: { opacity: 0, y: 14 },
                       animate: { opacity: 1, y: 0 },
-                      transition: { duration: headerNavAnimationDuration, delay: 0.68, ease: [0.22, 1, 0.36, 1] }
+                      transition: {
+                        duration: headerNavAnimationDuration,
+                        delay: 0.68,
+                        ease: [0.22, 1, 0.36, 1]
+                      }
                     }
                   : undefined
               }
@@ -192,7 +199,11 @@ export default function Header({ currentPath, currentSection, navigate }) {
                   ? {
                       initial: { opacity: 0, y: -14 },
                       animate: { opacity: 1, y: 0 },
-                      transition: { duration: headerNavAnimationDuration, delay: 0.8, ease: [0.22, 1, 0.36, 1] }
+                      transition: {
+                        duration: headerNavAnimationDuration,
+                        delay: 0.8,
+                        ease: [0.22, 1, 0.36, 1]
+                      }
                     }
                   : undefined
               }

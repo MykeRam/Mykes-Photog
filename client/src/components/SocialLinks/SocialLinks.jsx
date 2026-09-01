@@ -1,4 +1,3 @@
-import React from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import instagramIcon from '../../assets/social/IG.svg'
 import threadsIcon from '../../assets/social/Threads.svg'
@@ -73,7 +72,9 @@ export default function SocialLinks({
           rel="noreferrer"
           aria-label={social.name}
           title={social.name}
-          {...(animateOnEnter && !shouldReduceMotion ? enterAnimation(baseDelay + index * stagger) : {})}
+          {...(animateOnEnter && !shouldReduceMotion
+            ? enterAnimation(baseDelay + index * stagger)
+            : {})}
         >
           <img src={social.icon} alt="" />
         </motion.a>

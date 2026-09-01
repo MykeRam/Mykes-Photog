@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Header from './components/Header/Header'
 import About from './components/About/About'
 import Coding from './components/Coding/Coding'
@@ -77,7 +77,9 @@ export default function App() {
 
   useLayoutEffect(() => {
     const hasManualScrollRestoration = 'scrollRestoration' in window.history
-    const previousScrollRestoration = hasManualScrollRestoration ? window.history.scrollRestoration : undefined
+    const previousScrollRestoration = hasManualScrollRestoration
+      ? window.history.scrollRestoration
+      : undefined
 
     if (hasManualScrollRestoration) {
       window.history.scrollRestoration = 'manual'
@@ -196,7 +198,9 @@ export default function App() {
       return undefined
     }
 
-    const project = currentPath.startsWith('/coding/') ? projectBySlug.get(currentPath.replace('/coding/', '')) : null
+    const project = currentPath.startsWith('/coding/')
+      ? projectBySlug.get(currentPath.replace('/coding/', ''))
+      : null
     const pageName = project?.name
       ? `${project.name} project`
       : currentSection === 'about'
@@ -213,9 +217,7 @@ export default function App() {
           : '#home-title'
 
     document.title =
-      pageName === 'Home'
-        ? 'Michael Ramirez | Software Engineer'
-        : `${pageName} | Michael Ramirez`
+      pageName === 'Home' ? 'Michael Ramirez | Software Engineer' : `${pageName} | Michael Ramirez`
     if (!shouldMoveFocus) return undefined
 
     setNavigationAnnouncement(`${pageName} section`)
@@ -269,7 +271,6 @@ export default function App() {
       <About sectionId="about" navigate={navigate} />
       <Coding
         sectionId="coding"
-        isSectionActive={activeSection === 'coding'}
         isSectionTargeted={currentSection === 'coding'}
         navigate={navigate}
       />
@@ -292,7 +293,9 @@ export default function App() {
       <main id="main-content" className="app-main" tabIndex={-1}>
         {page}
       </main>
-      {isPageLoaded && (currentPath !== '/photography' || isPhotographyGridReady) ? <Footer /> : null}
+      {isPageLoaded && (currentPath !== '/photography' || isPhotographyGridReady) ? (
+        <Footer />
+      ) : null}
     </div>
   )
 }

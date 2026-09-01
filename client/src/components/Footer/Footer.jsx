@@ -1,4 +1,3 @@
-import React from 'react'
 import './Footer.css'
 
 export default function Footer() {
@@ -7,9 +6,7 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="container">
-        <p>
-          &copy; {year} Developed by Michael Ramirez
-        </p>
+        <p>&copy; {year} Developed by Michael Ramirez</p>
       </div>
     </footer>
   )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { buildHash } from '../../lib/hashRoute'
 import './ProjectDetail.css'
@@ -125,7 +125,10 @@ export default function ProjectDetail({ project, navigate }) {
 
   if (!project) {
     return (
-      <section className="project-detail-page project-detail-page--empty" aria-labelledby="project-detail-title">
+      <section
+        className="project-detail-page project-detail-page--empty"
+        aria-labelledby="project-detail-title"
+      >
         <div className="container">
           <a
             className="project-detail-back"
@@ -137,7 +140,9 @@ export default function ProjectDetail({ project, navigate }) {
           >
             Back to projects
           </a>
-          <h1 id="project-detail-title" tabIndex={-1}>Project not found</h1>
+          <h1 id="project-detail-title" tabIndex={-1}>
+            Project not found
+          </h1>
         </div>
       </section>
     )
@@ -161,9 +166,13 @@ export default function ProjectDetail({ project, navigate }) {
           className="project-detail-hero"
           initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
+          transition={
+            shouldReduceMotion ? { duration: 0 } : { duration: 0.58, ease: [0.22, 1, 0.36, 1] }
+          }
         >
-          <h1 id="project-detail-title" tabIndex={-1}>{project.name}</h1>
+          <h1 id="project-detail-title" tabIndex={-1}>
+            {project.name}
+          </h1>
         </motion.header>
 
         <section className="project-detail-showcase" aria-label={`${project.name} project details`}>
@@ -179,7 +188,10 @@ export default function ProjectDetail({ project, navigate }) {
             </section>
 
             {project.highlights?.length ? (
-              <section className="project-detail-section" aria-labelledby="project-detail-highlights">
+              <section
+                className="project-detail-section"
+                aria-labelledby="project-detail-highlights"
+              >
                 <h2 id="project-detail-highlights">Highlights</h2>
                 <ul className="project-detail-highlights">
                   {project.highlights.map((highlight) => (

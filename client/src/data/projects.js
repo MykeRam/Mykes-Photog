@@ -1,5 +1,6 @@
 const assetSrc = (path) => `${import.meta.env.BASE_URL}${path}`
-const projectAssetSrc = (projectFolder, fileName) => assetSrc(`projects/${projectFolder}/${fileName}`)
+const projectAssetSrc = (projectFolder, fileName) =>
+  assetSrc(`projects/${projectFolder}/${fileName}`)
 
 export const projectCards = [
   {

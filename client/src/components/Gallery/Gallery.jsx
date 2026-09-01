@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { buildHash, getHashSearchParams } from '../../lib/hashRoute'
@@ -46,23 +46,26 @@ function loadAspectRatio(src) {
   })
 }
 
-const thumbModules = import.meta.glob([
-  '../../images/thumbs/**/*.{webp,jpg,jpeg,png,svg,gif}',
-  '!../../images/thumbs/about-portrait/**/*'
-], {
-  eager: true,
-  query: '?url',
-  import: 'default'
-})
+const thumbModules = import.meta.glob(
+  [
+    '../../images/thumbs/**/*.{webp,jpg,jpeg,png,svg,gif}',
+    '!../../images/thumbs/about-portrait/**/*'
+  ],
+  {
+    eager: true,
+    query: '?url',
+    import: 'default'
+  }
+)
 
-const fullModules = import.meta.glob([
-  '../../images/full/**/*.{webp,jpg,jpeg,png,svg,gif}',
-  '!../../images/full/about-portrait/**/*'
-], {
-  eager: true,
-  query: '?url',
-  import: 'default'
-})
+const fullModules = import.meta.glob(
+  ['../../images/full/**/*.{webp,jpg,jpeg,png,svg,gif}', '!../../images/full/about-portrait/**/*'],
+  {
+    eager: true,
+    query: '?url',
+    import: 'default'
+  }
+)
 
 const extensionPriority = {
   webp: 0,
@@ -147,7 +150,9 @@ export default function Gallery({ onGridReadyChange }) {
       grouped.set(info.key, existing)
     }
 
-    const ordered = Array.from(grouped.values()).sort((a, b) => a.sortPath.localeCompare(b.sortPath))
+    const ordered = Array.from(grouped.values()).sort((a, b) =>
+      a.sortPath.localeCompare(b.sortPath)
+    )
     const list = ordered.map((item) => {
       const pathParts = item.sortPath.split('/')
       const parent = pathParts[0] || 'root'
@@ -160,7 +165,9 @@ export default function Gallery({ onGridReadyChange }) {
         child
       }
     })
-    return list.filter((item) => Boolean(item.thumb && item.full) && !excludedParents.has(item.parent))
+    return list.filter(
+      (item) => Boolean(item.thumb && item.full) && !excludedParents.has(item.parent)
+    )
   }, [])
 
   useEffect(() => {
@@ -254,7 +261,11 @@ export default function Gallery({ onGridReadyChange }) {
       nextSearchParams.set('camera', parentFilter)
     }
 
-    window.history.replaceState(window.history.state, '', buildHash('/photography', nextSearchParams))
+    window.history.replaceState(
+      window.history.state,
+      '',
+      buildHash('/photography', nextSearchParams)
+    )
   }, [parentFilter])
 
   const visible = useMemo(() => {
@@ -357,7 +368,9 @@ export default function Gallery({ onGridReadyChange }) {
   }
 
   function showPreviousImage() {
-    setActiveIndex((current) => (current === null ? current : (current - 1 + visible.length) % visible.length))
+    setActiveIndex((current) =>
+      current === null ? current : (current - 1 + visible.length) % visible.length
+    )
   }
 
   function handleLightboxTouchStart(event) {

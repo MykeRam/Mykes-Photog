@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion, useInView, useReducedMotion } from 'motion/react'
 import SocialLinks from '../SocialLinks/SocialLinks'
 import aboutPortrait from '../../images/full/about-portrait/000001550004-large.webp'
@@ -8,7 +8,7 @@ import './About.css'
 const aboutParagraphs = [
   "Hi, I'm Michael Ramirez, a New York City-based junior software engineer completing TripleTen's Software Engineering program.",
   'I build responsive front-end and full-stack products with React, TypeScript, Node.js, and PostgreSQL. I care about the details behind a good experience: clear information, reliable data flows, accessible interfaces, and code that another developer can understand.',
-  "My work as a flight attendant shaped how I approach engineering. It taught me to stay calm under pressure, adapt quickly, communicate with people from every background, and take responsibility for the small details that keep a larger system running.",
+  'My work as a flight attendant shaped how I approach engineering. It taught me to stay calm under pressure, adapt quickly, communicate with people from every background, and take responsibility for the small details that keep a larger system running.',
   'Photography remains part of how I see and design, but this portfolio is focused on the software products I am building and the engineering career I am working toward.'
 ]
 
@@ -22,11 +22,16 @@ export default function About({ sectionId = 'about', followTrigger = 0, navigate
     if (typeof window === 'undefined') return false
     return window.matchMedia('(max-width: 640px)').matches
   })
-  const favoriteCameraHref = buildHash('/photography', new URLSearchParams({ camera: 'Canon AF35ML' }))
+  const favoriteCameraHref = buildHash(
+    '/photography',
+    new URLSearchParams({ camera: 'Canon AF35ML' })
+  )
   const [visibleCharacters, setVisibleCharacters] = useState(() =>
     shouldReduceMotion ? aboutParagraphs.join('').length : 0
   )
-  const [hasReachedMobileFollowTarget, setHasReachedMobileFollowTarget] = useState(() => shouldReduceMotion)
+  const [hasReachedMobileFollowTarget, setHasReachedMobileFollowTarget] = useState(
+    () => shouldReduceMotion
+  )
   const totalCharacters = useMemo(
     () => aboutParagraphs.reduce((sum, paragraph) => sum + paragraph.length, 0),
     []
@@ -127,7 +132,9 @@ export default function About({ sectionId = 'about', followTrigger = 0, navigate
       <span className="about-typed-measure" aria-hidden="true">
         {paragraph}
       </span>
-      <span className="about-typed-overlay" aria-hidden="true">{visibleText}</span>
+      <span className="about-typed-overlay" aria-hidden="true">
+        {visibleText}
+      </span>
     </p>
   )
 
@@ -167,11 +174,7 @@ export default function About({ sectionId = 'about', followTrigger = 0, navigate
               <motion.div
                 className="about-visual-follow"
                 initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
-                animate={
-                  shouldShowFollowPrompt
-                    ? { opacity: 1, y: 0 }
-                    : { opacity: 0, y: 10 }
-                }
+                animate={shouldShowFollowPrompt ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                 transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
               >
                 <div className="about-follow-prompt">
@@ -186,11 +189,7 @@ export default function About({ sectionId = 'about', followTrigger = 0, navigate
                 <motion.div
                   className="about-socials"
                   initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
-                  animate={
-                    shouldShowFollowPrompt
-                      ? { opacity: 1, y: 0 }
-                      : { opacity: 0, y: 10 }
-                  }
+                  animate={shouldShowFollowPrompt ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                   transition={{ duration: 0.45, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <SocialLinks

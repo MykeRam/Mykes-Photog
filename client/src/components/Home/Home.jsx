@@ -1,4 +1,3 @@
-import React from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { buildHash } from '../../lib/hashRoute'
 import './Home.css'
@@ -50,19 +49,22 @@ export default function Home({ sectionId = 'home', navigate }) {
                 : { duration: homeCopyDuration, delay: homeEntryDelay, ease: 'easeOut' }
             }
           >
-            <p className="home-eyebrow">Michael Ramirez <span aria-hidden="true">•</span> New York City</p>
+            <p className="home-eyebrow">
+              Michael Ramirez <span aria-hidden="true">•</span> New York City
+            </p>
             <h1 id="home-title" className="home-title" tabIndex={-1}>
               Software engineer building polished, accessible products.
             </h1>
             <p className="home-summary">
-              I build responsive front-end and full-stack applications with React, TypeScript, Node.js, and
-              PostgreSQL, combining reliable engineering with an eye for intuitive product design.
+              I build responsive front-end and full-stack applications with React, TypeScript,
+              Node.js, and PostgreSQL, combining reliable engineering with an eye for intuitive
+              product design.
             </p>
 
-              <div className="home-availability">
-                Software Engineering student completing TripleTen&apos;s program · Open to junior frontend and
-                full-stack roles
-              </div>
+            <div className="home-availability">
+              Software Engineering student completing TripleTen&apos;s program · Open to junior
+              frontend and full-stack roles
+            </div>
 
             <div className="home-actions" aria-label="Portfolio actions">
               <a
@@ -121,7 +123,9 @@ export default function Home({ sectionId = 'home', navigate }) {
                         <strong>{project.name}</strong>
                         <span>{project.label}</span>
                       </span>
-                      <span className="home-work-arrow" aria-hidden="true">↗</span>
+                      <span className="home-work-arrow" aria-hidden="true">
+                        ↗
+                      </span>
                     </a>
                   </li>
                 )
