@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { buildHash } from '../../lib/hashRoute'
 import './ProjectDetail.css'
@@ -121,6 +121,9 @@ function ProjectImageCarousel({ project, shouldReduceMotion }) {
 
 export default function ProjectDetail({ project, navigate }) {
   const shouldReduceMotion = useReducedMotion()
+  useEffect(() => {
+    document.getElementById('project-detail-title')?.focus({ preventScroll: true })
+  }, [project])
   const codingHref = buildHash('/', new URLSearchParams({ section: 'coding' }))
 
   if (!project) {

@@ -1,15 +1,15 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Header from './components/Header/Header'
 import About from './components/About/About'
 import Coding from './components/Coding/Coding'
 import Footer from './components/Footer/Footer'
 import Home from './components/Home/Home'
 import Photography from './components/Photography/Photography'
-import ProjectDetail from './components/ProjectDetail/ProjectDetail'
 import { projectBySlug } from './data/projects'
 import { buildHash, getHashRoute, getHashSearchParams } from './lib/hashRoute'
 
 const mainPageRoutes = new Set(['/', '/about', '/coding'])
+const ProjectDetail = lazy(() => import('./components/ProjectDetail/ProjectDetail'))
 const activeSectionLeadPx = 96
 
 function getHeaderHeight() {
@@ -262,7 +262,15 @@ export default function App() {
 
   const projectSlug = currentPath.startsWith('/coding/') ? currentPath.replace('/coding/', '') : ''
   const page = currentPath.startsWith('/coding/') ? (
-    <ProjectDetail project={projectBySlug.get(projectSlug)} navigate={navigate} />
+    <Suspense
+      fallback={
+        <div className="container" role="status">
+          Loading project…
+        </div>
+      }
+    >
+      <ProjectDetail project={projectBySlug.get(projectSlug)} navigate={navigate} />
+    </Suspense>
   ) : currentPath === '/photography' ? (
     <Photography onGridReadyChange={setIsPhotographyGridReady} />
   ) : (

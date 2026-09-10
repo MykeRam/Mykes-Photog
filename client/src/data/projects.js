@@ -1,6 +1,9 @@
 const assetSrc = (path) => `${import.meta.env.BASE_URL}${path}`
-const projectAssetSrc = (projectFolder, fileName) =>
-  assetSrc(`projects/${projectFolder}/${fileName}`)
+const projectImageAssets = (projectFolder, fileName) => {
+  const stem = fileName.replace(/\.[^.]+$/, '')
+  const base = `projects/optimized/${projectFolder}/${stem}`
+  return { src: assetSrc(`${base}-preview.webp`), cardSrc: assetSrc(`${base}-card.webp`) }
+}
 
 export const projectCards = [
   {
@@ -28,19 +31,19 @@ export const projectCards = [
     cardStack: 'TypeScript • React • Supabase • PostgreSQL',
     images: [
       {
-        src: projectAssetSrc('nextstep', 'landing-nextstep.jpg'),
+        ...projectImageAssets('nextstep', 'landing-nextstep.jpg'),
         alt: 'Screenshot of the NextStep passwordless sign-in landing page'
       },
       {
-        src: projectAssetSrc('nextstep', 'dashboard-nextstep.jpg'),
+        ...projectImageAssets('nextstep', 'dashboard-nextstep.jpg'),
         alt: 'Screenshot of the NextStep dashboard with pipeline insights and follow-up planning'
       },
       {
-        src: projectAssetSrc('nextstep', 'applications-nextstep.jpg'),
+        ...projectImageAssets('nextstep', 'applications-nextstep.jpg'),
         alt: 'Screenshot of the NextStep application form and searchable application list'
       },
       {
-        src: projectAssetSrc('nextstep', 'application-detail-nextstep.jpg'),
+        ...projectImageAssets('nextstep', 'application-detail-nextstep.jpg'),
         alt: 'Screenshot of the NextStep application detail dialog and status timeline'
       }
     ],
@@ -73,15 +76,15 @@ export const projectCards = [
     featuredImageIndex: 1,
     images: [
       {
-        src: projectAssetSrc('color-dash', 'colodash-home.png'),
+        ...projectImageAssets('color-dash', 'colodash-home.png'),
         alt: 'Color Dash mobile landing screen with the start control and global leaderboard'
       },
       {
-        src: projectAssetSrc('color-dash', 'colordash-play.png'),
+        ...projectImageAssets('color-dash', 'colordash-play.png'),
         alt: 'Color Dash mobile gameplay screen with the target color, timer, score, and four choices'
       },
       {
-        src: projectAssetSrc('color-dash', 'colordash-results.png'),
+        ...projectImageAssets('color-dash', 'colordash-results.png'),
         alt: 'Color Dash mobile results screen with score, replay control, and leaderboard form'
       }
     ],
@@ -112,27 +115,27 @@ export const projectCards = [
     cardStack: 'TypeScript • PostgreSQL • SQL • Node.js',
     images: [
       {
-        src: projectAssetSrc('film-roll-tracker', 'landing-film-roll-tracker.png'),
+        ...projectImageAssets('film-roll-tracker', 'landing-film-roll-tracker.png'),
         alt: 'Screenshot of the Film Roll Tracker landing page'
       },
       {
-        src: projectAssetSrc('film-roll-tracker', 'bottom-landing-film-roll-tracker.png'),
+        ...projectImageAssets('film-roll-tracker', 'bottom-landing-film-roll-tracker.png'),
         alt: 'Screenshot of the Film Roll Tracker landing page lower section'
       },
       {
-        src: projectAssetSrc('film-roll-tracker', 'logged_in_dashboard-film-roll-tracker.jpg'),
+        ...projectImageAssets('film-roll-tracker', 'logged_in_dashboard-film-roll-tracker.jpg'),
         alt: 'Screenshot of the Film Roll Tracker authenticated dashboard'
       },
       {
-        src: projectAssetSrc('film-roll-tracker', 'roll_library-film-roll-tracker.jpg'),
+        ...projectImageAssets('film-roll-tracker', 'roll_library-film-roll-tracker.jpg'),
         alt: 'Screenshot of the Film Roll Tracker roll library view'
       },
       {
-        src: projectAssetSrc('film-roll-tracker', 'delete-confirm_film-roll-tracker.jpg'),
+        ...projectImageAssets('film-roll-tracker', 'delete-confirm_film-roll-tracker.jpg'),
         alt: 'Screenshot of the Film Roll Tracker delete confirmation dialog'
       },
       {
-        src: projectAssetSrc('film-roll-tracker', 'scans-film-roll-tracker.jpg'),
+        ...projectImageAssets('film-roll-tracker', 'scans-film-roll-tracker.jpg'),
         alt: 'Screenshot of the Film Roll Tracker scans view'
       }
     ],
@@ -162,15 +165,15 @@ export const projectCards = [
     cardStack: 'TypeScript • React • Google Maps',
     images: [
       {
-        src: projectAssetSrc('nyc-photo-lab-finder', 'landing-photo-lab.png'),
+        ...projectImageAssets('nyc-photo-lab-finder', 'landing-photo-lab.png'),
         alt: 'Screenshot of the NYC Photo Lab Finder landing page'
       },
       {
-        src: projectAssetSrc('nyc-photo-lab-finder', 'map-photo-lab.png'),
+        ...projectImageAssets('nyc-photo-lab-finder', 'map-photo-lab.png'),
         alt: 'Screenshot of the NYC Photo Lab Finder map view'
       },
       {
-        src: projectAssetSrc('nyc-photo-lab-finder', 'saved-labs-photo-lab.png'),
+        ...projectImageAssets('nyc-photo-lab-finder', 'saved-labs-photo-lab.png'),
         alt: 'Screenshot of the NYC Photo Lab Finder saved labs view'
       }
     ],
@@ -198,23 +201,23 @@ export const projectCards = [
     cardStack: 'React • Motion • Vite',
     images: [
       {
-        src: projectAssetSrc('personal-portfolio', 'landing-portfolio.png'),
+        ...projectImageAssets('personal-portfolio', 'landing-portfolio.png'),
         alt: 'Screenshot of the landing section of the portfolio site'
       },
       {
-        src: projectAssetSrc('personal-portfolio', 'about-portfolio.png'),
+        ...projectImageAssets('personal-portfolio', 'about-portfolio.png'),
         alt: 'Screenshot of the about section of the portfolio site'
       },
       {
-        src: projectAssetSrc('personal-portfolio', 'coding-portfolio.png'),
+        ...projectImageAssets('personal-portfolio', 'coding-portfolio.png'),
         alt: 'Screenshot of the coding section of the portfolio site'
       },
       {
-        src: projectAssetSrc('personal-portfolio', 'photography-portfolio.png'),
+        ...projectImageAssets('personal-portfolio', 'photography-portfolio.png'),
         alt: 'Screenshot of the photography section of the portfolio site'
       },
       {
-        src: projectAssetSrc('personal-portfolio', 'logo.png'),
+        ...projectImageAssets('personal-portfolio', 'logo.png'),
         alt: 'Portfolio branding logo',
         className: 'coding-project-image--contain'
       }
@@ -243,7 +246,7 @@ export const projectCards = [
     cardStack: 'React • JavaScript • API',
     images: [
       {
-        src: projectAssetSrc('wtwr', 'wtwr-home.png'),
+        ...projectImageAssets('wtwr', 'wtwr-home.png'),
         alt: 'Screenshot of the WTWR clothing recommendation application'
       }
     ],
@@ -269,23 +272,23 @@ export const projectCards = [
     cardStack: 'HTML • CSS • Flexbox',
     images: [
       {
-        src: projectAssetSrc('triple-peaks-library', 'TriplePeaksLibrary.png'),
+        ...projectImageAssets('triple-peaks-library', 'TriplePeaksLibrary.png'),
         alt: 'Screenshot of the full Triple Peaks Library webpage'
       },
       {
-        src: projectAssetSrc('triple-peaks-library', 'events-triple_peaks.png'),
+        ...projectImageAssets('triple-peaks-library', 'events-triple_peaks.png'),
         alt: 'Screenshot of the Triple Peaks Library events section'
       },
       {
-        src: projectAssetSrc('triple-peaks-library', 'staff-picks_triple_peaks.png'),
+        ...projectImageAssets('triple-peaks-library', 'staff-picks_triple_peaks.png'),
         alt: 'Screenshot of the Triple Peaks Library staff picks section'
       },
       {
-        src: projectAssetSrc('triple-peaks-library', 'become-member_triple_peaks.png'),
+        ...projectImageAssets('triple-peaks-library', 'become-member_triple_peaks.png'),
         alt: 'Screenshot of the Triple Peaks Library become member section'
       },
       {
-        src: projectAssetSrc('triple-peaks-library', 'about_triple_peaks.png'),
+        ...projectImageAssets('triple-peaks-library', 'about_triple_peaks.png'),
         alt: 'Screenshot of the Triple Peaks Library about section'
       }
     ],
@@ -313,23 +316,23 @@ export const projectCards = [
     cardStack: 'HTML • CSS • Forms',
     images: [
       {
-        src: projectAssetSrc('triple-peaks-coffee-shop', 'TriplePeaksCoffee.png'),
+        ...projectImageAssets('triple-peaks-coffee-shop', 'TriplePeaksCoffee.png'),
         alt: 'Screenshot of the full Triple Peaks Coffee Shop webpage'
       },
       {
-        src: projectAssetSrc('triple-peaks-coffee-shop', 'menu_coffee-shop.png'),
+        ...projectImageAssets('triple-peaks-coffee-shop', 'menu_coffee-shop.png'),
         alt: 'Screenshot of the Triple Peaks Coffee Shop menu section'
       },
       {
-        src: projectAssetSrc('triple-peaks-coffee-shop', 'recipes_coffee-shop.png'),
+        ...projectImageAssets('triple-peaks-coffee-shop', 'recipes_coffee-shop.png'),
         alt: 'Screenshot of the Triple Peaks Coffee Shop recipes section'
       },
       {
-        src: projectAssetSrc('triple-peaks-coffee-shop', 'book-table_coffee-shop.png'),
+        ...projectImageAssets('triple-peaks-coffee-shop', 'book-table_coffee-shop.png'),
         alt: 'Screenshot of the Triple Peaks Coffee Shop booking section'
       },
       {
-        src: projectAssetSrc('triple-peaks-coffee-shop', 'contacts_coffee-shop.png'),
+        ...projectImageAssets('triple-peaks-coffee-shop', 'contacts_coffee-shop.png'),
         alt: 'Screenshot of the Triple Peaks Coffee Shop contacts section',
         className: 'coding-project-image--contain-full'
       }
@@ -357,11 +360,11 @@ export const projectCards = [
     cardStack: 'HTML • CSS • Flexbox',
     images: [
       {
-        src: projectAssetSrc('about-me', 'landing_about-me.png'),
+        ...projectImageAssets('about-me', 'landing_about-me.png'),
         alt: 'Screenshot of the About Me landing section'
       },
       {
-        src: projectAssetSrc('about-me', '1stSiteMR.png'),
+        ...projectImageAssets('about-me', '1stSiteMR.png'),
         alt: 'Screenshot of the About Me project landing page'
       }
     ],

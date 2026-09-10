@@ -95,13 +95,15 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
   const swipeStateRef = useRef(null)
   const previewTriggerRef = useRef(null)
   const previewModalRef = useRef(null)
+  const carouselRef = useRef(null)
+  const isNearViewport = useInView(carouselRef, { margin: '300px 0px' })
   const images = project.images ?? emptyProjectImages
   const activeImage = images[activeImageIndex] ?? images[0]
   const hasMultipleImages = images.length > 1
   const isMobileTriptych = project.presentation === 'mobile-triptych'
 
   useEffect(() => {
-    if (!hasMultipleImages) return
+    if (!hasMultipleImages || (!isNearViewport && !isPreviewOpen)) return
 
     const adjacentImageIndexes = [
       (activeImageIndex - 1 + images.length) % images.length,
@@ -110,9 +112,9 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
 
     adjacentImageIndexes.forEach((imageIndex) => {
       const image = new Image()
-      image.src = images[imageIndex].src
+      image.src = isPreviewOpen ? images[imageIndex].src : images[imageIndex].cardSrc
     })
-  }, [activeImageIndex, hasMultipleImages, images])
+  }, [activeImageIndex, hasMultipleImages, images, isNearViewport, isPreviewOpen])
 
   useEffect(() => {
     if (!isPreviewOpen) return undefined
@@ -388,6 +390,7 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
   return (
     <>
       <div
+        ref={carouselRef}
         className={imageFrameClassName}
         onPointerDown={isMobileTriptych ? undefined : handlePointerDown}
         onPointerUp={isMobileTriptych ? undefined : handlePointerUp}
@@ -404,7 +407,7 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
               <img
                 key={image.src}
                 className={`coding-project-mobile-screen${imageIndex === project.featuredImageIndex ? ' coding-project-mobile-screen--featured' : ''}`}
-                src={image.src}
+                src={image.cardSrc}
                 alt=""
                 loading="lazy"
                 decoding="async"
@@ -434,7 +437,7 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
             >
               <img
                 className="coding-project-carousel-image"
-                src={activeImage.src}
+                src={activeImage.cardSrc}
                 alt={activeImage.alt}
                 loading="lazy"
                 decoding="async"

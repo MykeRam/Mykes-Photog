@@ -11,6 +11,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "convert-images": "node scripts/convert-images.js",
+    "optimize-project-images": "node scripts/optimize-project-images.cjs",
     "convert-images:force": "node scripts/convert-images.js --force"
   },
   "dependencies": {

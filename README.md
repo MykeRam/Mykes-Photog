@@ -94,6 +94,16 @@ This repository is primarily a **frontend portfolio application**. It demonstrat
 - Automated deployment to GitHub Pages with GitHub Actions
 - Image optimization workflows using Sharp, with ImageMagick as an optional fallback
 
+## Updating project screenshots
+
+Keep original project screenshots in `client/public/projects/<project>/` and reference them with
+`projectImageAssets` in `client/src/data/projects.js`. Run `npm run optimize-project-images` from
+`client` after adding or changing screenshots, and commit the generated files in
+`client/public/projects/optimized/`. The command generates WebP card images (up to 1000 pixels
+on the longest edge) and larger previews (up to 2400 pixels), without modifying the originals
+or photography assets. Cards use the small versions; expanded previews and project details use
+the larger versions. Adjacent carousel images preload within 300 pixels of the viewport.
+
 ## Credits
 
 - The project logo was created using **Canva**.
