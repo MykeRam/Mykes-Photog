@@ -393,10 +393,11 @@
     box-shadow 0.2s ease;
 }
 
-.coding-project-carousel-button span {
-  font-size: 1.45rem;
-  font-weight: 400;
-  line-height: 1;
+.coding-project-carousel-button svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
 .coding-project-carousel-button--prev {
@@ -529,10 +530,11 @@
   transform: translateY(-50%);
 }
 
-.coding-project-preview-button span {
-  font-size: 1.8rem;
-  font-weight: 400;
-  line-height: 1;
+.coding-project-preview-button svg {
+  display: block;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
 }
 
 .coding-project-preview-button--prev {

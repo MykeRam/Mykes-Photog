@@ -349,7 +349,16 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
             onClick={goToPreviousImage}
             aria-label={`Show previous image for ${project.name}`}
           >
-            <span aria-hidden="true">←</span>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M20 12H4m6-6-6 6 6 6" />
+            </svg>
           </button>
           <button
             type="button"
@@ -357,7 +366,16 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
             onClick={goToNextImage}
             aria-label={`Show next image for ${project.name}`}
           >
-            <span aria-hidden="true">→</span>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M4 12h16m-6-6 6 6-6 6" />
+            </svg>
           </button>
           <div className="coding-project-preview-counter" aria-hidden="true">
             {activeImageIndex + 1} / {images.length}
@@ -433,7 +451,16 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
               onClick={goToPreviousImage}
               aria-label={`Show previous image for ${project.name}`}
             >
-              <span aria-hidden="true">←</span>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M20 12H4m6-6-6 6 6 6" />
+              </svg>
             </button>
             <button
               type="button"
@@ -441,7 +468,16 @@ function ProjectCarousel({ project, shouldReduceMotion }) {
               onClick={goToNextImage}
               aria-label={`Show next image for ${project.name}`}
             >
-              <span aria-hidden="true">→</span>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M4 12h16m-6-6 6 6-6 6" />
+              </svg>
             </button>
             <div className="coding-project-carousel-counter" aria-hidden="true">
               {activeImageIndex + 1} / {images.length}
