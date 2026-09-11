@@ -12,7 +12,7 @@ The site showcases:
 
 ## Live Demo
 
-View the deployed site here: [mykeram.github.io/Mykes-Photog](https://mykeram.github.io/Mykes-Photog/)
+View the deployed site here: [https://myke.nyc/](https://myke.nyc/)
 
 ## Technologies and Tools
 
@@ -35,22 +35,22 @@ View the deployed site here: [mykeram.github.io/Mykes-Photog](https://mykeram.gi
 
 This project uses the following technologies and tools:
 
-| Technology | How it is used in this project | Where it is used |
-| --- | --- | --- |
-| **HTML5 / JSX** | Defines the site's semantic structure through React component markup, including sections, headings, links, buttons, project cards, and gallery content. | `client/src/App.jsx`, `client/src/components/Home/Home.jsx`, `client/src/components/Coding/Coding.jsx`, `client/src/components/Photography/Photography.jsx` |
-| **CSS3** | Controls layout, spacing, typography, responsive breakpoints, the home hero grid, the gallery layout, and the coding section styling. | `client/src/index.css`, `client/src/components/Home/Home.css`, `client/src/components/Gallery/Gallery.css`, `client/src/components/Coding/Coding.css` |
-| **JavaScript (ES6+)** | Powers hash-based navigation, scroll syncing, gallery filtering, animation state, and image processing logic. | `client/src/App.jsx`, `client/src/lib/hashRoute.js`, `client/src/components/Gallery/Gallery.jsx`, `client/scripts/convert-images.js` |
-| **React** | Builds the UI with reusable components and stateful behavior across the portfolio sections. | `client/src/main.jsx`, `client/src/App.jsx`, `client/src/components/` |
-| **React DOM** | Renders the app into the DOM with `createRoot` and mounts gallery and project-preview modals with `createPortal`. | `client/src/main.jsx`, `client/src/components/Gallery/Gallery.jsx`, `client/src/components/Coding/Coding.jsx` |
-| **Vite** | Runs the local development server and production build pipeline through the project's `dev`, `build`, and `preview` scripts. | `client/package.json`, `client/vite.config.js` |
-| **@vitejs/plugin-react** | Adds React and JSX support to the Vite build configuration. | `client/package.json`, `client/vite.config.js` |
-| **Motion** | Animates hero images, section headings, gallery transitions, and modal behavior while respecting reduced-motion preferences. | `client/src/components/Home/Home.jsx`, `client/src/components/Coding/Coding.jsx`, `client/src/components/Gallery/Gallery.jsx` |
-| **Node.js** | Executes the project's local tooling, including Vite commands and the image conversion utility. | `client/package.json`, `client/scripts/convert-images.js` |
-| **npm** | Manages dependencies and runs the frontend scripts for development, build, preview, and image conversion. | `client/package.json`, `client/package-lock.json` |
-| **Sharp** | Auto-rotates source images, resizes them into thumbnail and large variants, and exports optimized `.webp` files for the gallery. | `client/package.json`, `client/scripts/convert-images.js` |
-| **ImageMagick** | Serves as an optional fallback image processor when Sharp is unavailable, generating the same thumbnail and large gallery variants. | `client/scripts/convert-images.js` |
-| **GitHub Actions** | Automates checkout, dependency installation, the Vite build, artifact upload, and deployment. | `.github/workflows/deploy-pages.yml` |
-| **GitHub Pages** | Hosts the built static site, with the Vite base path configured for the repository deployment URL. | `.github/workflows/deploy-pages.yml`, `client/vite.config.js` |
+| Technology               | How it is used in this project                                                                                                                          | Where it is used                                                                                                                                            |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **HTML5 / JSX**          | Defines the site's semantic structure through React component markup, including sections, headings, links, buttons, project cards, and gallery content. | `client/src/App.jsx`, `client/src/components/Home/Home.jsx`, `client/src/components/Coding/Coding.jsx`, `client/src/components/Photography/Photography.jsx` |
+| **CSS3**                 | Controls layout, spacing, typography, responsive breakpoints, the home hero grid, the gallery layout, and the coding section styling.                   | `client/src/index.css`, `client/src/components/Home/Home.css`, `client/src/components/Gallery/Gallery.css`, `client/src/components/Coding/Coding.css`       |
+| **JavaScript (ES6+)**    | Powers hash-based navigation, scroll syncing, gallery filtering, animation state, and image processing logic.                                           | `client/src/App.jsx`, `client/src/lib/hashRoute.js`, `client/src/components/Gallery/Gallery.jsx`, `client/scripts/convert-images.js`                        |
+| **React**                | Builds the UI with reusable components and stateful behavior across the portfolio sections.                                                             | `client/src/main.jsx`, `client/src/App.jsx`, `client/src/components/`                                                                                       |
+| **React DOM**            | Renders the app into the DOM with `createRoot` and mounts gallery and project-preview modals with `createPortal`.                                       | `client/src/main.jsx`, `client/src/components/Gallery/Gallery.jsx`, `client/src/components/Coding/Coding.jsx`                                               |
+| **Vite**                 | Runs the local development server and production build pipeline through the project's `dev`, `build`, and `preview` scripts.                            | `client/package.json`, `client/vite.config.js`                                                                                                              |
+| **@vitejs/plugin-react** | Adds React and JSX support to the Vite build configuration.                                                                                             | `client/package.json`, `client/vite.config.js`                                                                                                              |
+| **Motion**               | Animates hero images, section headings, gallery transitions, and modal behavior while respecting reduced-motion preferences.                            | `client/src/components/Home/Home.jsx`, `client/src/components/Coding/Coding.jsx`, `client/src/components/Gallery/Gallery.jsx`                               |
+| **Node.js**              | Executes the project's local tooling, including Vite commands and the image conversion utility.                                                         | `client/package.json`, `client/scripts/convert-images.js`                                                                                                   |
+| **npm**                  | Manages dependencies and runs the frontend scripts for development, build, preview, and image conversion.                                               | `client/package.json`, `client/package-lock.json`                                                                                                           |
+| **Sharp**                | Auto-rotates source images, resizes them into thumbnail and large variants, and exports optimized `.webp` files for the gallery.                        | `client/package.json`, `client/scripts/convert-images.js`                                                                                                   |
+| **ImageMagick**          | Serves as an optional fallback image processor when Sharp is unavailable, generating the same thumbnail and large gallery variants.                     | `client/scripts/convert-images.js`                                                                                                                          |
+| **GitHub Actions**       | Automates checkout, dependency installation, the Vite build, artifact upload, and deployment.                                                           | `.github/workflows/deploy-pages.yml`                                                                                                                        |
+| **GitHub Pages**         | Hosts the built static site, with the Vite base path configured for the repository deployment URL.                                                      | `.github/workflows/deploy-pages.yml`, `client/vite.config.js`                                                                                               |
 
 ## Accessibility
 
