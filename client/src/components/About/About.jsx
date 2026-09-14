@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion, useInView, useReducedMotion } from 'motion/react'
 import SocialLinks from '../SocialLinks/SocialLinks'
 import aboutPortrait from '../../images/full/about-portrait/000001550004-large.webp'
-import { buildHash } from '../../lib/hashRoute'
 import './About.css'
 
 const aboutParagraphs = [
@@ -14,7 +13,7 @@ const aboutParagraphs = [
 
 const typingSpeedMs = 9
 
-export default function About({ sectionId = 'about', followTrigger = 0, navigate }) {
+export default function About({ sectionId = 'about', followTrigger = 0 }) {
   const aboutRef = useRef(null)
   const shouldReduceMotion = useReducedMotion()
   const isInView = useInView(aboutRef, { once: true, amount: 0.3 })
@@ -22,10 +21,7 @@ export default function About({ sectionId = 'about', followTrigger = 0, navigate
     if (typeof window === 'undefined') return false
     return window.matchMedia('(max-width: 640px)').matches
   })
-  const favoriteCameraHref = buildHash(
-    '/photography',
-    new URLSearchParams({ camera: 'Canon AF35ML' })
-  )
+  const favoriteCameraHref = 'https://myke.photos/portfolio/'
   const [visibleCharacters, setVisibleCharacters] = useState(() =>
     shouldReduceMotion ? aboutParagraphs.join('').length : 0
   )
@@ -216,12 +212,8 @@ export default function About({ sectionId = 'about', followTrigger = 0, navigate
               <motion.a
                 className="about-link"
                 href={favoriteCameraHref}
-                onClick={(event) => {
-                  if (!navigate) return
-
-                  event.preventDefault()
-                  navigate(favoriteCameraHref)
-                }}
+                target="_blank"
+                rel="noreferrer"
                 initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
                 animate={
                   shouldReduceMotion || isTypingComplete
@@ -230,7 +222,7 @@ export default function About({ sectionId = 'about', followTrigger = 0, navigate
                 }
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               >
-                Visit my separate photography work
+                Visit my analog photography work
               </motion.a>
             </div>
           </div>

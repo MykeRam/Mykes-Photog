@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import SocialLinks from '../SocialLinks/SocialLinks'
 import { enterAnimation } from '../../lib/enterMotion'
-import { buildHash, getHashRoute, getHashSearchParams } from '../../lib/hashRoute'
+import { buildHash, getHashSearchParams } from '../../lib/hashRoute'
 import './Header.css'
 
 const headerLogoSrc = `${import.meta.env.BASE_URL}myke_logo_vector_header.svg`
@@ -10,15 +10,11 @@ const underlineAnimationDuration = 0.35
 const underlineFinishTime = 3.9
 const underlineRevealDelayMs = (underlineFinishTime - underlineAnimationDuration) * 1000
 const headerNavAnimationDuration = 0.6
-const finalHeaderNavAnimationDelay = 0.92
 
-function NavLink({ href, label, currentPath, currentSection, navigate, motionProps, linkRef }) {
-  const routeHref = getHashRoute(href)
+function NavLink({ href, label, currentSection, navigate, motionProps, linkRef }) {
   const sectionHref = getHashSearchParams(href).get('section')
   const isActive =
-    routeHref === '/photography'
-      ? currentPath === '/photography'
-      : currentPath !== '/photography' && currentSection === (sectionHref || 'home')
+    currentSection === (sectionHref || 'home')
 
   return (
     <motion.a
@@ -46,8 +42,7 @@ export default function Header({ currentPath, currentSection, navigate }) {
   const homeHref = buildHash('/', new URLSearchParams({ section: 'home' }))
   const aboutHref = buildHash('/', new URLSearchParams({ section: 'about' }))
   const codingHref = buildHash('/', new URLSearchParams({ section: 'coding' }))
-  const photographyHref = buildHash('/photography')
-  const activeKey = currentPath === '/photography' ? 'photography' : currentSection
+  const activeKey = currentSection
 
   useLayoutEffect(() => {
     if (shouldReduceMotion) {
@@ -208,27 +203,24 @@ export default function Header({ currentPath, currentSection, navigate }) {
                   : undefined
               }
             />
-            <NavLink
-              href={photographyHref}
-              label="photography"
-              currentPath={currentPath}
-              currentSection={currentSection}
-              navigate={navigate}
-              linkRef={registerLink('photography')}
-              motionProps={
-                !shouldReduceMotion
-                  ? {
-                      initial: { opacity: 0, y: 14 },
-                      animate: { opacity: 1, y: 0 },
-                      transition: {
-                        duration: headerNavAnimationDuration,
-                        delay: finalHeaderNavAnimationDelay,
-                        ease: [0.22, 1, 0.36, 1]
-                      }
+            <motion.a
+              href="https://myke.photos/"
+              target="_blank"
+              rel="noreferrer"
+              {...(!shouldReduceMotion
+                ? {
+                    initial: { opacity: 0, y: 14 },
+                    animate: { opacity: 1, y: 0 },
+                    transition: {
+                      duration: headerNavAnimationDuration,
+                      delay: 0.92,
+                      ease: [0.22, 1, 0.36, 1]
                     }
-                  : undefined
-              }
-            />
+                  }
+                : {})}
+            >
+              photography
+            </motion.a>
             <motion.span
               className="header-nav-underline"
               aria-hidden="true"

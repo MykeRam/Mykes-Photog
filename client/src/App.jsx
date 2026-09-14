@@ -4,7 +4,6 @@ import About from './components/About/About'
 import Coding from './components/Coding/Coding'
 import Footer from './components/Footer/Footer'
 import Home from './components/Home/Home'
-import Photography from './components/Photography/Photography'
 import { projectBySlug } from './data/projects'
 import { buildHash, getHashRoute, getHashSearchParams } from './lib/hashRoute'
 
@@ -71,7 +70,6 @@ export default function App() {
   const [activeSection, setActiveSection] = useState(() => getCurrentSection())
   const [isPageLoaded, setIsPageLoaded] = useState(() => document.readyState === 'complete')
   const [hasHandledInitialScroll, setHasHandledInitialScroll] = useState(false)
-  const [isPhotographyGridReady, setIsPhotographyGridReady] = useState(false)
   const [navigationAnnouncement, setNavigationAnnouncement] = useState('')
   const hasMountedRef = useRef(false)
 
@@ -184,19 +182,8 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    if (currentPath === '/photography') {
-      setIsPhotographyGridReady(false)
-    }
-  }, [currentPath])
-
-  useEffect(() => {
     const shouldMoveFocus = hasMountedRef.current
     hasMountedRef.current = true
-
-    if (currentPath === '/photography') {
-      document.title = 'Photography | Michael Ramirez'
-      return undefined
-    }
 
     const project = currentPath.startsWith('/coding/')
       ? projectBySlug.get(currentPath.replace('/coding/', ''))
@@ -271,8 +258,6 @@ export default function App() {
     >
       <ProjectDetail project={projectBySlug.get(projectSlug)} navigate={navigate} />
     </Suspense>
-  ) : currentPath === '/photography' ? (
-    <Photography onGridReadyChange={setIsPhotographyGridReady} />
   ) : (
     <>
       <Home sectionId="home" navigate={navigate} />
@@ -301,9 +286,7 @@ export default function App() {
       <main id="main-content" className="app-main" tabIndex={-1}>
         {page}
       </main>
-      {isPageLoaded && (currentPath !== '/photography' || isPhotographyGridReady) ? (
-        <Footer />
-      ) : null}
+      {isPageLoaded ? <Footer /> : null}
     </div>
   )
 }
