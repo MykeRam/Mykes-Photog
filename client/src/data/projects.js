@@ -139,6 +139,7 @@ export const projectCards = [
         alt: 'Screenshot of the Film Roll Tracker scans view'
       }
     ],
+    liveHref: 'https://mykeram.github.io/Film-Roll-Tracker/',
     githubHref: 'https://github.com/MykeRam/Film-Roll-Tracker'
   },
   {
