@@ -13,8 +13,7 @@ const headerNavAnimationDuration = 0.6
 
 function NavLink({ href, label, currentSection, navigate, motionProps, linkRef }) {
   const sectionHref = getHashSearchParams(href).get('section')
-  const isActive =
-    currentSection === (sectionHref || 'home')
+  const isActive = currentSection === (sectionHref || 'home')
 
   return (
     <motion.a
