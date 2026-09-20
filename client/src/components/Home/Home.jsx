@@ -24,8 +24,8 @@ const selectedWork = [
 const homeCopyLead = 0.1
 const homeEntryDelay = headerLinksFinishTime - homeCopyLead
 const homeCopyDuration = 1.25
-const homeWorkOverlap = 0.4
-const homeWorkDelay = homeEntryDelay + homeCopyDuration - homeWorkOverlap
+const homeWorkGap = 0.1
+const homeWorkDelay = homeEntryDelay + homeWorkGap
 
 export default function Home({ sectionId = 'home', navigate }) {
   const shouldReduceMotion = useReducedMotion()
