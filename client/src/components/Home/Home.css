@@ -134,17 +134,7 @@
   min-width: 0;
   padding-top: 17px;
   color: #111;
-  border-top: 1px solid #111;
-}
-
-.home-work-panel::before {
-  content: '';
-  position: absolute;
-  top: -1px;
-  left: 0;
-  width: 48px;
-  height: 2px;
-  background: #2563eb;
+  border-top: 2px solid #2563eb;
 }
 
 .home-work-heading {
