@@ -260,6 +260,10 @@
     padding: 26px 16px;
   }
 
+  .about-layout {
+    gap: 8px;
+  }
+
   .about-portrait-frame {
     max-width: 320px;
     padding: 10px;
@@ -268,5 +272,9 @@
   .about-story p {
     font-size: 0.98rem;
     line-height: 1.82;
+  }
+
+  .about-story {
+    padding-top: 0;
   }
 }
