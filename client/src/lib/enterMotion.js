@@ -1,7 +1,7 @@
 export const headerAnimationFinishTime = 1.52
 
-export const enterAnimation = (delay = 0, duration = 0.5) => ({
-  initial: { opacity: 0, y: 16, scale: 0.96 },
+export const enterAnimation = (delay = 0, duration = 0.5, initialY = 16) => ({
+  initial: { opacity: 0, y: initialY, scale: 0.96 },
   animate: { opacity: 1, y: 0, scale: 1 },
   transition: {
     duration,

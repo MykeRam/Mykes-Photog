@@ -73,7 +73,7 @@ export default function SocialLinks({
           aria-label={social.name}
           title={social.name}
           {...(animateOnEnter && !shouldReduceMotion
-            ? enterAnimation(baseDelay + index * stagger)
+            ? enterAnimation(baseDelay + index * stagger, 0.5, index % 2 === 0 ? -14 : 14)
             : {})}
         >
           <img src={social.icon} alt="" />
