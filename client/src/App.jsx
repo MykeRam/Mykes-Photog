@@ -7,12 +7,11 @@ import FlightPath from './components/FlightPath/FlightPath'
 import Home from './components/Home/Home'
 import { projectBySlug } from './data/projects'
 import { buildHash, getHashRoute, getHashSearchParams } from './lib/hashRoute'
+import { cancelSectionScroll, scrollToPosition } from './lib/scrollMotion'
 
 const mainPageRoutes = new Set(['/', '/about', '/coding'])
 const ProjectDetail = lazy(() => import('./components/ProjectDetail/ProjectDetail'))
 const activeSectionLeadPx = 96
-const sectionScrollDurationMs = 1200
-let cancelSectionScroll = () => {}
 
 function getHeaderHeight() {
   const header = document.querySelector('.site-header')
@@ -45,54 +44,7 @@ function getSectionScrollTop(section) {
 }
 
 function scrollToSection(section, behavior = 'smooth') {
-  cancelSectionScroll()
-  const top = Math.min(
-    getSectionScrollTop(section),
-    Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
-  )
-  const start = window.scrollY
-  const distance = top - start
-
-  if (behavior !== 'smooth' || Math.abs(distance) < 1) {
-    window.scrollTo({ top, behavior: 'instant' })
-    return
-  }
-
-  let frameId = 0
-  const startedAt = performance.now()
-  const cancel = () => {
-    window.cancelAnimationFrame(frameId)
-    window.removeEventListener('wheel', cancel)
-    window.removeEventListener('touchstart', cancel)
-    window.removeEventListener('pointerdown', cancel)
-    window.removeEventListener('keydown', onKeyDown)
-    window.removeEventListener('resize', cancel)
-    cancelSectionScroll = () => {}
-  }
-  const onKeyDown = (event) => {
-    if (
-      ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ', 'Escape', 'Tab'].includes(
-        event.key
-      )
-    ) {
-      cancel()
-    }
-  }
-  const step = (now) => {
-    const progress = Math.min((now - startedAt) / sectionScrollDurationMs, 1)
-    const eased = progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2
-    window.scrollTo({ top: start + distance * eased, behavior: 'instant' })
-    if (progress < 1) frameId = window.requestAnimationFrame(step)
-    else cancel()
-  }
-
-  cancelSectionScroll = cancel
-  window.addEventListener('wheel', cancel, { passive: true })
-  window.addEventListener('touchstart', cancel, { passive: true })
-  window.addEventListener('pointerdown', cancel, { passive: true })
-  window.addEventListener('keydown', onKeyDown)
-  window.addEventListener('resize', cancel)
-  frameId = window.requestAnimationFrame(step)
+  scrollToPosition(getSectionScrollTop(section), behavior)
 }
 
 function getCurrentSection(path = getHashRoute(), hash = window.location.hash) {

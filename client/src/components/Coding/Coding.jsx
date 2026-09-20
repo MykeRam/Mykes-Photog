@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'motion/react'
 import { projectCards } from '../../data/projects'
 import { buildHash } from '../../lib/hashRoute'
+import { scrollToPosition } from '../../lib/scrollMotion'
 import './Coding.css'
 
 const headingAnimations = {
@@ -617,10 +618,9 @@ export default function Coding({ sectionId = 'coding', isSectionTargeted = false
     const projectsHeading = document.getElementById('coding-projects-title')
     if (!projectsHeading) return
 
-    projectsHeading.scrollIntoView({
-      behavior: shouldReduceMotion ? 'auto' : 'smooth',
-      block: 'start'
-    })
+    const scrollMargin = parseFloat(window.getComputedStyle(projectsHeading).scrollMarginTop) || 0
+    const targetTop = window.scrollY + projectsHeading.getBoundingClientRect().top - scrollMargin
+    scrollToPosition(targetTop, shouldReduceMotion ? 'auto' : 'smooth')
   }
 
   return (
