@@ -24,7 +24,7 @@ const selectedWork = [
 const homeCopyLead = 0.1
 const homeEntryDelay = headerAnimationFinishTime - homeCopyLead
 const homeCopyDuration = 1.25
-const homeWorkOverlap = 0.2
+const homeWorkOverlap = 0.4
 const homeWorkDelay = homeEntryDelay + homeCopyDuration - homeWorkOverlap
 
 export default function Home({ sectionId = 'home', navigate }) {
