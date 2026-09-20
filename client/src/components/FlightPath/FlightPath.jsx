@@ -1,12 +1,12 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useInView, useReducedMotion } from 'motion/react'
 import './FlightPath.css'
 
-const clouds = Array.from({ length: 24 }, (_, index) => ({
-  y: [24, 55, 119, 150][index % 4],
+const clouds = Array.from({ length: 48 }, (_, index) => ({
+  row: index % 8,
   scale: [0.85, 1.25, 1, 1.5, 0.7][index % 5],
   duration: [19, 24, 17, 22][index % 4],
-  progress: ((index * 7) % 24) / 24
+  progress: ((index * 13) % 48) / 48
 }))
 const cloudShape = 'M 0 8 C 0 3 4 0 9 0 C 12 -7 22 -8 27 -1 C 34 -4 42 0 42 8 Z'
 
@@ -14,7 +14,20 @@ export default function FlightPath() {
   const sceneRef = useRef(null)
   const skyRef = useRef(null)
   const shouldReduceMotion = useReducedMotion()
-  const isInView = useInView(sceneRef)
+  const isInView = useInView(sceneRef, { margin: '100px 0px' })
+  const [skySize, setSkySize] = useState({ width: 1040, height: 340 })
+
+  useEffect(() => {
+    const observer = new ResizeObserver(([entry]) => {
+      setSkySize({ width: entry.contentRect.width, height: entry.contentRect.height })
+    })
+    observer.observe(skyRef.current)
+    return () => observer.disconnect()
+  }, [])
+
+  const visibleClouds = skySize.width <= 640 ? clouds.slice(0, 24) : clouds
+  const cloudStart = skySize.width + 80
+  const cloudTravel = cloudStart + 110
 
   useEffect(() => {
     if (isInView && !shouldReduceMotion) skyRef.current?.unpauseAnimations()
@@ -28,23 +41,31 @@ export default function FlightPath() {
       data-playing={isInView && !shouldReduceMotion}
       aria-hidden="true"
     >
-      <svg ref={skyRef} className="flight-path-art" viewBox="0 0 1040 170" focusable="false">
-        {clouds.map(({ y, scale, duration, progress }, index) => (
-          <g key={index} transform={`translate(${1080 - progress * 1190} ${y})`}>
-            {!shouldReduceMotion && (
-              <animateTransform
-                attributeName="transform"
-                type="translate"
-                from={`1080 ${y}`}
-                to={`-110 ${y}`}
-                dur={`${duration}s`}
-                begin={`${-progress * duration}s`}
-                repeatCount="indefinite"
-              />
-            )}
-            <path className="flight-path-cloud" transform={`scale(${scale})`} d={cloudShape} />
-          </g>
-        ))}
+      <svg
+        ref={skyRef}
+        className="flight-path-art"
+        viewBox={`0 0 ${skySize.width} ${skySize.height}`}
+        focusable="false"
+      >
+        {visibleClouds.map(({ row, scale, duration, progress }, index) => {
+          const y = 22 + (row / 7) * (skySize.height - 48)
+          return (
+            <g key={index} transform={`translate(${cloudStart - progress * cloudTravel} ${y})`}>
+              {!shouldReduceMotion && (
+                <animateTransform
+                  attributeName="transform"
+                  type="translate"
+                  from={`${cloudStart} ${y}`}
+                  to={`-110 ${y}`}
+                  dur={`${duration}s`}
+                  begin={`${-progress * duration}s`}
+                  repeatCount="indefinite"
+                />
+              )}
+              <path className="flight-path-cloud" transform={`scale(${scale})`} d={cloudShape} />
+            </g>
+          )
+        })}
       </svg>
       <svg className="flight-path-jet" viewBox="-150 -80 300 160" focusable="false">
         <g className="flight-path-trails">

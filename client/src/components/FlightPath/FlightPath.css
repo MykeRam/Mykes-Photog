@@ -3,12 +3,16 @@
   width: min(100%, 1040px);
   height: clamp(142px, 16vw, 192px);
   margin: 0 auto;
-  overflow: hidden;
+  overflow: visible;
+  pointer-events: none;
 }
 .flight-path-art {
+  position: absolute;
+  top: -100px;
   display: block;
   width: 100%;
-  height: 100%;
+  height: calc(100% + 200px);
+  overflow: hidden;
 }
 .flight-path-cloud {
   fill: none;
@@ -96,6 +100,10 @@
   }
 }
 @media (max-width: 640px) {
+  .flight-path-art {
+    top: -32px;
+    height: calc(100% + 64px);
+  }
   .flight-path-jet {
     width: 240px;
     height: 128px;
