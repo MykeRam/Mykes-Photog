@@ -1,30 +1,49 @@
 import { useReducedMotion } from 'motion/react'
 import './FlightPath.css'
 
-const flightPath =
-  'M 520 22 C 760 22 930 50 930 85 C 930 120 760 148 520 148 C 280 148 110 120 110 85 C 110 50 280 22 520 22 Z'
-
 export default function FlightPath() {
   const shouldReduceMotion = useReducedMotion()
 
   return (
     <div className="flight-path" aria-hidden="true">
       <svg className="flight-path-art" viewBox="0 0 1040 170" role="presentation" focusable="false">
-        <path id="flight-path-route" className="flight-path-route" d={flightPath} />
-        <path className="flight-path-accent" d={flightPath} pathLength="1" />
-
-        <g className="flight-path-plane" transform="translate(520 22)">
+        <g className="flight-path-cloud flight-path-cloud--one">
           {!shouldReduceMotion ? (
-            <animateMotion
-              dur="10s"
-              rotate="auto"
+            <animateTransform
+              attributeName="transform"
+              type="translate"
+              from="-190 36"
+              to="1080 36"
+              dur="16s"
               repeatCount="indefinite"
-              calcMode="spline"
-              keyTimes="0;1"
-              keySplines="0.45 0 0.55 1"
-            >
-              <mpath href="#flight-path-route" />
-            </animateMotion>
+            />
+          ) : null}
+          <path d="M 0 8 C 0 3 4 0 9 0 C 12 -7 22 -8 27 -1 C 34 -4 42 0 42 8 Z" />
+        </g>
+
+        <g className="flight-path-cloud flight-path-cloud--two">
+          {!shouldReduceMotion ? (
+            <animateTransform
+              attributeName="transform"
+              type="translate"
+              from="-470 104"
+              to="800 104"
+              dur="20s"
+              repeatCount="indefinite"
+            />
+          ) : null}
+          <path d="M 0 7 C 0 3 4 0 8 0 C 11 -5 19 -6 23 -1 C 29 -3 36 1 36 7 Z" />
+        </g>
+
+        <g className="flight-path-plane" transform="translate(520 85)">
+          {!shouldReduceMotion ? (
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              values="-2 0 0; 2 0 0; -2 0 0"
+              dur="4s"
+              repeatCount="indefinite"
+            />
           ) : null}
           <path
             className="flight-path-plane-outline"

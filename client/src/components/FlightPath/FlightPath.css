@@ -11,23 +11,13 @@
   margin: 0 auto;
 }
 
-.flight-path-route,
-.flight-path-accent {
+.flight-path-cloud {
   fill: none;
-  vector-effect: non-scaling-stroke;
-}
-
-.flight-path-route {
-  stroke: rgba(17, 17, 17, 0.45);
+  stroke: rgba(17, 17, 17, 0.38);
   stroke-width: 1.2;
-}
-
-.flight-path-accent {
-  stroke: #2563eb;
-  stroke-width: 2;
   stroke-linecap: round;
-  stroke-dasharray: 0.16 0.84;
-  stroke-dashoffset: 0.02;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
 }
 
 .flight-path-plane {
@@ -50,12 +40,6 @@
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .flight-path-accent {
-    stroke-dasharray: none;
-  }
 }
 
 @media (max-width: 640px) {
