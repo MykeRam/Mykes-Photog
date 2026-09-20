@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { useInView, useReducedMotion } from 'motion/react'
+import { motion, useInView, useReducedMotion } from 'motion/react'
+import { headerUnderlineFinishTime } from '../../lib/enterMotion'
 import './FlightPath.css'
+
+const flightPathFadeDuration = 0.65
+const flightPathFadeDelay = headerUnderlineFinishTime - flightPathFadeDuration
 
 const clouds = Array.from({ length: 48 }, (_, index) => ({
   row: index % 8,
@@ -35,11 +39,18 @@ export default function FlightPath() {
   }, [isInView, shouldReduceMotion])
 
   return (
-    <div
+    <motion.div
       ref={sceneRef}
       className="flight-path"
       data-playing={isInView && !shouldReduceMotion}
       aria-hidden="true"
+      initial={shouldReduceMotion ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={
+        shouldReduceMotion
+          ? { duration: 0 }
+          : { duration: flightPathFadeDuration, delay: flightPathFadeDelay, ease: 'easeOut' }
+      }
     >
       <svg
         ref={skyRef}
@@ -127,6 +138,6 @@ export default function FlightPath() {
           <path className="flight-path-plane-detail" d="M -81 -40 L -73 -29 M -36 46 L -27 47" />
         </g>
       </svg>
-    </div>
+    </motion.div>
   )
 }
