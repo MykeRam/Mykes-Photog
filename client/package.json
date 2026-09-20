@@ -8,6 +8,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "test:smoke": "node --test scripts/*.smoke.test.cjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "convert-images": "node scripts/convert-images.js",
