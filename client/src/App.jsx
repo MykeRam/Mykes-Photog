@@ -3,6 +3,7 @@ import Header from './components/Header/Header'
 import About from './components/About/About'
 import Coding from './components/Coding/Coding'
 import Footer from './components/Footer/Footer'
+import FlightPath from './components/FlightPath/FlightPath'
 import Home from './components/Home/Home'
 import { projectBySlug } from './data/projects'
 import { buildHash, getHashRoute, getHashSearchParams } from './lib/hashRoute'
@@ -261,6 +262,7 @@ export default function App() {
   ) : (
     <>
       <Home sectionId="home" navigate={navigate} />
+      <FlightPath />
       <About sectionId="about" navigate={navigate} />
       <Coding
         sectionId="coding"
