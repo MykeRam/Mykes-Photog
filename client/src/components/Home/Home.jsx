@@ -21,7 +21,7 @@ const selectedWork = [
   }
 ]
 
-const homeCopyLead = 0.2
+const homeCopyLead = 0.1
 const homeEntryDelay = headerAnimationFinishTime - homeCopyLead
 const homeCopyDuration = 1.25
 const homeWorkOverlap = 0.2
