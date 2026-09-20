@@ -21,11 +21,17 @@ function getHeaderHeight() {
 function getSectionTarget(section) {
   if (section === 'home') return null
 
-  return section === 'about'
-    ? document.getElementById('about')
-    : section === 'coding'
-      ? document.querySelector('#coding-title')
-      : document.getElementById(section)
+  if (section === 'about') {
+    const mobileFlightPath = window.matchMedia('(max-width: 640px)').matches
+      ? document.querySelector('.flight-path')
+      : null
+
+    return mobileFlightPath || document.getElementById('about')
+  }
+
+  return section === 'coding'
+    ? document.querySelector('#coding-title')
+    : document.getElementById(section)
 }
 
 function getSectionScrollTop(section) {
