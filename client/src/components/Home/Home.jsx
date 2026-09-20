@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'motion/react'
 import { buildHash } from '../../lib/hashRoute'
+import { headerAnimationFinishTime } from '../../lib/enterMotion'
 import './Home.css'
 
 const selectedWork = [
@@ -20,7 +21,8 @@ const selectedWork = [
   }
 ]
 
-const homeEntryDelay = 1.35
+const homeCopyLead = 0.2
+const homeEntryDelay = headerAnimationFinishTime - homeCopyLead
 const homeCopyDuration = 1.25
 const homeWorkOverlap = 0.2
 const homeWorkDelay = homeEntryDelay + homeCopyDuration - homeWorkOverlap

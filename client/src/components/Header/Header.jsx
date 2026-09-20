@@ -1,14 +1,14 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import SocialLinks from '../SocialLinks/SocialLinks'
-import { enterAnimation } from '../../lib/enterMotion'
+import { enterAnimation, headerAnimationFinishTime } from '../../lib/enterMotion'
 import { buildHash, getHashSearchParams } from '../../lib/hashRoute'
 import './Header.css'
 
 const headerLogoSrc = `${import.meta.env.BASE_URL}myke_logo_vector_header.svg`
 const underlineAnimationDuration = 0.35
-const underlineFinishTime = 3.9
-const underlineRevealDelayMs = (underlineFinishTime - underlineAnimationDuration) * 1000
+const underlineRevealDelayMs =
+  (headerAnimationFinishTime - underlineAnimationDuration) * 1000
 const headerNavAnimationDuration = 0.6
 
 function NavLink({ href, label, currentSection, navigate, motionProps, linkRef }) {
