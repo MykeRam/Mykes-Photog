@@ -189,12 +189,12 @@ export const projectCards = [
     description:
       'A responsive React portfolio with hash routing, custom motion, accessible navigation states, and an optimized asset workflow.',
     detailDescription: [
-      'This portfolio presents software engineering work through responsive sections, dedicated project case studies, custom hash-based routing, and motion-driven transitions. Photography remains available as a separate routed experience with its own visual treatment.',
+      'This portfolio presents software engineering work through responsive sections, dedicated project case studies, custom hash-based routing, and motion-driven transitions. Photography remains part of the visual identity and is linked externally through the site header.',
       'The project is also a live playground for refining front-end structure, animation timing, accessibility, responsive layout, image handling, metadata, and deployment workflow.'
     ],
     highlights: [
       'Single-page section navigation with hash route support',
-      'Separate software and photography experiences with custom motion',
+      'Software portfolio experience with an external photography link and custom motion',
       'Optimized image workflow for gallery and portfolio assets'
     ],
     stack:
