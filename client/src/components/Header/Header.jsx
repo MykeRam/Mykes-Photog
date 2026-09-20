@@ -7,8 +7,7 @@ import './Header.css'
 
 const headerLogoSrc = `${import.meta.env.BASE_URL}myke_logo_vector_header.svg`
 const underlineAnimationDuration = 0.35
-const underlineRevealDelayMs =
-  (headerUnderlineFinishTime - underlineAnimationDuration) * 1000
+const underlineRevealDelayMs = (headerUnderlineFinishTime - underlineAnimationDuration) * 1000
 const headerNavAnimationDuration = 0.6
 
 function NavLink({ href, label, currentSection, navigate, motionProps, linkRef }) {
