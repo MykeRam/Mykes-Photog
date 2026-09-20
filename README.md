@@ -1,5 +1,7 @@
 # Michael Ramirez Portfolio
 
+[![Deploy GitHub Pages](https://github.com/MykeRam/Mykes-Photog/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/MykeRam/Mykes-Photog/actions/workflows/deploy-pages.yml)
+
 Personal portfolio for Michael Ramirez, focused on software engineering work, product thinking, and accessible frontend development. Photography remains part of the visual identity and is linked externally through the header, while this application focuses on the software portfolio experience.
 
 ## Live site
