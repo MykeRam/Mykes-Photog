@@ -65,8 +65,7 @@ export default function Home({ sectionId = 'home', navigate }) {
             </p>
 
             <div className="home-availability">
-              Software Engineering student completing TripleTen&apos;s program · Open to junior
-              frontend and full-stack roles
+              TripleTen Software Engineering graduate · Open to junior frontend and full-stack roles
             </div>
 
             <div className="home-actions" aria-label="Portfolio actions">

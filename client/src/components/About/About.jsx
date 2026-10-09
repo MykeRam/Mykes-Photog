@@ -5,7 +5,7 @@ import aboutPortrait from '../../images/full/about-portrait/000001550004-large.w
 import './About.css'
 
 const aboutParagraphs = [
-  "Hi, I'm Michael Ramirez, a New York City-based junior software engineer completing TripleTen's Software Engineering program.",
+  "Hi, I'm Michael Ramirez, a New York City-based junior software engineer and graduate of TripleTen's Software Engineering program.",
   'I build responsive front-end and full-stack products with React, TypeScript, Node.js, and PostgreSQL. I care about the details behind a good experience: clear information, reliable data flows, accessible interfaces, and code that another developer can understand.',
   'My work as a flight attendant shaped how I approach engineering. It taught me to stay calm under pressure, adapt quickly, communicate with people from every background, and take responsibility for the small details that keep a larger system running.',
   'Photography remains part of how I see and design, but this portfolio is focused on the software products I am building and the engineering career I am working toward.'

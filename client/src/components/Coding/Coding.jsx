@@ -752,7 +752,7 @@ export default function Coding({ sectionId = 'coding', isSectionTargeted = false
               </span>
             </motion.h2>
             <p className="coding-intro-text">
-              I&apos;m completing TripleTen&apos;s Software Engineering program and building
+              I&apos;m a graduate of TripleTen&apos;s Software Engineering program, building
               production-minded React and full-stack applications. My recent work combines
               TypeScript, authentication, PostgreSQL, testing, and automated deployment with a
               strong focus on responsive, accessible user experiences.
